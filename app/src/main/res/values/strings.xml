@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">filmstock</string>
+
+    <!-- Generic -->
+    <string name="no_internet">Parece que você está sem internet!</string>
+    <string name="no_internet_greeting">Oops!</string>
+    <string name="no_internet_verify_connection">Verifique sua conexão e tente novamente. :)</string>
+    <string name="reconnect">Tentar novamente</string>
+
+    <!-- Content Descriptions -->
+    <string name="splash_filmstock_logo">Filmstock Logo</string>
+    <string name="splash_filmstock_background">Filmstock Background</string>
+
+    <!-- Movie Detail -->
+    <string name="movie_detail_text">Detalhes do filme</string>
+
+    <!-- Movie Search -->
+    <string name="movie_search_text">Buscar filme</string>
+    <string name="movie_search_no_results_greeting_text">Nadinha…</string>
+    <string name="movie_search_no_results_text">Não foram econtrados resultados :(</string>
+    <string name="movie_search_no_results_suggestion_text">Que tal tentar buscar algo diferente?</string>
+
+</resources>

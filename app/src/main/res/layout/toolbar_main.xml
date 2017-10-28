@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    app:theme="@style/ToolbarStyleDark">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Toolbar title -->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:lines="1"
+            android:text="@string/movie_detail_text"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_size_large" />
+
+        <!-- Like Button -->
+        <Button
+            android:id="@+id/toolbar_like_button"
+            android:layout_width="@dimen/button_toolbar_size"
+            android:layout_height="@dimen/button_toolbar_size"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/default_medium_margin"
+            android:background="@drawable/ic_favorite_border_white"
+            android:visibility="visible"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

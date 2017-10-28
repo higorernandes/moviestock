@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="pineapplesoftware.filmstock.MovieDetailActivity"
+    android:background="@color/colorBackgroundDark">
+
+    <!-- Toolbar -->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null">
+
+        <include
+            android:id="@+id/detail_toolbar"
+            layout="@layout/toolbar_main" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!-- Content area -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/detail_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <!-- Movie image -->
+                <ImageView
+                    android:id="@+id/detail_movie_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/image_header_height"
+                    android:src="@drawable/scott_pilgrim_poster"
+                    android:scaleType="centerCrop"/>
+
+                <!-- Movie title transluscent View -->
+                <RelativeLayout
+                    android:id="@+id/detail_transluscent_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/image_header_height"
+                    android:background="@drawable/transluscent_black_view"/>
+
+                <!-- Actual movie title -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/detail_transluscent_view"
+                    android:text="Scott Pilgrim Vs The World"
+                    android:textSize="@dimen/font_size_large"
+                    android:layout_marginStart="@dimen/cardview_default_margin"
+                    android:layout_marginEnd="@dimen/default_medium_margin"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/roboto_light"
+                    android:maxLines="3"
+                    android:textStyle="bold"
+                    android:ellipsize="end"/>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_below="@+id/detail_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/cardview_default_margin"
+                app:cardBackgroundColor="@color/colorCardBackgroundDark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/detail_movie_info_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin"
+                        android:layout_marginStart="@dimen/default_medium_margin"
+                        android:layout_marginEnd="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_genre"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Drama, Action"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_duration"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="2h33m"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/font_size_medium"
+                            android:textAlignment="viewEnd"
+                            android:alpha="0.5"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/detail_movie_synopsis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/detail_movie_info_view"
+                        android:layout_marginBottom="@dimen/default_medium_margin"
+                        android:layout_marginEnd="@dimen/default_medium_margin"
+                        android:layout_marginStart="@dimen/default_medium_margin"
+                        android:layout_marginTop="@dimen/default_medium_margin"
+                        android:alpha="0.7"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean molestie ex sit amet ultricies molestie. \n\nInteger laoreet fermentum purus, a imperdiet augue fringilla eget. Sed in risus mauris. \n\nQuisque semper sapien in magna pharetra laoreet. Morbi ornare id elit sit amet viverra. Sed sed hendrerit erat, sed venenatis quam. Ut posuere mi ut euismod finibus. Nunc luctus nisi eros, pellentesque tincidunt magna malesuada vitae. Maecenas in massa feugiat, maximus nunc eget, sollicitudin dolor. Aliquam erat volutpat. \n\nCurabitur quis nibh purus. Etiam viverra commodo turpis, a eleifend est facilisis a. \n\nDonec sem ex, dignissim nec felis vitae, laoreet tristique quam."
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_size_medium_large" />
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>
