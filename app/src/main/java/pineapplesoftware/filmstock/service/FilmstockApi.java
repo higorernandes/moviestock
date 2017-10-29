@@ -2,16 +2,17 @@ package pineapplesoftware.filmstock.service;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.squareup.okhttp.OkHttpClient;
 
+import java.util.ArrayList;
+
+import pineapplesoftware.filmstock.model.domain.IFilmstockResponse;
+import pineapplesoftware.filmstock.model.domain.MovieResponse;
+import pineapplesoftware.filmstock.model.dto.Movie;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -20,13 +21,16 @@ import retrofit.http.Query;
 
 public class FilmstockApi
 {
-    private static FilmstockApi.IFilmstockApi guideApi;
-    private static String BASE_URL = "http://www.omdbapi.com/?apikey=[getsomeapikey]&";
+    private static FilmstockApi.IFilmstockApi filmstockApi;
+    private static String BASE_URL = "http://www.omdbapi.com";
+    public static String API_KEY = "201fefa";
 
     public static Retrofit getClient(final Context context) {
         try {
-            Gson gson = new GsonBuilder().create();
-            return new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
+            return new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,8 +40,7 @@ public class FilmstockApi
 
     public static FilmstockApi.IFilmstockApi getApi(final Context context) {
         try {
-            guideApi = getClient(context).create(FilmstockApi.IFilmstockApi.class);
-            return guideApi;
+            return getClient(context).create(FilmstockApi.IFilmstockApi.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,8 +51,9 @@ public class FilmstockApi
 
     public interface IFilmstockApi
     {
-        @GET("t={search}")
-        Call<JsonObject> searchMovie(@Query("search") String text);
+        @GET(".")
+        Call<MovieResponse> searchMovie(@Query("apikey") String apiKey,
+                                     @Query("t") String text);
     }
 
     //endregion

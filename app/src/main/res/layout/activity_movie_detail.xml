@@ -135,10 +135,9 @@
 
                     <!-- Plot -->
                     <TextView
-                        android:id="@+id/detail_movie_synopsis"
+                        android:id="@+id/detail_movie_plot"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/detail_movie_info_view"
                         android:layout_marginTop="@dimen/default_medium_margin"
                         android:fontFamily="@font/roboto_light"
                         android:text="Scott Pilgrim must defeat his new girlfriend's seven evil exes in order to win her heart."
@@ -150,7 +149,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view"
                         android:layout_marginTop="@dimen/default_medium_margin">
 
                         <TextView

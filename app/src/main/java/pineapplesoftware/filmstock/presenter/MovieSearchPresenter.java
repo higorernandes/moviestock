@@ -1,5 +1,6 @@
 package pineapplesoftware.filmstock.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pineapplesoftware.filmstock.R;
@@ -12,7 +13,7 @@ import pineapplesoftware.filmstock.service.FilmstockServices;
 import pineapplesoftware.filmstock.view.IMovieSearchView;
 
 /**
- * Created by root on 2017-10-29.
+ * Created by Higor Ernandes on 2017-10-29.
  */
 
 public class MovieSearchPresenter implements IPresenter {
@@ -29,12 +30,16 @@ public class MovieSearchPresenter implements IPresenter {
         this.mView = new IMovieSearchView.HomebrokerEmptyView();
     }
 
+    /**
+     * Searches for a movie given a typed text and retrieves a list of movies.
+     * @param textToSearch The text to be searched.
+     */
     public void searchMovie(String textToSearch) {
         if(NetworkHelper.isConnected()) {
             mView.showLoading();
-            FilmstockServices.searchMovie(mView.getContext(), textToSearch, new IFilmstockResponse<List<Movie>>() {
+            FilmstockServices.searchMovie(mView.getContext(), textToSearch, new IFilmstockResponse<ArrayList<Movie>>() {
                 @Override
-                public void onResponseSuccess(List<Movie> response) {
+                public void onResponseSuccess(ArrayList<Movie> response) {
                     mView.callbackSuccessSearchMovie(response);
                     mView.hideLoading();
                 }

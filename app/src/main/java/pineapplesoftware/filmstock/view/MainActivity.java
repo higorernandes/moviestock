@@ -2,7 +2,6 @@ package pineapplesoftware.filmstock.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
-    private Button mToolbarSearchButton;
+    private RelativeLayout mToolbarSearchButton;
 
     private HorizontalInfiniteCycleViewPager mMainInfiniteCycleViewPager;
     private CoverViewPagerAdapter mMoviesPagerAdapter;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.toolbar_search_button:
+            case R.id.toolbar_main_relativelayout:
                 startActivity(MovieSearchActivity.getActivityIntent(this));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
                 break;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void getViews() {
         mToolbar = findViewById(R.id.main_toolbar);
         mToolbarTitle = mToolbar.findViewById(R.id.toolbar_title);
-        mToolbarSearchButton = mToolbar.findViewById(R.id.toolbar_search_button);
+        mToolbarSearchButton = mToolbar.findViewById(R.id.toolbar_main_relativelayout);
 
         mMainInfiniteCycleViewPager = findViewById(R.id.main_coverview);
 
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setUpToolbar() {
         setSupportActionBar(mToolbar);
         mToolbarTitle.setText(getResources().getString(R.string.app_name));
-        mToolbarSearchButton.setBackground(ContextCompat.getDrawable(this, R.drawable.ic_search_white));
         mToolbarSearchButton.setVisibility(View.VISIBLE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
@@ -174,8 +172,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void onClick(View view) {
-            startActivity(MovieDetailActivity.getActivityIntent(mContext));
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
+//            startActivity(MovieDetailActivity.getActivityIntent(mContext, movie));
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
         }
     }
 

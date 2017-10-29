@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#191919</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#65D8C5</color>
+    <color name="colorPrimary">#171C21</color>
+    <color name="colorPrimaryDark">#0e1216</color>
+    <color name="colorAccent">#349b89</color>
     <color name="colorGradientEnd">#417dcc</color>
     <color name="colorBackground">#f6f6f6</color>
-    <color name="colorBackgroundDark">#191919</color>
-    <color name="colorCardBackgroundDark">#202020</color>
-    <color name="colorWhiteTransluscent">#7fffffff</color>
+    <color name="colorBackgroundDark">#171C21</color>
+    <color name="colorCardBackgroundDark">#2f3439</color>
+    <color name="colorWhiteTranslucent">#7fffffff</color>
 </resources>

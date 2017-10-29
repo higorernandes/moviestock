@@ -2,19 +2,19 @@ package pineapplesoftware.filmstock.view;
 
 import android.content.Context;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import pineapplesoftware.filmstock.generic.IView;
 import pineapplesoftware.filmstock.model.dto.Movie;
 
 /**
- * Created by root on 2017-10-29.
+ * Created by Higor Ernandes on 2017-10-29.
  */
 
 public interface IMovieSearchView extends IView
 {
 
-    void callbackSuccessSearchMovie(List<Movie> movieList);
+    void callbackSuccessSearchMovie(ArrayList<Movie> movieList);
     void callbackErrorSearchMovie();
 
     class HomebrokerEmptyView implements IMovieSearchView {
@@ -25,33 +25,21 @@ public interface IMovieSearchView extends IView
         }
 
         @Override
-        public void requestCallbackSuccess() {
-
-        }
+        public void requestCallbackSuccess() { }
 
         @Override
-        public void requestCallbackError() {
-
-        }
+        public void requestCallbackError() { }
 
         @Override
-        public void showLoading() {
-
-        }
+        public void showLoading() { }
 
         @Override
-        public void hideLoading() {
-
-        }
+        public void hideLoading() { }
 
         @Override
-        public void callbackSuccessSearchMovie(List<Movie> movieList) {
-
-        }
+        public void callbackSuccessSearchMovie(ArrayList<Movie> movieList) { }
 
         @Override
-        public void callbackErrorSearchMovie() {
-
-        }
+        public void callbackErrorSearchMovie() { }
     }
 }

@@ -2,10 +2,12 @@
     <string name="app_name">filmstock</string>
 
     <!-- Generic -->
-    <string name="no_internet">It looks like you're offline!</string>
+    <string name="no_internet">It looks like you\'re offline!</string>
     <string name="no_internet_greeting">Oops!</string>
     <string name="no_internet_verify_connection">Check your connection and try again. :)</string>
-    <string name="reconnect">Try again</string>
+    <string name="generic_server_error">There was a error on the server. :/</string>
+    <string name="generic_server_connection_error">We could not connect to the server D: \n\nPlease try again.</string>
+    <string name="generic_reconnect">Try again</string>
 
     <!-- Content Descriptions -->
     <string name="splash_filmstock_logo">Filmstock Logo</string>
@@ -13,6 +15,7 @@
 
     <!-- Movie Detail -->
     <string name="movie_detail_text">Movie details</string>
+    <string name="movie_detail_movie_year_runtime">{movieYear} • {runtime}</string>
     <string name="movie_detail_genre_label">Genre</string>
     <string name="movie_detail_cast_label">Cast</string>
     <string name="movie_detail_director_label">Directed by</string>

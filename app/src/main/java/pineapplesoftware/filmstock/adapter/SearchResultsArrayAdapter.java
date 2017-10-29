@@ -1,5 +1,6 @@
 package pineapplesoftware.filmstock.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import pineapplesoftware.filmstock.R;
+import pineapplesoftware.filmstock.model.dto.Movie;
 
 /**
  * Created by root on 2017-10-28.
@@ -20,7 +24,8 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 {
     //region Attributes
 
-    private ArrayList<String> mObjects;
+    private Context mContext;
+    private ArrayList<Movie> mObjects;
     private IMovieSelectionListener mListener;
 
     //endregion
@@ -35,7 +40,8 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     //region Constructor
 
-    public SearchResultsArrayAdapter(ArrayList<String> searchResults) {
+    public SearchResultsArrayAdapter(Context context, ArrayList<Movie> searchResults) {
+        mContext = context;
         mObjects = searchResults;
     }
 
@@ -51,7 +57,16 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     @Override
     public void onBindViewHolder(MoviesHolder holder, int position) {
+        Movie movie = mObjects.get(position);
 
+        // Setting the movie poster.
+        Glide.with(mContext).load(movie.getPosterUrl()).into(holder.getMoviePosterImageView());
+
+        // Setting the movie title.
+        holder.getMovieNameTextView().setText(movie.getTitle());
+
+        //Setting the movie genre.
+        holder.getMovieGenreTextView().setText(movie.getGenre());
     }
 
     @Override

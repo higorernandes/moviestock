@@ -51,7 +51,7 @@
         android:id="@+id/no_internet_reconnect_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_default_height"
-        android:text="@string/reconnect"
+        android:text="@string/generic_reconnect"
         style="@style/ButtonStyleDefault"/>
 
 </LinearLayout>
