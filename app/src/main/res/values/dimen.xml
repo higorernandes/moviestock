@@ -12,6 +12,7 @@
     <dimen name="font_size_medium">12sp</dimen>
     <dimen name="font_size_medium_large">14sp</dimen>
     <dimen name="font_size_large">18sp</dimen>
+    <dimen name="font_size_extra_large">22sp</dimen>
 
     <!-- Images -->
     <dimen name="image_header_height">150dp</dimen>
@@ -24,5 +25,5 @@
     <!-- CardView -->
     <dimen name="cardview_default_margin">10dp</dimen>
     <dimen name="cardview_small_margin">5dp</dimen>
-    <dimen name="cardview_list_item_height">90dp</dimen>
+    <dimen name="cardview_list_item_height">110dp</dimen>
 </resources>

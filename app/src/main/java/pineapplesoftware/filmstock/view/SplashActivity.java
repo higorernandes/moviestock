@@ -1,4 +1,4 @@
-package pineapplesoftware.filmstock;
+package pineapplesoftware.filmstock.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.WindowManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import pineapplesoftware.filmstock.R;
 
 public class SplashActivity extends AppCompatActivity
 {
@@ -23,7 +25,7 @@ public class SplashActivity extends AppCompatActivity
                 startActivity(MainActivity.getActivityIntent(SplashActivity.this));
                 finish();
             }
-        }, 5000);
+        }, 3000);
     }
 
     //endregion

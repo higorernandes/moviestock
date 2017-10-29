@@ -1,4 +1,4 @@
-package pineapplesoftware.filmstock;
+package pineapplesoftware.filmstock.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,9 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import pineapplesoftware.filmstock.SearchResultsArrayAdapter.IMovieSelectionListener;
+import pineapplesoftware.filmstock.R;
+import pineapplesoftware.filmstock.adapter.SearchResultsArrayAdapter;
+import pineapplesoftware.filmstock.adapter.SearchResultsArrayAdapter.IMovieSelectionListener;
 import pineapplesoftware.filmstock.helper.NetworkHelper;
 
 public class MovieSearchActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher, IMovieSelectionListener
@@ -75,6 +77,12 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out_right);
     }
 
     @Override

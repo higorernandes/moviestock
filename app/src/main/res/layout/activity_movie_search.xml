@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackgroundDark"
-    tools:context="pineapplesoftware.filmstock.MovieSearchActivity">
+    tools:context="pineapplesoftware.filmstock.view.MovieSearchActivity">
 
     <!-- Toolbar -->
     <android.support.design.widget.AppBarLayout

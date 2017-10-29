@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="pineapplesoftware.filmstock.MovieDetailActivity"
+    tools:context="pineapplesoftware.filmstock.view.MovieDetailActivity"
     android:background="@color/colorBackgroundDark">
 
     <!-- Toolbar -->
@@ -47,9 +47,9 @@
                     android:src="@drawable/scott_pilgrim_poster"
                     android:scaleType="centerCrop"/>
 
-                <!-- Movie title transluscent View -->
+                <!-- Movie title translucent View -->
                 <RelativeLayout
-                    android:id="@+id/detail_transluscent_view"
+                    android:id="@+id/detail_translucent_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/image_header_height"
                     android:background="@drawable/transluscent_black_view"/>
@@ -59,7 +59,7 @@
                     android:id="@+id/detail_movie_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/detail_transluscent_view"
+                    android:layout_alignBottom="@+id/detail_translucent_view"
                     android:text="Scott Pilgrim vs. The World"
                     android:textSize="@dimen/font_size_large"
                     android:layout_marginStart="@dimen/default_medium_margin"
@@ -109,7 +109,7 @@
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_light"
                             android:ellipsize="end"
-                            android:alpha="0.5" />
+                            android:alpha="0.7" />
 
                         <!-- Year and duration -->
                         <TextView
@@ -120,7 +120,7 @@
                             android:text="2017 • 2h33m"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewEnd"
-                            android:alpha="0.5"
+                            android:alpha="0.7"
                             android:fontFamily="@font/roboto_light"
                             android:layout_height="wrap_content" />
 

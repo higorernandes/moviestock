@@ -5,6 +5,7 @@
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".application.FilmstockApplication"
@@ -18,7 +19,7 @@
 
         <!-- Splash Activity -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".view.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
@@ -29,7 +30,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -39,13 +40,13 @@
         <!-- Movie Detail Activity -->
         <activity
             android:theme="@style/AppTheme"
-            android:name=".MovieDetailActivity"
+            android:name=".view.MovieDetailActivity"
             android:screenOrientation="portrait"/>
 
         <!-- Movie Search Activity -->
         <activity
             android:theme="@style/AppTheme"
-            android:name=".MovieSearchActivity"
+            android:name=".view.MovieSearchActivity"
             android:screenOrientation="portrait"/>
 
     </application>

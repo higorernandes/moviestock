@@ -1,4 +1,4 @@
-package pineapplesoftware.filmstock;
+package pineapplesoftware.filmstock.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import pineapplesoftware.filmstock.R;
 
 public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -55,8 +57,15 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_like_button:
+                saveMovieToLocalDatabase();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out_right);
     }
 
     //endregion
@@ -80,6 +89,10 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadMovieInformation() {
+
+    }
+
+    private void saveMovieToLocalDatabase() {
 
     }
 

@@ -1,4 +1,4 @@
-package pineapplesoftware.filmstock;
+package pineapplesoftware.filmstock.adapter;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static java.security.AccessController.getContext;
+import pineapplesoftware.filmstock.R;
 
 /**
  * Created by root on 2017-10-28.
@@ -27,7 +27,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     //region Interface
 
-    interface IMovieSelectionListener {
+    public interface IMovieSelectionListener {
         void onMovieItemSelected(int position);
     }
 
