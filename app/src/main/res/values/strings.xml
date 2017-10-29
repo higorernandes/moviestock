@@ -2,22 +2,32 @@
     <string name="app_name">filmstock</string>
 
     <!-- Generic -->
-    <string name="no_internet">Parece que você está sem internet!</string>
+    <string name="no_internet">It looks like you're offline!</string>
     <string name="no_internet_greeting">Oops!</string>
-    <string name="no_internet_verify_connection">Verifique sua conexão e tente novamente. :)</string>
-    <string name="reconnect">Tentar novamente</string>
+    <string name="no_internet_verify_connection">Check your connection and try again. :)</string>
+    <string name="reconnect">Try again</string>
 
     <!-- Content Descriptions -->
     <string name="splash_filmstock_logo">Filmstock Logo</string>
     <string name="splash_filmstock_background">Filmstock Background</string>
 
     <!-- Movie Detail -->
-    <string name="movie_detail_text">Detalhes do filme</string>
+    <string name="movie_detail_text">Movie details</string>
+    <string name="movie_detail_genre_label">Genre</string>
+    <string name="movie_detail_cast_label">Cast</string>
+    <string name="movie_detail_director_label">Directed by</string>
+    <string name="movie_detail_ratings_label">Ratings</string>
+    <string name="movie_detail_writer_label">Written by</string>
+    <string name="movie_detail_rated_label">Rated</string>
+    <string name="movie_detail_language_label">Language</string>
+    <string name="movie_detail_country_label">Country</string>
+    <string name="movie_detail_production_label">Produced by</string>
+    <string name="movie_detail_boxoffice_label">Box Office</string>
 
     <!-- Movie Search -->
-    <string name="movie_search_text">Digite o nome de um filme…</string>
-    <string name="movie_search_no_results_greeting_text">Nadinha…</string>
-    <string name="movie_search_no_results_text">Não foram econtrados resultados :(</string>
-    <string name="movie_search_no_results_suggestion_text">Que tal tentar buscar algo diferente?</string>
+    <string name="movie_search_text">Type a movie name…</string>
+    <string name="movie_search_no_results_greeting_text">Nothing…</string>
+    <string name="movie_search_no_results_text">No results were found :(</string>
+    <string name="movie_search_no_results_suggestion_text">How about trying something different?</string>
 
 </resources>

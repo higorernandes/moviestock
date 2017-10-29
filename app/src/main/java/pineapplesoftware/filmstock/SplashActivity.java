@@ -20,17 +20,10 @@ public class SplashActivity extends AppCompatActivity
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                navigateToMainScreen();
+                startActivity(MainActivity.getActivityIntent(SplashActivity.this));
+                finish();
             }
         }, 5000);
-    }
-
-    //endregion
-
-    //region Private Methods
-
-    private void navigateToMainScreen() {
-        startActivity(MainActivity.getActivityIntent(this));
     }
 
     //endregion

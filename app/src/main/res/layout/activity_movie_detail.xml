@@ -17,24 +17,27 @@
 
         <include
             android:id="@+id/detail_toolbar"
-            layout="@layout/toolbar_main" />
+            layout="@layout/toolbar_detail" />
 
     </android.support.design.widget.AppBarLayout>
 
     <!-- Content area -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="50dp"
+        android:fadingEdge="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- Header view -->
             <RelativeLayout
                 android:id="@+id/detail_header_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <!-- Movie image -->
                 <ImageView
@@ -53,12 +56,13 @@
 
                 <!-- Actual movie title -->
                 <TextView
+                    android:id="@+id/detail_movie_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/detail_transluscent_view"
-                    android:text="Scott Pilgrim Vs The World"
+                    android:text="Scott Pilgrim vs. The World"
                     android:textSize="@dimen/font_size_large"
-                    android:layout_marginStart="@dimen/cardview_default_margin"
+                    android:layout_marginStart="@dimen/default_medium_margin"
                     android:layout_marginEnd="@dimen/default_medium_margin"
                     android:layout_marginBottom="@dimen/default_medium_margin"
                     android:textColor="@android:color/white"
@@ -69,33 +73,91 @@
 
             </RelativeLayout>
 
+            <!-- Main information area -->
             <android.support.v7.widget.CardView
+                android:id="@+id/detail_synopsis_cardview"
                 android:layout_below="@+id/detail_header_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/cardview_default_margin"
-                app:cardBackgroundColor="@color/colorCardBackgroundDark">
+                app:cardBackgroundColor="@color/colorCardBackgroundDark"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_medium_margin"
                     android:orientation="vertical">
 
+                    <!-- Basic info -->
                     <LinearLayout
-                        android:id="@+id/detail_movie_info_view"
+                        android:id="@+id/detail_movie_synopsis_container_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_below="@+id/detail_header_view"
-                        android:layout_marginTop="@dimen/default_medium_margin"
-                        android:layout_marginStart="@dimen/default_medium_margin"
-                        android:layout_marginEnd="@dimen/default_medium_margin">
+                        android:layout_below="@+id/detail_header_view">
 
+                        <!-- Genre -->
                         <TextView
-                            android:id="@+id/detail_movie_genre"
+                            android:id="@+id/detail_movie_genre_text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Drama, Action"
+                            android:layout_weight="6"
+                            android:textColor="@android:color/white"
+                            android:text="Action, Comedy, Romance"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_light"
+                            android:ellipsize="end"
+                            android:alpha="0.5" />
+
+                        <!-- Year and duration -->
+                        <TextView
+                            android:id="@+id/detail_movie_duration"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="2017 • 2h33m"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewEnd"
+                            android:alpha="0.5"
+                            android:fontFamily="@font/roboto_light"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Separator -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/default_medium_margin"
+                        android:background="@drawable/bg_gradient"/>
+
+                    <!-- Plot -->
+                    <TextView
+                        android:id="@+id/detail_movie_synopsis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/detail_movie_info_view"
+                        android:layout_marginTop="@dimen/default_medium_margin"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="Scott Pilgrim must defeat his new girlfriend's seven evil exes in order to win her heart."
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_size_medium_large" />
+
+                    <!-- Actors section-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_actors_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_cast_label"
                             android:textColor="@android:color/white"
                             android:alpha="0.5"
                             android:textAllCaps="true"
@@ -104,40 +166,307 @@
                             android:layout_weight="6"/>
 
                         <TextView
-                            android:id="@+id/detail_movie_duration"
-                            android:layout_width="0dp"
+                            android:id="@+id/detail_movie_actors_text"
+                            android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="2h33m"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/font_size_medium"
-                            android:textAlignment="viewEnd"
-                            android:alpha="0.5"
+                            android:text="Michael Cera, Alison Pill, Mark Webber, Johnny Simmons"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/detail_movie_synopsis"
+                    <!-- Director -->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/detail_movie_info_view"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:layout_marginEnd="@dimen/default_medium_margin"
-                        android:layout_marginStart="@dimen/default_medium_margin"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_medium_margin"
-                        android:alpha="0.7"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean molestie ex sit amet ultricies molestie. \n\nInteger laoreet fermentum purus, a imperdiet augue fringilla eget. Sed in risus mauris. \n\nQuisque semper sapien in magna pharetra laoreet. Morbi ornare id elit sit amet viverra. Sed sed hendrerit erat, sed venenatis quam. Ut posuere mi ut euismod finibus. Nunc luctus nisi eros, pellentesque tincidunt magna malesuada vitae. Maecenas in massa feugiat, maximus nunc eget, sollicitudin dolor. Aliquam erat volutpat. \n\nCurabitur quis nibh purus. Etiam viverra commodo turpis, a eleifend est facilisis a. \n\nDonec sem ex, dignissim nec felis vitae, laoreet tristique quam."
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_size_medium_large" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/detail_movie_director_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_director_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_director_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="Edgar Wright"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewEnd"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-
             </android.support.v7.widget.CardView>
 
+            <!-- Extra information area -->
+            <android.support.v7.widget.CardView
+                android:layout_below="@+id/detail_synopsis_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginBottom="@dimen/cardview_default_margin"
+                android:paddingBottom="@dimen/cardview_default_margin"
+                app:cardBackgroundColor="@color/colorCardBackgroundDark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_medium_margin"
+                    android:layout_marginEnd="@dimen/default_medium_margin"
+                    android:layout_marginTop="@dimen/default_medium_margin"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
+
+                    <!-- Writer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view">
+
+                        <TextView
+                            android:id="@+id/detail_movie_writer_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_writer_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_writer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="Michael Bacall (screenplay), Edgar Wright (screenplay), Bryan Lee O'Malley (Oni Press graphic novels)"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Rated -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_rated_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_rated_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_rated_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="PG-13"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Language -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_language_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_language_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_language_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="English"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Country -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_country_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_country_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_country_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="USA, UK, Canada, Japan"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Production -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_production_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_production_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_production_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="Universal Pictures"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- BoxOffice -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_box_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_boxoffice_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_box_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="$31,494,270"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Ratings -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/detail_header_view"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_ratings_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_ratings_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_ratings_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="IMDB: 10/10"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </RelativeLayout>
 

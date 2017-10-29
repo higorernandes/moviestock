@@ -3,6 +3,7 @@
     <color name="colorPrimary">#191919</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#65D8C5</color>
+    <color name="colorGradientEnd">#417dcc</color>
     <color name="colorBackground">#f6f6f6</color>
     <color name="colorBackgroundDark">#191919</color>
     <color name="colorCardBackgroundDark">#202020</color>
