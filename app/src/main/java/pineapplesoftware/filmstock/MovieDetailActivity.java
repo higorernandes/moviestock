@@ -6,10 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MovieDetailActivity extends AppCompatActivity
+public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener
 {
     //region Attributes
 
@@ -44,10 +45,18 @@ public class MovieDetailActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out_right);
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_like_button:
+                break;
+        }
     }
 
     //endregion
@@ -59,7 +68,7 @@ public class MovieDetailActivity extends AppCompatActivity
         mToolbarTitle = mToolbar.findViewById(R.id.toolbar_title);
         mToolbarLikeButton = mToolbar.findViewById(R.id.toolbar_like_button);
 
-
+        mToolbarLikeButton.setOnClickListener(this);
     }
 
     private void setUpToolbar() {
@@ -67,6 +76,7 @@ public class MovieDetailActivity extends AppCompatActivity
         mToolbarTitle.setText(getResources().getString(R.string.movie_detail_text));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        mToolbarLikeButton.setVisibility(View.VISIBLE);
     }
 
     private void loadMovieInformation() {

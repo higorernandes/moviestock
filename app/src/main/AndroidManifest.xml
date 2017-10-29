@@ -42,7 +42,7 @@
 
         <!-- Movie Search Activity -->
         <activity
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:theme="@style/AppTheme"
             android:name=".MovieSearchActivity"
             android:screenOrientation="portrait"/>
 

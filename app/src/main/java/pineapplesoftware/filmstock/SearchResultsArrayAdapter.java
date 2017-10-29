@@ -1,11 +1,16 @@
 package pineapplesoftware.filmstock;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by root on 2017-10-28.
@@ -16,6 +21,15 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
     //region Attributes
 
     private ArrayList<String> mObjects;
+    private IMovieSelectionListener mListener;
+
+    //endregion
+
+    //region Interface
+
+    interface IMovieSelectionListener {
+        void onMovieItemSelected(int position);
+    }
 
     //endregion
 
@@ -47,12 +61,65 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     //endregion
 
+    //region Public Methods
+
+    public void setListener(IMovieSelectionListener listener) {
+        try {
+            mListener = listener;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(listener.toString() + "must implement IMovieSelectionListener.");
+        }
+    }
+
+    //endregion
+
     //region Inner Classes
 
-    class MoviesHolder extends RecyclerView.ViewHolder
+    class MoviesHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        public MoviesHolder(View itemView) {
+        private CardView mRootView;
+        private ImageView mMoviePosterImageView;
+        private TextView mMovieNameTextView;
+        private TextView mMovieGenreTextView;
+
+        MoviesHolder(View itemView) {
             super(itemView);
+
+            mRootView = itemView.findViewById(R.id.search_item_cardview);
+            mMoviePosterImageView = itemView.findViewById(R.id.search_item_movie_poster);
+            mMovieNameTextView = itemView.findViewById(R.id.search_item_movie_title);
+            mMovieGenreTextView = itemView.findViewById(R.id.search_item_movie_genre);
+
+            mRootView.setOnClickListener(this);
+        }
+
+        public ImageView getMoviePosterImageView() {
+            return mMoviePosterImageView;
+        }
+
+        public void setMoviePosterImageView(ImageView moviePosterImageView) {
+            this.mMoviePosterImageView = moviePosterImageView;
+        }
+
+        public TextView getMovieNameTextView() {
+            return mMovieNameTextView;
+        }
+
+        public void setMovieNameTextView(TextView movieNameTextView) {
+            this.mMovieNameTextView = movieNameTextView;
+        }
+
+        public TextView getMovieGenreTextView() {
+            return mMovieGenreTextView;
+        }
+
+        public void setMovieGenreTextView(TextView movieGenreTextView) {
+            this.mMovieGenreTextView = movieGenreTextView;
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onMovieItemSelected(getAdapterPosition());
         }
     }
 

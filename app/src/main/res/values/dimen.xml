@@ -23,6 +23,6 @@
 
     <!-- CardView -->
     <dimen name="cardview_default_margin">10dp</dimen>
-    <dimen name="cardview_small_margin">10dp</dimen>
+    <dimen name="cardview_small_margin">5dp</dimen>
     <dimen name="cardview_list_item_height">90dp</dimen>
 </resources>

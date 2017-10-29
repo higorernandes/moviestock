@@ -7,6 +7,7 @@
 
     <!-- CardView -->
     <android.support.v7.widget.CardView
+        android:id="@+id/search_item_cardview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/cardview_list_item_height"
         android:layout_marginTop="@dimen/cardview_small_margin"
@@ -22,6 +23,7 @@
 
             <!-- Movie poster thumbnail -->
             <ImageView
+                android:id="@+id/search_item_movie_poster"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/cardview_default_margin"
@@ -36,6 +38,7 @@
                 android:layout_marginBottom="@dimen/cardview_default_margin">
 
                 <TextView
+                    android:id="@+id/search_item_movie_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Scott Pilgrim Vs The World (2010)"
@@ -43,6 +46,7 @@
                     android:textColor="@android:color/white"/>
 
                 <TextView
+                    android:id="@+id/search_item_movie_genre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sci-fi"

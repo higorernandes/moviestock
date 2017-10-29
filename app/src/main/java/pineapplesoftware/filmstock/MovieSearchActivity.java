@@ -8,21 +8,25 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import pineapplesoftware.filmstock.SearchResultsArrayAdapter.IMovieSelectionListener;
 import pineapplesoftware.filmstock.helper.NetworkHelper;
 
-public class MovieSearchActivity extends AppCompatActivity implements View.OnClickListener
+public class MovieSearchActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher, IMovieSelectionListener
 {
     //region Attributes
 
     private Toolbar mToolbar;
-    private TextView mToolbarTitle;
+    private EditText mToolbarSearchEditText;
     private RelativeLayout mNoInternetView;
     private RelativeLayout mNoItemsView;
 
@@ -50,15 +54,45 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
 
         initViews();
         setUpToolbar();
+        performSearch("");
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.no_internet_reconnect_button:
-                performSearch();
+                performSearch(mToolbarSearchEditText.getText().toString());
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out_right);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        performSearch(charSequence.toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) { }
+
+
+    @Override
+    public void onMovieItemSelected(int position) {
+        startActivity(MovieDetailActivity.getActivityIntent(this));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
     }
 
     //endregion
@@ -66,30 +100,38 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
     //region Private Methods
 
     private void initViews() {
-        mToolbar = findViewById(R.id.detail_toolbar);
-        mToolbarTitle = mToolbar.findViewById(R.id.toolbar_title);
+        mToolbar = findViewById(R.id.search_toolbar);
+        mToolbarSearchEditText = mToolbar.findViewById(R.id.toolbar_search_edittext);
 
         mNoInternetView = findViewById(R.id.search_no_internet);
         mNoItemsView = findViewById(R.id.search_no_items);
         Button reconnectButton = mNoInternetView.findViewById(R.id.no_internet_reconnect_button);
 
-        SearchResultsArrayAdapter searchResultsArrayAdapter = new SearchResultsArrayAdapter(mSearchResults);
+        mSearchResultsRecyclerView = findViewById(R.id.search_movies_recyclerview);
+        mSearchResultsArrayAdapter = new SearchResultsArrayAdapter(mSearchResults);
         mSearchResultsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mSearchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mSearchResultsRecyclerView.setAdapter(searchResultsArrayAdapter);
+        mSearchResultsRecyclerView.setAdapter(mSearchResultsArrayAdapter);
+        mSearchResultsArrayAdapter.setListener(this);
 
         reconnectButton.setOnClickListener(this);
+        mToolbarSearchEditText.addTextChangedListener(this);
     }
 
     private void setUpToolbar() {
         setSupportActionBar(mToolbar);
-        mToolbarTitle.setText(getResources().getString(R.string.movie_search_text));
+        mToolbarSearchEditText.setText(getResources().getString(R.string.movie_search_text));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
-    private void performSearch() {
+    private void performSearch(String textToSearch) {
         if (NetworkHelper.isConnected()) {
+            mSearchResults.add("one");
+            mSearchResults.add("one");
+            mSearchResults.add("one");
+            mSearchResults.add("one");
+            mSearchResults.add("one");
             mSearchResults.add("one");
             mSearchResults.add("one");
             mSearchResults.add("one");

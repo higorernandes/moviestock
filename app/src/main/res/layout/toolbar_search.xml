@@ -11,16 +11,19 @@
         android:layout_height="match_parent">
 
         <!-- Toolbar title -->
-        <TextView
-            android:id="@+id/toolbar_title"
+        <EditText
+            android:id="@+id/toolbar_search_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:lines="1"
-            android:text="@string/movie_detail_text"
+            android:hint="@string/movie_search_text"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_size_large" />
+            android:textColorHint="@color/colorWhiteTransluscent"
+            android:textSize="@dimen/font_size_large"
+            android:layout_toStartOf="@+id/toolbar_like_button"
+            android:maxLines="1"/>
 
         <!-- Like Button -->
         <Button
@@ -30,8 +33,9 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/default_medium_margin"
-            android:background="@drawable/ic_favorite_border_white"
-            android:visibility="gone"/>
+            android:layout_marginStart="@dimen/default_medium_margin"
+            android:background="@drawable/ic_search_white"
+            android:visibility="visible"/>
 
     </RelativeLayout>
 

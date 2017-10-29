@@ -6,4 +6,5 @@
     <color name="colorBackground">#f6f6f6</color>
     <color name="colorBackgroundDark">#191919</color>
     <color name="colorCardBackgroundDark">#202020</color>
+    <color name="colorWhiteTransluscent">#7fffffff</color>
 </resources>
