@@ -45,8 +45,6 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
 
     private MovieSearchPresenter mPresenter;
 
-    private boolean mIsPerformingSearch = false;
-
     //endregion
 
     //region Constructors
@@ -75,10 +73,10 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.no_internet_reconnect_button:
-                performSearch(mToolbarSearchEditText.getText().toString());
+                mPresenter.searchMovie(mToolbarSearchEditText.getText().toString());
                 break;
             case R.id.toolbar_search_relativelayout:
-                performSearch(mToolbarSearchEditText.getText().toString());
+                mPresenter.searchMovie(mToolbarSearchEditText.getText().toString());
                 break;
         }
     }
@@ -106,7 +104,7 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         if (charSequence.length() >= 2) { // Minimum of 2 characters to start searching.
-            performSearch(charSequence.toString());
+            mPresenter.searchMovie(charSequence.toString());
         } else {
             mSearchResults.clear();
             mSearchResultsArrayAdapter.notifyDataSetChanged();
@@ -136,12 +134,12 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
     public void requestCallbackError() {
         hideLoading();
         mSearchResultsRecyclerView.setVisibility(View.GONE);
+        mNoItemsView.setVisibility(View.GONE);
         mNoInternetView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showLoading() {
-        mIsPerformingSearch = true;
         mLoadingProgressBar.animate();
         mLoadingProgressBar.setVisibility(View.VISIBLE);
         mToolbarSearchButton.setVisibility(View.GONE);
@@ -149,7 +147,6 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void hideLoading() {
-        mIsPerformingSearch = false;
         mLoadingProgressBar.clearAnimation();
         mLoadingProgressBar.setVisibility(View.GONE);
         mToolbarSearchButton.setVisibility(View.VISIBLE);
@@ -160,6 +157,7 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                mNoInternetView.setVisibility(View.GONE);
                 if (movieList != null && movieList.size() > 0) {
                     mNoItemsView.setVisibility(View.GONE);
                     mSearchResultsRecyclerView.setVisibility(View.VISIBLE);
@@ -224,13 +222,6 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    private void performSearch(String textToSearch) {
-        if (!mIsPerformingSearch) {
-
-        }
-        mPresenter.searchMovie(textToSearch);
     }
 
     //endregion
