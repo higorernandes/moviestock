@@ -52,8 +52,9 @@ public class FilmstockApi
     public interface IFilmstockApi
     {
         @GET(".")
-        Call<MovieResponse> searchMovie(@Query("apikey") String apiKey,
-                                     @Query("t") String text);
+        Call<JsonObject> searchMovie(@Query("apikey") String apiKey,
+                                     @Query("t") String text,
+                                     @Query("plot") String plot);
     }
 
     //endregion

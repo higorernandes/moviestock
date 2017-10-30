@@ -27,33 +27,57 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/cardview_default_margin"
-                android:src="@drawable/baby_driver_poster"
+                android:background="@color/colorBackgroundDark"
                 android:scaleType="centerCrop"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/cardview_default_margin"
-                android:layout_marginBottom="@dimen/cardview_default_margin">
+                android:layout_marginBottom="@dimen/cardview_default_margin"
+                android:layout_marginEnd="@dimen/cardview_default_margin">
 
+                <!-- Movie title -->
                 <TextView
                     android:id="@+id/search_item_movie_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Scott Pilgrim Vs The World (2010)"
+                    android:text="@string/generic_placeholder_text"
                     android:fontFamily="@font/roboto_light"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="@android:color/white"/>
+
+                <!-- Separator -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/cardview_default_margin"
+                    android:background="@drawable/bg_gradient"/>
 
                 <TextView
                     android:id="@+id/search_item_movie_genre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sci-fi"
+                    android:layout_marginTop="@dimen/cardview_default_margin"
+                    android:text="@string/generic_placeholder_text"
                     android:textSize="@dimen/font_size_medium"
                     android:textAllCaps="true"
                     android:fontFamily="@font/roboto_light"
                     android:alpha="0.5"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/search_item_movie_cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/generic_placeholder_text"
+                    android:textSize="@dimen/font_size_medium_large"
+                    android:layout_marginTop="@dimen/cardview_small_margin"
+                    android:fontFamily="@font/roboto_thin"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="@android:color/white"/>
 
             </LinearLayout>

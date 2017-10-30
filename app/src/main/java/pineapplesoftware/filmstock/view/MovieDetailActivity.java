@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -132,50 +133,162 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
         //region Main information
 
+        LinearLayout containerView;
+
+        // Poster.
+        String posterUrl = getIntent().getStringExtra(POSTER_URL);
         ImageView moviePosterImageView = findViewById(R.id.detail_movie_image);
-        Glide.with(this).load(getIntent().getStringExtra(POSTER_URL)).into(moviePosterImageView);
+        if (posterUrl != null && !posterUrl.isEmpty() && !posterUrl.toLowerCase().equals("n/a")) {
+            Glide.with(this).load(posterUrl).into(moviePosterImageView);
+        }
 
+        // Title.
+        String title = getIntent().getStringExtra(TITLE);
         TextView movieTitleTextView = findViewById(R.id.detail_movie_name);
-        movieTitleTextView.setText(getIntent().getStringExtra(TITLE));
+        if (title != null && !title.isEmpty() && !title.toLowerCase().equals("n/a")) {
+            movieTitleTextView.setText(title);
+        }
 
-        TextView movieGenreTextView = findViewById(R.id.detail_movie_genre_text);
-        movieGenreTextView.setText(getIntent().getStringExtra(GENRE));
+        // Type.
+        String type = getIntent().getStringExtra(TYPE);
+        TextView movieTypeTextView = findViewById(R.id.detail_movie_type);
+        if (type != null && !type.isEmpty() && !type.toLowerCase().equals("n/a")) {
+            movieTypeTextView.setText(type);
+        } else {
+            movieTypeTextView.setVisibility(View.GONE);
+        }
 
+        // Genre.
+        String genre = getIntent().getStringExtra(GENRE);
+        if (genre != null && !genre.isEmpty() && !genre.toLowerCase().equals("n/a")) {
+            TextView movieGenreTextView = findViewById(R.id.detail_movie_genre_text);
+            movieGenreTextView.setText(genre);
+        }
+
+        // Year and Runtime/duration.
+        String year = getIntent().getStringExtra(YEAR);
+        String runtime = getIntent().getStringExtra(RUNTIME);
         TextView movieDurationTextView = findViewById(R.id.detail_movie_duration);
-        movieDurationTextView.setText(getResources().getString(R.string.movie_detail_movie_year_runtime)
-                .replace("{movieYear}", getIntent().getStringExtra(YEAR))
-                .replace("{runtime}", getIntent().getStringExtra(RUNTIME)));
+        if ((year != null && !year.isEmpty() && !year.toLowerCase().equals("n/a")) && (runtime != null && !runtime.isEmpty() && !runtime.toLowerCase().equals("n/a"))) {
+            movieDurationTextView.setText(getResources().getString(R.string.movie_detail_movie_year_runtime)
+                    .replace("{movieYear}", year)
+                    .replace("{runtime}", runtime));
+        } else if ((year == null || year.isEmpty() || year.toLowerCase().equals("n/a")) && (runtime != null && !runtime.isEmpty() && !runtime.toLowerCase().equals("n/a"))) {
+            movieDurationTextView.setText(runtime);
+        } else if ((year != null && !year.isEmpty() && !year.toLowerCase().equals("n/a")) && (runtime == null || runtime.isEmpty() || runtime.toLowerCase().equals("n/a"))) {
+            movieDurationTextView.setText(year);
+        }
 
-        TextView moviePlotTextView = findViewById(R.id.detail_movie_plot);
-        moviePlotTextView.setText(getIntent().getStringExtra(PLOT));
+        // Plot.
+        String plot = getIntent().getStringExtra(PLOT);
+        if (plot != null && !plot.isEmpty() && !plot.toLowerCase().equals("n/a")) {
+            TextView moviePlotTextView = findViewById(R.id.detail_movie_plot);
+            moviePlotTextView.setText(plot);
+        }
 
-        TextView movieDirectorTextView = findViewById(R.id.detail_movie_director_text);
-        movieDirectorTextView.setText(getIntent().getStringExtra(DIRECTOR));
+        // Cast.
+        String cast = getIntent().getStringExtra(ACTORS);
+        if (cast != null && !cast.isEmpty() && !cast.toLowerCase().equals("n/a")) {
+            TextView movieDirectorTextView = findViewById(R.id.detail_movie_actors_text);
+            movieDirectorTextView.setText(cast);
+        } else {
+            containerView = findViewById(R.id.detail_actors_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Director.
+        String director = getIntent().getStringExtra(DIRECTOR);
+        if (director != null && !director.isEmpty() && !director.toLowerCase().equals("n/a")) {
+            TextView movieDirectorTextView = findViewById(R.id.detail_movie_director_text);
+            movieDirectorTextView.setText(director);
+        } else {
+            containerView = findViewById(R.id.detail_director_container);
+            containerView.setVisibility(View.GONE);
+        }
 
         //endregion
 
         //region Secondary information
 
-        TextView movieWriterTextView = findViewById(R.id.detail_movie_writer_text);
-        movieWriterTextView.setText(getIntent().getStringExtra(WRITER));
+        // Writers.
+        String writer = getIntent().getStringExtra(WRITER);
+        if (writer != null && !writer.isEmpty() && !writer.toLowerCase().equals("n/a")) {
+            TextView movieWriterTextView = findViewById(R.id.detail_movie_writer_text);
+            movieWriterTextView.setText(writer);
+        } else {
+            containerView = findViewById(R.id.detail_writer_container);
+            containerView.setVisibility(View.GONE);
+        }
 
-        TextView movieRatedTextView = findViewById(R.id.detail_movie_rated_text);
-        movieRatedTextView.setText(getIntent().getStringExtra(RATED));
+        // Rated.
+        String rated = getIntent().getStringExtra(RATED);
+        if (rated != null && !rated.isEmpty() && !rated.toLowerCase().equals("n/a")) {
+            TextView movieRatedTextView = findViewById(R.id.detail_movie_rated_text);
+            movieRatedTextView.setText(rated);
+        } else {
+            containerView = findViewById(R.id.detail_rated_container);
+            containerView.setVisibility(View.GONE);
+        }
 
-        TextView movieLanguageTextView = findViewById(R.id.detail_movie_language_text);
-        movieLanguageTextView.setText(getIntent().getStringExtra(LANGUAGE));
+        // Awards.
+        String awards = getIntent().getStringExtra(AWARDS);
+        if (awards != null && !awards.isEmpty() && !awards.toLowerCase().equals("n/a")) {
+            TextView movieAwardsTextView = findViewById(R.id.detail_movie_awards_text);
+            movieAwardsTextView.setText(awards);
+        } else {
+            containerView = findViewById(R.id.detail_awards_container);
+            containerView.setVisibility(View.GONE);
+        }
 
-        TextView movieCountryTextView = findViewById(R.id.detail_movie_country_text);
-        movieCountryTextView.setText(getIntent().getStringExtra(COUNTRY));
+        // Language.
+        String language = getIntent().getStringExtra(LANGUAGE);
+        if (language != null && !language.isEmpty() && !language.toLowerCase().equals("n/a")) {
+            TextView movieLanguageTextView = findViewById(R.id.detail_movie_language_text);
+            movieLanguageTextView.setText(language);
+        } else {
+            containerView = findViewById(R.id.detail_language_container);
+            containerView.setVisibility(View.GONE);
+        }
 
-        TextView movieProductionTextView = findViewById(R.id.detail_movie_production_text);
-        movieProductionTextView.setText(getIntent().getStringExtra(PRODUCTION));
+        // Country.
+        String country = getIntent().getStringExtra(COUNTRY);
+        if (country != null && !country.isEmpty() && !country.toLowerCase().equals("n/a")) {
+            TextView movieCountryTextView = findViewById(R.id.detail_movie_country_text);
+            movieCountryTextView.setText(country);
+        } else {
+            containerView = findViewById(R.id.detail_country_container);
+            containerView.setVisibility(View.GONE);
+        }
 
-        TextView movieBoxOfficeTextView = findViewById(R.id.detail_movie_box_text);
-        movieBoxOfficeTextView.setText(getIntent().getStringExtra(BOX_OFFICE));
+        // Production.
+        String production = getIntent().getStringExtra(PRODUCTION);
+        if (production != null && !production.isEmpty() && !production.toLowerCase().equals("n/a")) {
+            TextView movieProductionTextView = findViewById(R.id.detail_movie_production_text);
+            movieProductionTextView.setText(production);
+        } else {
+            containerView = findViewById(R.id.detail_production_container);
+            containerView.setVisibility(View.GONE);
+        }
 
-        TextView movieRatingsTextView = findViewById(R.id.detail_movie_ratings_text);
-        movieRatingsTextView.setText(getIntent().getStringExtra(IMDB_RATING));
+        // Box Office.
+        String boxOffice = getIntent().getStringExtra(BOX_OFFICE);
+        if (boxOffice != null && !boxOffice.isEmpty() && !boxOffice.toLowerCase().equals("n/a")) {
+            TextView movieBoxOfficeTextView = findViewById(R.id.detail_movie_box_text);
+            movieBoxOfficeTextView.setText(boxOffice);
+        } else {
+            containerView = findViewById(R.id.detail_boxoffice_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // IMDB Rating.
+        String imdbRating = getIntent().getStringExtra(IMDB_RATING);
+        if (imdbRating != null && !imdbRating.isEmpty() && !imdbRating.toLowerCase().equals("n/a")) {
+            TextView movieRatingsTextView = findViewById(R.id.detail_movie_ratings_text);
+            movieRatingsTextView.setText(imdbRating);
+        } else {
+            containerView = findViewById(R.id.detail_ratings_container);
+            containerView.setVisibility(View.GONE);
+        }
 
         //endregion
 

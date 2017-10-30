@@ -8,6 +8,7 @@
     <string name="generic_server_error">There was a error on the server. :/</string>
     <string name="generic_server_connection_error">We could not connect to the server D: \n\nPlease try again.</string>
     <string name="generic_reconnect">Try again</string>
+    <string name="generic_placeholder_text">-</string>
 
     <!-- Content Descriptions -->
     <string name="splash_filmstock_logo">Filmstock Logo</string>
@@ -19,9 +20,10 @@
     <string name="movie_detail_genre_label">Genre</string>
     <string name="movie_detail_cast_label">Cast</string>
     <string name="movie_detail_director_label">Directed by</string>
-    <string name="movie_detail_ratings_label">Ratings</string>
+    <string name="movie_detail_ratings_label">IMDB Rating</string>
     <string name="movie_detail_writer_label">Written by</string>
     <string name="movie_detail_rated_label">Rated</string>
+    <string name="movie_detail_awards_label">Awards</string>
     <string name="movie_detail_language_label">Language</string>
     <string name="movie_detail_country_label">Country</string>
     <string name="movie_detail_production_label">Produced by</string>
@@ -32,5 +34,6 @@
     <string name="movie_search_no_results_greeting_text">Nothing…</string>
     <string name="movie_search_no_results_text">No results were found :(</string>
     <string name="movie_search_no_results_suggestion_text">How about trying something different?</string>
+    <string name="movie_search_title_text">{name} • ({year})</string>
 
 </resources>

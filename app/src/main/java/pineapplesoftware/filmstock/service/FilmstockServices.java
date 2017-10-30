@@ -41,13 +41,23 @@ public class FilmstockServices
     public static void searchMovie(final Context context, String textToSearch, final IFilmstockResponse listener) {
         FilmstockApi.IFilmstockApi service = getFilmstockApi(context);
         if (service != null) {
-            service.searchMovie(FilmstockApi.API_KEY, textToSearch).enqueue(new Callback<MovieResponse>() {
+            service.searchMovie(FilmstockApi.API_KEY, textToSearch, "full").enqueue(new Callback<JsonObject>() {
                 @Override
-                public void onResponse(Response<MovieResponse> response, Retrofit retrofit) {
+                public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                     if (response.isSuccess()) {
                         try {
                             // Getting the data from the Json response and transforming it into a movie list.
-                            listener.onResponseSuccess(response.body().getMovies());
+                            Gson gson = new Gson();
+                            ArrayList<Movie> moviesList = new ArrayList<>();
+                            JsonObject jsonObject = response.body().getAsJsonObject();
+
+                            String json = jsonObject.getAsJsonObject().toString();
+                            Movie movie = gson.fromJson(json, Movie.class);
+                            if (Boolean.valueOf(movie.getResponse().toLowerCase()) == true) {
+                                moviesList.add(movie);
+                            }
+
+                            listener.onResponseSuccess(moviesList);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -58,7 +68,7 @@ public class FilmstockServices
 
                 @Override
                 public void onFailure(Throwable t) {
-                    listener.onResponseError(context.getResources().getString(R.string.generic_server_error));
+                    listener.onResponseError(t.getCause().getMessage());
                 }
             });
         }

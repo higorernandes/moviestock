@@ -161,13 +161,19 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void run() {
                 if (movieList != null && movieList.size() > 0) {
+                    mNoItemsView.setVisibility(View.GONE);
                     mSearchResultsRecyclerView.setVisibility(View.VISIBLE);
                     mSearchResults = movieList;
-                    mSearchResultsArrayAdapter.notifyDataSetChanged();
+                    mSearchResultsArrayAdapter = new SearchResultsArrayAdapter(getContext(), mSearchResults);
+                    mSearchResultsArrayAdapter.setListener(MovieSearchActivity.this);
+                    mSearchResultsRecyclerView.setAdapter(mSearchResultsArrayAdapter);
                 } else {
+                    mSearchResults.clear();
                     mSearchResultsRecyclerView.setVisibility(View.GONE);
                     mNoItemsView.setVisibility(View.VISIBLE);
                 }
+
+                mSearchResultsArrayAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -205,10 +211,10 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
 
         mSearchResultsRecyclerView = findViewById(R.id.search_movies_recyclerview);
         mSearchResultsArrayAdapter = new SearchResultsArrayAdapter(this, mSearchResults);
+        mSearchResultsArrayAdapter.setListener(this);
         mSearchResultsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mSearchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSearchResultsRecyclerView.setAdapter(mSearchResultsArrayAdapter);
-        mSearchResultsArrayAdapter.setListener(this);
 
         reconnectButton.setOnClickListener(this);
         mToolbarSearchEditText.addTextChangedListener(this);
@@ -222,8 +228,9 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
 
     private void performSearch(String textToSearch) {
         if (!mIsPerformingSearch) {
-            mPresenter.searchMovie(textToSearch);
+
         }
+        mPresenter.searchMovie(textToSearch);
     }
 
     //endregion

@@ -1,6 +1,7 @@
 package pineapplesoftware.filmstock.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
@@ -60,13 +62,22 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
         Movie movie = mObjects.get(position);
 
         // Setting the movie poster.
-        Glide.with(mContext).load(movie.getPosterUrl()).into(holder.getMoviePosterImageView());
+        RequestOptions requestOptions = new RequestOptions().placeholder(ContextCompat.getDrawable(mContext, R.drawable.ic_movie));
+        Glide.with(mContext)
+                .load(movie.getPosterUrl())
+                .apply(requestOptions)
+                .into(holder.getMoviePosterImageView());
 
         // Setting the movie title.
-        holder.getMovieNameTextView().setText(movie.getTitle());
+        String title = mContext.getResources().getString(R.string.movie_search_title_text)
+                .replace("{name}", movie.getTitle())
+                .replace("{year}", movie.getYear());
+        holder.getMovieNameTextView().setText(title);
 
         //Setting the movie genre.
         holder.getMovieGenreTextView().setText(movie.getGenre());
+
+        holder.getMovieCastTextView().setText(movie.getActors());
     }
 
     @Override
@@ -96,6 +107,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
         private ImageView mMoviePosterImageView;
         private TextView mMovieNameTextView;
         private TextView mMovieGenreTextView;
+        private TextView mMovieCastTextView;
 
         MoviesHolder(View itemView) {
             super(itemView);
@@ -104,6 +116,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
             mMoviePosterImageView = itemView.findViewById(R.id.search_item_movie_poster);
             mMovieNameTextView = itemView.findViewById(R.id.search_item_movie_title);
             mMovieGenreTextView = itemView.findViewById(R.id.search_item_movie_genre);
+            mMovieCastTextView = itemView.findViewById(R.id.search_item_movie_cast);
 
             mRootView.setOnClickListener(this);
         }
@@ -130,6 +143,14 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
         public void setMovieGenreTextView(TextView movieGenreTextView) {
             this.mMovieGenreTextView = movieGenreTextView;
+        }
+
+        public TextView getMovieCastTextView() {
+            return mMovieCastTextView;
+        }
+
+        public void setMovieCastTextView(TextView movieCastTextView) {
+            this.mMovieCastTextView = movieCastTextView;
         }
 
         @Override

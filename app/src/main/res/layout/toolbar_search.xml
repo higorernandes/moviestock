@@ -6,59 +6,68 @@
     android:background="@color/colorPrimary"
     app:theme="@style/ToolbarStyleDark">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <!-- Toolbar title -->
         <EditText
             android:id="@+id/toolbar_search_edittext"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="9"
             android:lines="1"
             android:hint="@string/movie_search_text"
             android:textColor="@android:color/white"
             android:textColorHint="@color/colorWhiteTranslucent"
             android:textSize="@dimen/font_size_large"
-            android:layout_toStartOf="@+id/toolbar_search_relativelayout"
             android:inputType="textFilter"
             android:imeOptions="actionDone"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_light"
             android:ems="10"
             android:maxLines="1"/>
 
-        <!-- Search Button -->
         <RelativeLayout
-            android:id="@+id/toolbar_search_relativelayout"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:foreground="?attr/selectableItemBackground">
+            android:layout_weight="2">
 
-            <ImageView
+            <!-- Search Button -->
+            <RelativeLayout
+                android:id="@+id/toolbar_search_relativelayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:foreground="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="@dimen/button_toolbar_size"
+                    android:layout_height="@dimen/button_toolbar_size"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/default_medium_margin"
+                    android:layout_marginStart="@dimen/default_medium_margin"
+                    android:src="@drawable/ic_search_white"/>
+
+            </RelativeLayout>
+
+            <!-- ProgressBar -->
+            <ProgressBar
+                android:id="@+id/toolbar_progressbar"
                 android:layout_width="@dimen/button_toolbar_size"
                 android:layout_height="@dimen/button_toolbar_size"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
                 android:layout_marginEnd="@dimen/default_medium_margin"
                 android:layout_marginStart="@dimen/default_medium_margin"
-                android:src="@drawable/ic_search_white"/>
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
-        <!-- ProgressBar -->
-        <ProgressBar
-            android:id="@+id/toolbar_progressbar"
-            android:layout_width="@dimen/button_toolbar_size"
-            android:layout_height="@dimen/button_toolbar_size"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/default_medium_margin"
-            android:layout_marginStart="@dimen/default_medium_margin"
-            android:visibility="gone"/>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.Toolbar>

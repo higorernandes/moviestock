@@ -6,6 +6,6 @@
     <color name="colorGradientEnd">#417dcc</color>
     <color name="colorBackground">#f6f6f6</color>
     <color name="colorBackgroundDark">#171C21</color>
-    <color name="colorCardBackgroundDark">#2f3439</color>
+    <color name="colorCardBackgroundDark">#1e252b</color>
     <color name="colorWhiteTranslucent">#7fffffff</color>
 </resources>

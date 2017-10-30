@@ -37,14 +37,13 @@
             <RelativeLayout
                 android:id="@+id/detail_header_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <!-- Movie image -->
                 <ImageView
                     android:id="@+id/detail_movie_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/image_header_height"
-                    android:src="@drawable/scott_pilgrim_poster"
                     android:scaleType="centerCrop"/>
 
                 <!-- Movie title translucent View -->
@@ -54,22 +53,52 @@
                     android:layout_height="@dimen/image_header_height"
                     android:background="@drawable/transluscent_black_view"/>
 
-                <!-- Actual movie title -->
-                <TextView
-                    android:id="@+id/detail_movie_name"
+                <!-- Movie title and type -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/detail_translucent_view"
-                    android:text="Scott Pilgrim vs. The World"
-                    android:textSize="@dimen/font_size_large"
                     android:layout_marginStart="@dimen/default_medium_margin"
                     android:layout_marginEnd="@dimen/default_medium_margin"
                     android:layout_marginBottom="@dimen/default_medium_margin"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="@font/roboto_light"
-                    android:maxLines="3"
-                    android:textStyle="bold"
-                    android:ellipsize="end"/>
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <!-- Actual movie title -->
+                    <TextView
+                        android:id="@+id/detail_movie_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="7"
+                        android:layout_marginBottom="@dimen/default_medium_margin"
+                        android:text="@string/generic_placeholder_text"
+                        android:textSize="@dimen/font_size_extra_large"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="@font/roboto_light"
+                        android:gravity="bottom|start"
+                        android:maxLines="3"
+                        android:textStyle="bold"
+                        android:ellipsize="end"/>
+
+                    <!-- Movie type -->
+                    <TextView
+                        android:id="@+id/detail_movie_type"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/default_medium_margin"
+                        android:layout_weight="2"
+                        android:text="@string/generic_placeholder_text"
+                        android:textSize="@dimen/font_size_medium_large"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="@font/roboto_light"
+                        android:maxLines="3"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:layout_gravity="bottom"
+                        android:gravity="bottom|end"
+                        android:alpha="0.7"
+                        android:ellipsize="end"/>
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -94,8 +123,7 @@
                         android:id="@+id/detail_movie_synopsis_container_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_below="@+id/detail_header_view">
+                        android:orientation="horizontal">
 
                         <!-- Genre -->
                         <TextView
@@ -104,7 +132,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
                             android:textColor="@android:color/white"
-                            android:text="Action, Comedy, Romance"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_light"
@@ -117,7 +145,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="2017 • 2h33m"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewEnd"
                             android:alpha="0.7"
@@ -140,12 +168,13 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/default_medium_margin"
                         android:fontFamily="@font/roboto_light"
-                        android:text="Scott Pilgrim must defeat his new girlfriend's seven evil exes in order to win her heart."
+                        android:text="@string/generic_placeholder_text"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/font_size_medium_large" />
 
                     <!-- Actors section-->
                     <LinearLayout
+                        android:id="@+id/detail_actors_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -168,7 +197,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="Michael Cera, Alison Pill, Mark Webber, Johnny Simmons"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
@@ -178,6 +207,7 @@
 
                     <!-- Director -->
                     <LinearLayout
+                        android:id="@+id/detail_director_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_medium_margin"
@@ -200,7 +230,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="Edgar Wright"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewEnd"
                             android:fontFamily="@font/roboto_thin"
@@ -234,10 +264,10 @@
 
                     <!-- Writer -->
                     <LinearLayout
+                        android:id="@+id/detail_writer_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/detail_movie_writer_label"
@@ -256,7 +286,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="Michael Bacall (screenplay), Edgar Wright (screenplay), Bryan Lee O'Malley (Oni Press graphic novels)"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
@@ -266,10 +296,10 @@
 
                     <!-- Rated -->
                     <LinearLayout
+                        android:id="@+id/detail_rated_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view"
                         android:layout_marginTop="@dimen/default_medium_margin">
 
                         <TextView
@@ -289,7 +319,40 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="PG-13"
+                            android:text="@string/generic_placeholder_text"
+                            android:textSize="@dimen/font_size_medium_large"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- Awards -->
+                    <LinearLayout
+                        android:id="@+id/detail_awards_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/default_medium_margin">
+
+                        <TextView
+                            android:id="@+id/detail_movie_awards_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_awards_label"
+                            android:textColor="@android:color/white"
+                            android:alpha="0.5"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/roboto_thin"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_weight="6"/>
+
+                        <TextView
+                            android:id="@+id/detail_movie_awards_text"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="4"
+                            android:textColor="@android:color/white"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
@@ -299,10 +362,10 @@
 
                     <!-- Language -->
                     <LinearLayout
+                        android:id="@+id/detail_language_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view"
                         android:layout_marginTop="@dimen/default_medium_margin">
 
                         <TextView
@@ -322,7 +385,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="English"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
@@ -332,10 +395,10 @@
 
                     <!-- Country -->
                     <LinearLayout
+                        android:id="@+id/detail_country_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view"
                         android:layout_marginTop="@dimen/default_medium_margin">
 
                         <TextView
@@ -355,7 +418,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="USA, UK, Canada, Japan"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
@@ -365,10 +428,10 @@
 
                     <!-- Production -->
                     <LinearLayout
+                        android:id="@+id/detail_production_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view"
                         android:layout_marginTop="@dimen/default_medium_margin">
 
                         <TextView
@@ -388,7 +451,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="Universal Pictures"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
@@ -398,10 +461,10 @@
 
                     <!-- BoxOffice -->
                     <LinearLayout
+                        android:id="@+id/detail_boxoffice_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view"
                         android:layout_marginTop="@dimen/default_medium_margin">
 
                         <TextView
@@ -421,7 +484,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="$31,494,270"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"
@@ -431,10 +494,10 @@
 
                     <!-- Ratings -->
                     <LinearLayout
+                        android:id="@+id/detail_ratings_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_below="@+id/detail_header_view"
                         android:layout_marginTop="@dimen/default_medium_margin">
 
                         <TextView
@@ -454,7 +517,7 @@
                             android:layout_width="wrap_content"
                             android:layout_weight="4"
                             android:textColor="@android:color/white"
-                            android:text="IMDB: 10/10"
+                            android:text="@string/generic_placeholder_text"
                             android:textSize="@dimen/font_size_medium_large"
                             android:textAlignment="viewStart"
                             android:fontFamily="@font/roboto_thin"

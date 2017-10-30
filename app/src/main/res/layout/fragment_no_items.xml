@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center|top"
     android:background="@color/colorBackgroundDark">
 
     <!-- No internet icon -->
     <ImageView
         android:layout_width="@dimen/image_default_size"
         android:layout_height="@dimen/image_default_size"
-        android:src="@drawable/ic_shrug"
-        android:alpha="0.5"/>
+        android:layout_marginTop="@dimen/default_extra_large_margin"
+        android:src="@drawable/ic_shrug"/>
 
     <!-- Greeting text -->
     <TextView
@@ -37,6 +37,7 @@
         android:alpha="0.5"
         android:text="@string/movie_search_no_results_text"/>
 
+    <!-- Suggestion text -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +47,5 @@
         android:textColor="@android:color/white"
         android:alpha="0.5"
         android:text="@string/movie_search_no_results_suggestion_text"/>
-
 
 </LinearLayout>
