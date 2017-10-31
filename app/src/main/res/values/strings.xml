@@ -14,8 +14,15 @@
     <string name="splash_filmstock_logo">Filmstock Logo</string>
     <string name="splash_filmstock_background">Filmstock Background</string>
 
+    <!-- Main -->
+    <string name="main_movie_info">{genre} • {year} • {runtime}</string>
+    <string name="main_no_items_greeting_text">Hey there!</string>
+    <string name="movie_no_items_text">It looks like you don\'t have any saved movies.</string>
+    <string name="movie_no_items_suggestion_text">How about trying to search for some? Click on the search icon above and start searching!</string>
+    <string name="main_saved_on_text">Saved on {date}</string>
+
     <!-- Movie Detail -->
-    <string name="movie_detail_text">Movie details</string>
+    <string name="movie_detail_text">Details</string>
     <string name="movie_detail_movie_year_runtime">{movieYear} • {runtime}</string>
     <string name="movie_detail_genre_label">Genre</string>
     <string name="movie_detail_cast_label">Cast</string>
@@ -27,7 +34,10 @@
     <string name="movie_detail_language_label">Language</string>
     <string name="movie_detail_country_label">Country</string>
     <string name="movie_detail_production_label">Produced by</string>
+    <string name="movie_detail_released_label">Released</string>
     <string name="movie_detail_boxoffice_label">Box Office</string>
+    <string name="movie_detail_success_save_message">Movie saved!</string>
+    <string name="movie_detail_success_unsave_message">Movie unsaved!</string>
 
     <!-- Movie Search -->
     <string name="movie_search_text">Type a movie name…</string>

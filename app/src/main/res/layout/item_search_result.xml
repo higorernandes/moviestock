@@ -76,8 +76,9 @@
                     android:textSize="@dimen/font_size_medium_large"
                     android:layout_marginTop="@dimen/cardview_small_margin"
                     android:fontFamily="@font/roboto_thin"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:ellipsize="end"
+                    android:gravity="top"
                     android:textColor="@android:color/white"/>
 
             </LinearLayout>

@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:attr="http://schemas.android.com/tools"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/transparent"
     app:theme="@style/ToolbarStyleDark">
 
     <RelativeLayout

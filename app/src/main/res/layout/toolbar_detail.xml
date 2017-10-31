@@ -23,15 +23,24 @@
             android:textSize="@dimen/font_size_large" />
 
         <!-- Like Button -->
-        <Button
-            android:id="@+id/toolbar_like_button"
-            android:layout_width="@dimen/button_toolbar_size"
-            android:layout_height="@dimen/button_toolbar_size"
+        <RelativeLayout
+            android:id="@+id/toolbar_detail_like_relativelayout"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/default_medium_margin"
-            android:background="@drawable/ic_favorite_border_white"
-            android:visibility="gone"/>
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/toolbar_detail_like_imageview"
+                android:layout_width="@dimen/button_toolbar_size"
+                android:layout_height="@dimen/button_toolbar_size"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/default_medium_margin"
+                android:src="@drawable/ic_favorite_border_white"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

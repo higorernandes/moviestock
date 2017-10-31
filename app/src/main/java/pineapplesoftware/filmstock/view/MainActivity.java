@@ -2,14 +2,19 @@ package pineapplesoftware.filmstock.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,9 +22,13 @@ import com.bumptech.glide.Glide;
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.gigamole.infinitecycleviewpager.OnInfiniteCyclePageTransformListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import pineapplesoftware.filmstock.R;
+import pineapplesoftware.filmstock.helper.DatabaseHelper;
+import pineapplesoftware.filmstock.model.dto.Movie;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnInfiniteCyclePageTransformListener
 {
@@ -29,11 +38,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mToolbarTitle;
     private RelativeLayout mToolbarSearchButton;
 
+    private LinearLayout mNoMoviesView;
     private HorizontalInfiniteCycleViewPager mMainInfiniteCycleViewPager;
+
+    private LinearLayout mMainMovieInfoContainer;
+    private TextView mMovieTitleTextView;
+    private TextView mMovieInfoTextView;
+    private TextView mMovieSavedDateTextView;
+
     private CoverViewPagerAdapter mMoviesPagerAdapter;
 
-    private int[] mLayouts;
-    private ArrayList<String> mMovies = new ArrayList<>();
+    private ArrayList<Movie> mMovies = new ArrayList<>();
+
+    public static boolean sShouldReloadMoviesList = false;
 
     //endregion
 
@@ -52,14 +69,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLayouts = new int[]{
-                R.layout.item_movie_cover,
-                R.layout.item_movie_cover,
-                R.layout.item_movie_cover};
-
-        getViews();
+        initViews();
         setUpToolbar();
         loadUserSavedMovies();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (sShouldReloadMoviesList) {
+            loadUserSavedMovies();
+            sShouldReloadMoviesList = false;
+        }
     }
 
     @Override
@@ -69,35 +90,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(MovieSearchActivity.getActivityIntent(this));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
                 break;
-//            case R.id.search_text:
-//                startActivity(MovieSearchActivity.getActivityIntent(this));
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
-//                break;
+            case R.id.main_movie_info_container:
+                Movie selectedMovie = mMovies.get(mMainInfiniteCycleViewPager.getRealItem());
+                startActivity(MovieDetailActivity.getActivityIntent(this, selectedMovie));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
+                break;
         }
     }
 
     @Override
-    public void onPreTransform(View page, float position) {
-
-    }
+    public void onPreTransform(View page, float position) { }
 
     @Override
     public void onPostTransform(View page, float position) {
-
+        crossFade();
     }
 
     //endregion
 
     //region Private Methods
 
-    private void getViews() {
+    private void initViews() {
         mToolbar = findViewById(R.id.main_toolbar);
         mToolbarTitle = mToolbar.findViewById(R.id.toolbar_title);
         mToolbarSearchButton = mToolbar.findViewById(R.id.toolbar_main_relativelayout);
 
+        mNoMoviesView = findViewById(R.id.main_no_movies_view);
         mMainInfiniteCycleViewPager = findViewById(R.id.main_coverview);
 
+        mMainMovieInfoContainer = findViewById(R.id.main_movie_info_container);
+        mMovieTitleTextView = findViewById(R.id.main_movie_title);
+        mMovieInfoTextView = findViewById(R.id.main_movie_info);
+        mMovieSavedDateTextView = findViewById(R.id.main_movie_saved_date);
+
         mToolbarSearchButton.setOnClickListener(this);
+        mMainMovieInfoContainer.setOnClickListener(this);
     }
 
     private void setUpToolbar() {
@@ -109,17 +136,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadUserSavedMovies() {
-        mMovies.add("https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwNTczNTMyOF5BMl5BanBnXkFtZTcwNzUxOTUyMw@@._V1_SX300.jpg");
-        mMovies.add("https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwNTczNTMyOF5BMl5BanBnXkFtZTcwNzUxOTUyMw@@._V1_SX300.jpg");
-        mMovies.add("https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwNTczNTMyOF5BMl5BanBnXkFtZTcwNzUxOTUyMw@@._V1_SX300.jpg");
-        mMovies.add("https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwNTczNTMyOF5BMl5BanBnXkFtZTcwNzUxOTUyMw@@._V1_SX300.jpg");
-        mMovies.add("https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwNTczNTMyOF5BMl5BanBnXkFtZTcwNzUxOTUyMw@@._V1_SX300.jpg");
-        mMovies.add("https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwNTczNTMyOF5BMl5BanBnXkFtZTcwNzUxOTUyMw@@._V1_SX300.jpg");
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        mMovies = databaseHelper.getAllMovies();
 
-        mMoviesPagerAdapter = new CoverViewPagerAdapter(this, mMovies);
-        mMainInfiniteCycleViewPager.setAdapter(mMoviesPagerAdapter);
-        mMoviesPagerAdapter.notifyDataSetChanged();
-        mMainInfiniteCycleViewPager.setOnInfiniteCyclePageTransformListener(this);
+        if (mMovies.size() > 0) {
+            mMoviesPagerAdapter = new CoverViewPagerAdapter(this, mMovies);
+            mMainInfiniteCycleViewPager.setAdapter(mMoviesPagerAdapter);
+            mMoviesPagerAdapter.notifyDataSetChanged();
+            mMainInfiniteCycleViewPager.setOnInfiniteCyclePageTransformListener(this);
+        } else {
+            mMainInfiniteCycleViewPager.setVisibility(View.GONE);
+            mMainMovieInfoContainer.setVisibility(View.GONE);
+            mNoMoviesView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showMovieDetailedInfo(int position) {
+        Movie movie = mMovies.get(position);
+        startActivity(MovieDetailActivity.getActivityIntent(this, movie));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
+    }
+
+    private void crossFade() {
+        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setDuration(200);
+        anim.setRepeatCount(1);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) { }
+
+            @Override
+            public void onAnimationEnd(Animation animation) { }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                Movie focusedMovie = mMovies.get(mMainInfiniteCycleViewPager.getRealItem());
+                mMovieTitleTextView.setText(focusedMovie.getTitle());
+
+                String movieInfo = getResources().getString(R.string.main_movie_info);
+                if (focusedMovie.getGenre() != null && !focusedMovie.getGenre().equals("") && !focusedMovie.getGenre().toLowerCase().equals("n/a")) {
+                    movieInfo.replace("{genre}", focusedMovie.getGenre());
+                } else {
+                    movieInfo.replace("{genre} • ", "");
+                }
+
+                if (focusedMovie.getYear() != null && !focusedMovie.getYear().equals("") && !focusedMovie.getYear().toLowerCase().equals("n/a")) {
+                    movieInfo.replace("{year}", focusedMovie.getYear());
+                } else {
+                    movieInfo.replace("{year} • ", "");
+                }
+
+                if (focusedMovie.getRuntime() != null && !focusedMovie.getRuntime().equals("") && !focusedMovie.getRuntime().toLowerCase().equals("n/a")) {
+                    movieInfo.replace("{runtime}", focusedMovie.getRuntime());
+                } else {
+                    movieInfo.replace("• {runtime} ", "");
+                }
+
+                mMovieInfoTextView.setText(movieInfo
+                        .replace("{genre}", focusedMovie.getGenre())
+                        .replace("{year}", focusedMovie.getYear())
+                        .replace("{runtime}", focusedMovie.getRuntime()));
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String date = dateFormat.format(focusedMovie.getDateSaved());
+                mMovieSavedDateTextView.setText(getResources().getString(R.string.main_saved_on_text).replace("{date}", date));
+            }
+        });
+        mMainMovieInfoContainer.startAnimation(anim);
     }
 
     //endregion
@@ -129,10 +213,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     class CoverViewPagerAdapter extends PagerAdapter implements View.OnClickListener {
 
         private LayoutInflater mLayoutInflater;
-        private ArrayList<String> mMovies;
+        private ArrayList<Movie> mMovies;
         private Context mContext;
 
-        private CoverViewPagerAdapter(Context context, ArrayList<String> movies) {
+        private CoverViewPagerAdapter(Context context, ArrayList<Movie> movies) {
             mMovies = movies;
             mContext = context;
         }
@@ -143,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final View view = mLayoutInflater.inflate(R.layout.item_movie_cover, container, false);
 
             ImageView imageView = view.findViewById(R.id.main_item_movie_poster);
-            Glide.with(mContext).load(mMovies.get(position)).into(imageView);
+            Glide.with(mContext).load(mMovies.get(position).getPosterUrl()).into(imageView);
 
             container.addView(view);
             view.setOnClickListener(this);
@@ -152,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public int getCount() {
-            return mLayouts.length;
+            return mMovies.size();
         }
 
         @Override
@@ -172,8 +256,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void onClick(View view) {
-//            startActivity(MovieDetailActivity.getActivityIntent(mContext, movie));
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
+            showMovieDetailedInfo(mMainInfiniteCycleViewPager.getRealItem());
         }
     }
 

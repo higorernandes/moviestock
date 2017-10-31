@@ -16,9 +16,8 @@ import retrofit.http.GET;
 import retrofit.http.Query;
 
 /**
- * Created by root on 2017-10-29.
+ * Created by Higor Ernandes on 2017-10-29.
  */
-
 public class FilmstockApi
 {
     private static FilmstockApi.IFilmstockApi filmstockApi;

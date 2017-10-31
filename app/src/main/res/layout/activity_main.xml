@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,15 +13,20 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null">
+        android:background="@null"
+        android:visibility="visible"
+        app:elevation="0dp">
 
         <include
             android:id="@+id/main_toolbar"
-            layout="@layout/toolbar_main" />
+            layout="@layout/toolbar_main"
+            android:elevation="7dp" />
 
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/main_root_view"
+        android:layout_below="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,107 +35,148 @@
             android:id="@+id/main_translucent_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/transluscent_black_view"/>
+            android:layout_marginTop="150dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/transluscent_extra_black_view"/>
+
+        <!-- No movies saved view -->
+        <LinearLayout
+            android:id="@+id/main_no_movies_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_large_margin"
+            android:layout_marginEnd="@dimen/default_large_margin"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <!-- No items icon -->
+            <ImageView
+                android:layout_width="@dimen/image_default_size"
+                android:layout_height="@dimen/image_default_size"
+                android:src="@drawable/ic_shrug"/>
+
+            <!-- Greeting text -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/default_medium_margin"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="@dimen/font_size_large"
+                android:textColor="@android:color/white"
+                android:text="@string/main_no_items_greeting_text"/>
+
+            <!-- No items text -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="@dimen/font_size_medium_large"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="@dimen/default_medium_margin"
+                android:alpha="0.5"
+                android:text="@string/movie_no_items_text"/>
+
+            <!-- Suggestion text -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_small_margin"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="@dimen/font_size_medium_large"
+                android:textColor="@android:color/white"
+                android:alpha="0.5"
+                android:text="@string/movie_no_items_suggestion_text"/>
+
+        </LinearLayout>
+
+        <!-- Movies ViewPager -->
+        <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+            android:id="@+id/main_coverview"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="48dp"
+            android:background="@android:color/transparent"
+            app:icvp_center_page_scale_offset="30dp"
+            app:icvp_min_page_scale_offset="5dp"
+            app:icvp_medium_scaled="false"
+            app:icvp_max_page_scale="0.8"
+            app:icvp_min_page_scale="0.5"
+            app:icvp_scroll_duration="1000" />
 
         <LinearLayout
+            android:id="@+id/main_movie_info_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_below="@+id/main_coverview"
+            android:layout_marginStart="@dimen/default_medium_margin"
+            android:layout_marginEnd="@dimen/default_medium_margin"
+            android:layout_marginBottom="@dimen/default_medium_margin"
+            android:foreground="?attr/selectableItemBackground">
 
-            <!-- Movies ViewPager -->
-            <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
-                android:id="@+id/main_coverview"
+            <!-- Movie title -->
+            <TextView
+                android:id="@+id/main_movie_title"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="6"
-                android:background="@android:color/transparent"
-                app:icvp_center_page_scale_offset="30dp"
-                app:icvp_min_page_scale_offset="5dp"
-                app:icvp_medium_scaled="false"
-                app:icvp_max_page_scale="0.8"
-                app:icvp_min_page_scale="0.5"
-                app:icvp_scroll_duration="1000" />
+                android:layout_height="wrap_content"
+                android:text="@string/generic_placeholder_text"
+                android:textSize="@dimen/font_size_extra_large"
+                android:layout_marginTop="@dimen/default_large_margin"
+                android:layout_marginBottom="@dimen/default_small_margin"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/roboto_light"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"/>
 
-            <android.support.v7.widget.CardView
+            <!-- Movie info -->
+            <TextView
+                android:id="@+id/main_movie_info"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:layout_margin="@dimen/cardview_default_margin"
-                app:cardBackgroundColor="@color/colorCardBackgroundDark">
+                android:layout_height="wrap_content"
+                android:text="@string/generic_placeholder_text"
+                android:textSize="@dimen/font_size_medium_large"
+                android:layout_marginBottom="@dimen/default_medium_margin"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/roboto_light"
+                android:textAlignment="center"
+                android:alpha="0.7"
+                android:maxLines="3"
+                android:ellipsize="end"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center">
+            <!-- Separator -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/default_large_margin"
+                android:layout_marginEnd="@dimen/default_large_margin"
+                android:background="@drawable/bg_gradient"/>
 
-                    <!-- Movie title -->
-                    <TextView
-                        android:id="@+id/detail_movie_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Scott Pilgrim vs. The World"
-                        android:textSize="@dimen/font_size_extra_large"
-                        android:layout_marginTop="@dimen/default_medium_margin"
-                        android:layout_marginStart="@dimen/default_medium_margin"
-                        android:layout_marginEnd="@dimen/default_medium_margin"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:textColor="@android:color/white"
-                        android:fontFamily="@font/roboto_light"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
-                        android:maxLines="1"
-                        android:ellipsize="end"/>
-
-                    <TextView
-                        android:id="@+id/detail_movie_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Action, Comedy, Romance • 2010 • 2h33m"
-                        android:textSize="@dimen/font_size_medium_large"
-                        android:layout_marginStart="@dimen/default_medium_margin"
-                        android:layout_marginEnd="@dimen/default_medium_margin"
-                        android:layout_marginBottom="@dimen/default_large_margin"
-                        android:textColor="@android:color/white"
-                        android:fontFamily="@font/roboto_light"
-                        android:textAlignment="center"
-                        android:alpha="0.7"
-                        android:maxLines="3"
-                        android:ellipsize="end"/>
-
-                    <!-- Separator -->
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginStart="@dimen/cardview_default_margin"
-                        android:layout_marginEnd="@dimen/cardview_default_margin"
-                        android:background="@drawable/bg_gradient"/>
-
-                    <TextView
-                        android:id="@+id/detail_movie_saved_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Saved in 28/10/2017"
-                        android:textSize="@dimen/font_size_medium_large"
-                        android:layout_marginTop="@dimen/default_large_margin"
-                        android:layout_marginStart="@dimen/default_medium_margin"
-                        android:layout_marginEnd="@dimen/default_medium_margin"
-                        android:layout_marginBottom="@dimen/default_large_margin"
-                        android:textColor="@android:color/white"
-                        android:fontFamily="@font/roboto_light"
-                        android:textAlignment="center"
-                        android:alpha="0.7"
-                        android:maxLines="3"
-                        android:ellipsize="end"/>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
+            <!-- Saved date -->
+            <TextView
+                android:id="@+id/main_movie_saved_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/generic_placeholder_text"
+                android:textSize="@dimen/font_size_medium_large"
+                android:layout_marginTop="@dimen/default_medium_margin"
+                android:layout_marginBottom="@dimen/default_large_margin"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/roboto_light"
+                android:textAlignment="center"
+                android:alpha="0.7"
+                android:maxLines="3"
+                android:ellipsize="end"/>
 
         </LinearLayout>
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

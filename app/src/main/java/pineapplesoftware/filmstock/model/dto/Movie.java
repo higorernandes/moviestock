@@ -3,12 +3,17 @@ package pineapplesoftware.filmstock.model.dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created by Higor Ernandes on 2017-10-29.
  */
 
 public class Movie
 {
+    private long mId;
+    private Date mDateSaved;
+
     @SerializedName("Title")
     @Expose
     private String mTitle;
@@ -104,6 +109,56 @@ public class Movie
     @SerializedName("Response")
     @Expose
     private String mResponse;
+
+    public Movie() {}
+
+    public Movie(long id, String title, String year, String rated, String released, String runtime,
+                 String genre, String director, String writer, String actors, String plot,
+                 String language, String country, String awards, String posterUrl, String metascore,
+                 String imdbRating, String imdbVotes, String imdbId, String type, String dvd,
+                 String boxOffice, String production, String website, String response) {
+        this.mId = id;
+        this.mTitle = title;
+        this.mYear = year;
+        this.mRated = rated;
+        this.mReleased = released;
+        this.mRuntime = runtime;
+        this.mGenre = genre;
+        this.mDirector = director;
+        this.mWriter = writer;
+        this.mActors = actors;
+        this.mPlot = plot;
+        this.mLanguage = language;
+        this.mCountry = country;
+        this.mAwards = awards;
+        this.mPosterUrl = posterUrl;
+        this.mMetascore = metascore;
+        this.mImdbRating = imdbRating;
+        this.mImdbVotes = imdbVotes;
+        this.mImdbId = imdbId;
+        this.mType = type;
+        this.mDvd = dvd;
+        this.mBoxOffice = boxOffice;
+        this.mProduction = production;
+        this.mWebsite = website;
+        this.mResponse = response;
+    }
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long mId) {
+        this.mId = mId;
+    }
+
+    public Date getDateSaved() {
+        return mDateSaved;
+    }
+
+    public void setDateSaved(Date dateSaved) {
+        this.mDateSaved = dateSaved;
+    }
 
     public String getTitle() {
         return mTitle;

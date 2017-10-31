@@ -2,25 +2,33 @@ package pineapplesoftware.filmstock.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import pineapplesoftware.filmstock.R;
+import pineapplesoftware.filmstock.helper.DatabaseHelper;
 import pineapplesoftware.filmstock.model.dto.Movie;
 
 public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener
 {
     //region Attributes
 
+    private static final String ID = "ID";
     private static final String TITLE = "TITLE";
     private static final String YEAR = "YEAR";
     private static final String RATED = "RATED";
@@ -47,7 +55,10 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
-    private Button mToolbarLikeButton;
+    private RelativeLayout mToolbarLikeButton;
+    private ImageView mToolbarLikeImage;
+
+    private Movie mMovie = new Movie();
 
     //endregion
 
@@ -55,6 +66,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     public static Intent getActivityIntent(Context context, Movie movie) {
         Intent intent = new Intent(context, MovieDetailActivity.class);
+        intent.putExtra(ID, movie.getId());
         intent.putExtra(TITLE, movie.getTitle());
         intent.putExtra(YEAR, movie.getYear());
         intent.putExtra(RATED, movie.getRated());
@@ -110,8 +122,8 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.toolbar_like_button:
-                saveMovieToLocalDatabase();
+            case R.id.toolbar_detail_like_relativelayout:
+                saveOrUnsaveMovieToLocalDatabase();
                 break;
         }
     }
@@ -129,7 +141,8 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     private void initViews() {
         mToolbar = findViewById(R.id.detail_toolbar);
         mToolbarTitle = mToolbar.findViewById(R.id.toolbar_title);
-        mToolbarLikeButton = mToolbar.findViewById(R.id.toolbar_like_button);
+        mToolbarLikeButton = mToolbar.findViewById(R.id.toolbar_detail_like_relativelayout);
+        mToolbarLikeImage = mToolbar.findViewById(R.id.toolbar_detail_like_imageview);
 
         //region Main information
 
@@ -140,6 +153,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         ImageView moviePosterImageView = findViewById(R.id.detail_movie_image);
         if (posterUrl != null && !posterUrl.isEmpty() && !posterUrl.toLowerCase().equals("n/a")) {
             Glide.with(this).load(posterUrl).into(moviePosterImageView);
+            mMovie.setPosterUrl(posterUrl);
         }
 
         // Title.
@@ -147,6 +161,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         TextView movieTitleTextView = findViewById(R.id.detail_movie_name);
         if (title != null && !title.isEmpty() && !title.toLowerCase().equals("n/a")) {
             movieTitleTextView.setText(title);
+            mMovie.setTitle(title);
         }
 
         // Type.
@@ -154,6 +169,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         TextView movieTypeTextView = findViewById(R.id.detail_movie_type);
         if (type != null && !type.isEmpty() && !type.toLowerCase().equals("n/a")) {
             movieTypeTextView.setText(type);
+            mMovie.setType(type);
         } else {
             movieTypeTextView.setVisibility(View.GONE);
         }
@@ -163,6 +179,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (genre != null && !genre.isEmpty() && !genre.toLowerCase().equals("n/a")) {
             TextView movieGenreTextView = findViewById(R.id.detail_movie_genre_text);
             movieGenreTextView.setText(genre);
+            mMovie.setGenre(genre);
         }
 
         // Year and Runtime/duration.
@@ -173,10 +190,14 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
             movieDurationTextView.setText(getResources().getString(R.string.movie_detail_movie_year_runtime)
                     .replace("{movieYear}", year)
                     .replace("{runtime}", runtime));
+            mMovie.setYear(year);
+            mMovie.setRuntime(runtime);
         } else if ((year == null || year.isEmpty() || year.toLowerCase().equals("n/a")) && (runtime != null && !runtime.isEmpty() && !runtime.toLowerCase().equals("n/a"))) {
             movieDurationTextView.setText(runtime);
+            mMovie.setRuntime(runtime);
         } else if ((year != null && !year.isEmpty() && !year.toLowerCase().equals("n/a")) && (runtime == null || runtime.isEmpty() || runtime.toLowerCase().equals("n/a"))) {
             movieDurationTextView.setText(year);
+            mMovie.setYear(year);
         }
 
         // Plot.
@@ -184,6 +205,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (plot != null && !plot.isEmpty() && !plot.toLowerCase().equals("n/a")) {
             TextView moviePlotTextView = findViewById(R.id.detail_movie_plot);
             moviePlotTextView.setText(plot);
+            mMovie.setPlot(plot);
         }
 
         // Cast.
@@ -191,6 +213,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (cast != null && !cast.isEmpty() && !cast.toLowerCase().equals("n/a")) {
             TextView movieDirectorTextView = findViewById(R.id.detail_movie_actors_text);
             movieDirectorTextView.setText(cast);
+            mMovie.setActors(cast);
         } else {
             containerView = findViewById(R.id.detail_actors_container);
             containerView.setVisibility(View.GONE);
@@ -201,6 +224,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (director != null && !director.isEmpty() && !director.toLowerCase().equals("n/a")) {
             TextView movieDirectorTextView = findViewById(R.id.detail_movie_director_text);
             movieDirectorTextView.setText(director);
+            mMovie.setDirector(director);
         } else {
             containerView = findViewById(R.id.detail_director_container);
             containerView.setVisibility(View.GONE);
@@ -215,6 +239,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (writer != null && !writer.isEmpty() && !writer.toLowerCase().equals("n/a")) {
             TextView movieWriterTextView = findViewById(R.id.detail_movie_writer_text);
             movieWriterTextView.setText(writer);
+            mMovie.setWriter(writer);
         } else {
             containerView = findViewById(R.id.detail_writer_container);
             containerView.setVisibility(View.GONE);
@@ -225,6 +250,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (rated != null && !rated.isEmpty() && !rated.toLowerCase().equals("n/a")) {
             TextView movieRatedTextView = findViewById(R.id.detail_movie_rated_text);
             movieRatedTextView.setText(rated);
+            mMovie.setRated(rated);
         } else {
             containerView = findViewById(R.id.detail_rated_container);
             containerView.setVisibility(View.GONE);
@@ -235,6 +261,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (awards != null && !awards.isEmpty() && !awards.toLowerCase().equals("n/a")) {
             TextView movieAwardsTextView = findViewById(R.id.detail_movie_awards_text);
             movieAwardsTextView.setText(awards);
+            mMovie.setAwards(awards);
         } else {
             containerView = findViewById(R.id.detail_awards_container);
             containerView.setVisibility(View.GONE);
@@ -245,6 +272,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (language != null && !language.isEmpty() && !language.toLowerCase().equals("n/a")) {
             TextView movieLanguageTextView = findViewById(R.id.detail_movie_language_text);
             movieLanguageTextView.setText(language);
+            mMovie.setLanguage(language);
         } else {
             containerView = findViewById(R.id.detail_language_container);
             containerView.setVisibility(View.GONE);
@@ -255,6 +283,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (country != null && !country.isEmpty() && !country.toLowerCase().equals("n/a")) {
             TextView movieCountryTextView = findViewById(R.id.detail_movie_country_text);
             movieCountryTextView.setText(country);
+            mMovie.setCountry(country);
         } else {
             containerView = findViewById(R.id.detail_country_container);
             containerView.setVisibility(View.GONE);
@@ -265,8 +294,20 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (production != null && !production.isEmpty() && !production.toLowerCase().equals("n/a")) {
             TextView movieProductionTextView = findViewById(R.id.detail_movie_production_text);
             movieProductionTextView.setText(production);
+            mMovie.setProduction(production);
         } else {
             containerView = findViewById(R.id.detail_production_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Released.
+        String released = getIntent().getStringExtra(RELEASED);
+        if (released != null && !released.isEmpty() && !released.toLowerCase().equals("n/a")) {
+            TextView movieReleasedTextView = findViewById(R.id.detail_movie_released_text);
+            movieReleasedTextView.setText(released);
+            mMovie.setReleased(released);
+        } else {
+            containerView = findViewById(R.id.detail_released_container);
             containerView.setVisibility(View.GONE);
         }
 
@@ -275,6 +316,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (boxOffice != null && !boxOffice.isEmpty() && !boxOffice.toLowerCase().equals("n/a")) {
             TextView movieBoxOfficeTextView = findViewById(R.id.detail_movie_box_text);
             movieBoxOfficeTextView.setText(boxOffice);
+            mMovie.setBoxOffice(boxOffice);
         } else {
             containerView = findViewById(R.id.detail_boxoffice_container);
             containerView.setVisibility(View.GONE);
@@ -285,12 +327,19 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         if (imdbRating != null && !imdbRating.isEmpty() && !imdbRating.toLowerCase().equals("n/a")) {
             TextView movieRatingsTextView = findViewById(R.id.detail_movie_ratings_text);
             movieRatingsTextView.setText(imdbRating);
+            mMovie.setImdbRating(imdbRating);
         } else {
             containerView = findViewById(R.id.detail_ratings_container);
             containerView.setVisibility(View.GONE);
         }
 
+        loadRemainingInfo();
+
         //endregion
+
+        if (mMovie.getId() != 0) {
+            mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
+        }
 
         mToolbarLikeButton.setOnClickListener(this);
     }
@@ -307,8 +356,54 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void saveMovieToLocalDatabase() {
+    private void loadRemainingInfo() {
+        long id = getIntent().getLongExtra(ID, 0);
+        if (id != 0) {
+            mMovie.setId(id);
+        }
 
+        String metascore = getIntent().getStringExtra(IMDB_RATING);
+        if (metascore != null && !metascore.isEmpty() && !metascore.toLowerCase().equals("n/a")) {
+            mMovie.setMetascore(metascore);
+        }
+
+        String imdbVotes = getIntent().getStringExtra(IMDB_VOTES);
+        if (imdbVotes != null && !imdbVotes.isEmpty() && !imdbVotes.toLowerCase().equals("n/a")) {
+            mMovie.setImdbVotes(imdbVotes);
+        }
+
+        String imdbId = getIntent().getStringExtra(IMDB_ID);
+        if (imdbId != null && !imdbId.isEmpty() && !imdbId.toLowerCase().equals("n/a")) {
+            mMovie.setImdbId(imdbId);
+        }
+
+        String dvd = getIntent().getStringExtra(DVD);
+        if (dvd != null && !dvd.isEmpty() && !dvd.toLowerCase().equals("n/a")) {
+            mMovie.setDvd(dvd);
+        }
+
+        String website = getIntent().getStringExtra(WEBSITE);
+        if (website != null && !website.isEmpty() && !website.toLowerCase().equals("n/a")) {
+            mMovie.setWebsite(website);
+        }
+    }
+
+    private void saveOrUnsaveMovieToLocalDatabase() {
+        DatabaseHelper database = new DatabaseHelper(this);
+
+        mMovie.setDateSaved(Calendar.getInstance().getTime());
+
+        if (mMovie.getId() != 0) {
+            database.deleteMovie(mMovie);
+            mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white));
+            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_unsave_message), Toast.LENGTH_LONG).show();
+        } else {
+            database.addMovie(mMovie);
+            mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
+            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_save_message), Toast.LENGTH_LONG).show();
+        }
+
+        MainActivity.sShouldReloadMoviesList = !MainActivity.sShouldReloadMoviesList;
     }
 
     //endregion
