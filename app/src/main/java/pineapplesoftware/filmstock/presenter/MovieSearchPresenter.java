@@ -1,9 +1,7 @@
 package pineapplesoftware.filmstock.presenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.generic.IPresenter;
 import pineapplesoftware.filmstock.generic.IView;
 import pineapplesoftware.filmstock.helper.NetworkHelper;

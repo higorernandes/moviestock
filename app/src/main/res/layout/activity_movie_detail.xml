@@ -10,7 +10,7 @@
 
     <!-- Toolbar -->
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/detail_toolbar_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -52,8 +52,19 @@
                     android:layout_height="@dimen/image_header_height"
                     android:background="@drawable/transluscent_black_view"/>
 
+                <!-- Play button -->
+                <ImageButton
+                    android:id="@+id/detail_title_play_imagebutton"
+                    android:layout_width="@dimen/button_default_height"
+                    android:layout_height="@dimen/button_default_height"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="@dimen/default_large_margin"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_play"/>
+
                 <!-- Movie title and type -->
                 <LinearLayout
+                    android:id="@+id/detail_title_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_medium_margin"

@@ -4,33 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_splash_gradient"
+    android:gravity="center"
     tools:context="pineapplesoftware.filmstock.view.SplashActivity">
 
-    <!-- Logo -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4">
-
-        <ImageView
-            android:id="@+id/splash_filmstock_logo"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/filmstock_logo"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/default_large_margin"
-            android:layout_marginEnd="@dimen/default_large_margin"
-            android:contentDescription="@string/splash_filmstock_logo"/>
-
-    </RelativeLayout>
-
-    <!-- Smooth background -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:background="@drawable/filmstock_background"
-        android:contentDescription="@string/splash_filmstock_logo" />
+    <ImageView
+        android:id="@+id/splash_filmstock_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_filmstock"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/default_large_margin"
+        android:layout_marginEnd="@dimen/default_large_margin"
+        android:contentDescription="@string/splash_filmstock_logo"/>
 
 </LinearLayout>

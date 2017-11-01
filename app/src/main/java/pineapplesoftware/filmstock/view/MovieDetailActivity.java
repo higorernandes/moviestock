@@ -1,13 +1,16 @@
 package pineapplesoftware.filmstock.view;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,9 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.helper.DatabaseHelper;
@@ -57,6 +58,8 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView mToolbarTitle;
     private RelativeLayout mToolbarLikeButton;
     private ImageView mToolbarLikeImage;
+
+    private ImageButton mPlayImageButton;
 
     private Movie mMovie = new Movie();
 
@@ -125,6 +128,9 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
             case R.id.toolbar_detail_like_relativelayout:
                 saveOrUnsaveMovieToLocalDatabase();
                 break;
+            case R.id.detail_title_play_imagebutton:
+                openYoutubeVideoSearch();
+                break;
         }
     }
 
@@ -143,6 +149,8 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         mToolbarTitle = mToolbar.findViewById(R.id.toolbar_title);
         mToolbarLikeButton = mToolbar.findViewById(R.id.toolbar_detail_like_relativelayout);
         mToolbarLikeImage = mToolbar.findViewById(R.id.toolbar_detail_like_imageview);
+
+        mPlayImageButton = findViewById(R.id.detail_title_play_imagebutton);
 
         //region Main information
 
@@ -342,6 +350,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         }
 
         mToolbarLikeButton.setOnClickListener(this);
+        mPlayImageButton.setOnClickListener(this);
     }
 
     private void setUpToolbar() {
@@ -352,10 +361,21 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         mToolbarLikeButton.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Verifies whether the movie already exists on the database or not.
+     */
     private void loadMovieInformation() {
-
+        // If movie has already been saved, changes the icon to show it as so.
+        DatabaseHelper database = new DatabaseHelper(this);
+        Movie movie = database.getMovieWithImdbId(mMovie.getImdbId());
+        if (movie != null) {
+            mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
+        }
     }
 
+    /**
+     * Loads the remaining info (information not shown).
+     */
     private void loadRemainingInfo() {
         long id = getIntent().getLongExtra(ID, 0);
         if (id != 0) {
@@ -388,22 +408,45 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * Saves or deletes a movie from the local database (you don't say?).
+     */
     private void saveOrUnsaveMovieToLocalDatabase() {
         DatabaseHelper database = new DatabaseHelper(this);
 
-        mMovie.setDateSaved(Calendar.getInstance().getTime());
+        Movie movie = database.getMovieWithImdbId(mMovie.getImdbId());
 
-        if (mMovie.getId() != 0) {
-            database.deleteMovie(mMovie);
+        if (movie != null) {
+            database.deleteMovie(movie);
             mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white));
-            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_unsave_message), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_unsave_message), Toast.LENGTH_SHORT).show();
         } else {
+            mMovie.setDateSaved(Calendar.getInstance().getTime());
             database.addMovie(mMovie);
+            database.getMovieWithImdbId(mMovie.getImdbId());
             mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
-            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_save_message), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_save_message), Toast.LENGTH_SHORT).show();
         }
 
         MainActivity.sShouldReloadMoviesList = !MainActivity.sShouldReloadMoviesList;
+    }
+
+    /**
+     * Attempts to open the youtube app to search for a video. In case it fails, opens it via browser.
+     */
+    private void openYoutubeVideoSearch() {
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + mMovie.getTitle()));
+        appIntent.setPackage("com.google.android.youtube");
+        appIntent.putExtra("query", mMovie.getTitle());
+        appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        String movieSearch = mMovie.getTitle().trim().replaceAll(" ", "+") + "+trailer";
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/results?search_query=" + movieSearch));
+        try {
+            startActivity(appIntent);
+        } catch (ActivityNotFoundException ex) {
+            startActivity(webIntent);
+        }
     }
 
     //endregion

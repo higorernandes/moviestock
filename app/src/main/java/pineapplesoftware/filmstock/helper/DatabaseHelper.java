@@ -6,14 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import pineapplesoftware.filmstock.model.dto.Movie;
 
@@ -113,7 +109,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     //region CRUD Methods
 
-    // Adding new movie.
+    /**
+     * Adds a new movie to the database.
+     * @param movie The movie to be added.
+     */
     public void addMovie(Movie movie) {
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -147,25 +146,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
         database.close();
     }
 
-    // Getting single movie.
-//    public Movie getMovie(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.query(TABLE_MOVIES, new String[] { KEY_ID,
-//                        KEY_NAME, KEY_PH_NO }, KEY_ID + "=?",
-//                new String[] { String.valueOf(id) }, null, null, null, null);
-//
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//        }
-//
-//        Movie contact = new Movie(Integer.parseInt(cursor.getString(0)),
-//                cursor.getString(1), cursor.getString(2));
-//
-//        return contact;
-//    }
-
-    // Getting all movies.
+    /**
+     * Gets all the movies from the database.
+     * @return The list of Movie objects.
+     */
     public ArrayList<Movie> getAllMovies() {
         ArrayList<Movie> contactList = new ArrayList<>();
 
@@ -213,56 +197,67 @@ public class DatabaseHelper extends SQLiteOpenHelper
             } while (row.moveToNext());
         }
 
+        row.close();
         return contactList;
     }
 
-    // Getting movies count.
-    public int getMoviesCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_MOVIES;
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor row = database.rawQuery(countQuery, null);
-        row.close();
+    /**
+     * Gets a movie from the database.
+     * @param imdbId The movie's IMDB ID to be searched for.
+     * @return A Movie object or null if the movie doesn't exist.
+     */
+    public Movie getMovieWithImdbId(String imdbId) {
 
-        return row.getCount();
-    }
+        String selectQuery = "SELECT * FROM " + TABLE_MOVIES + " WHERE " + KEY_IMDB_ID  + " = \'" + imdbId + "\'";
 
-    // Updating single movie.
-    public int updateMovie(Movie movie) {
         SQLiteDatabase database = this.getWritableDatabase();
+        Cursor row = database.rawQuery(selectQuery, null);
 
-        Calendar calendar = Calendar.getInstance();
+        if (row.moveToFirst()) {
+            Movie movie = new Movie();
+            movie.setId(Long.parseLong(row.getString(0)));
+            movie.setTitle(row.getString(1));
+            movie.setYear(row.getString(2));
+            movie.setRated(row.getString(3));
+            movie.setReleased(row.getString(4));
+            movie.setRuntime(row.getString(5));
+            movie.setGenre(row.getString(6));
+            movie.setDirector(row.getString(7));
+            movie.setWriter(row.getString(8));
+            movie.setActors(row.getString(9));
+            movie.setPlot(row.getString(10));
+            movie.setLanguage(row.getString(11));
+            movie.setCountry(row.getString(12));
+            movie.setAwards(row.getString(13));
+            movie.setPosterUrl(row.getString(14));
+            movie.setMetascore(row.getString(15));
+            movie.setImdbRating(row.getString(16));
+            movie.setImdbVotes(row.getString(17));
+            movie.setImdbId(row.getString(18));
+            movie.setType(row.getString(19));
+            movie.setDvd(row.getString(20));
+            movie.setBoxOffice(row.getString(21));
+            movie.setProduction(row.getString(22));
+            movie.setWebsite(row.getString(23));
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, movie.getTitle());
-        values.put(KEY_YEAR, movie.getYear());
-        values.put(KEY_RATED, movie.getRated());
-        values.put(KEY_RELEASED, movie.getReleased());
-        values.put(KEY_RUNTIME, movie.getRuntime());
-        values.put(KEY_GENRE, movie.getGenre());
-        values.put(KEY_DIRECTOR, movie.getDirector());
-        values.put(KEY_WRITER, movie.getWriter());
-        values.put(KEY_ACTORS, movie.getActors());
-        values.put(KEY_PLOT, movie.getPlot());
-        values.put(KEY_LANGUAGE, movie.getLanguage());
-        values.put(KEY_COUNTRY, movie.getCountry());
-        values.put(KEY_AWARDS, movie.getAwards());
-        values.put(KEY_POSTER_URL, movie.getPosterUrl());
-        values.put(KEY_METASCORE, movie.getMetascore());
-        values.put(KEY_IMDB_RATING, movie.getImdbRating());
-        values.put(KEY_IMDB_VOTES, movie.getImdbVotes());
-        values.put(KEY_IMDB_ID, movie.getImdbId());
-        values.put(KEY_TYPE, movie.getType());
-        values.put(KEY_DVD, movie.getDvd());
-        values.put(KEY_BOX_OFFICE, movie.getBoxOffice());
-        values.put(KEY_PRODUCTION, movie.getProduction());
-        values.put(KEY_WEBSITE, movie.getWebsite());
-        values.put(KEY_DATE_SAVED, mDateFormat.format(calendar));
+            String dateSavedString = row.getString(24);
+            try {
+                movie.setDateSaved(mDateFormat.parse(dateSavedString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        // updating row
-        return database.update(TABLE_MOVIES, values, KEY_ID + " = ?", new String[] { String.valueOf(movie.getId()) });
+            row.close();
+            return movie;
+        }
+
+        return null;
     }
 
-    // Deleting single movie.
+    /**
+     * Deletes a movie from the database.
+     * @param movie The movie to be deleted.
+     */
     public void deleteMovie(Movie movie) {
         SQLiteDatabase database = this.getWritableDatabase();
 

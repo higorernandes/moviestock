@@ -62,7 +62,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
         Movie movie = mObjects.get(position);
 
         // Setting the movie poster.
-        RequestOptions requestOptions = new RequestOptions().placeholder(ContextCompat.getDrawable(mContext, R.drawable.ic_movie));
+        RequestOptions requestOptions = new RequestOptions().placeholder(ContextCompat.getDrawable(mContext, R.drawable.ic_movie_placeholder)).centerCrop();
         Glide.with(mContext)
                 .load(movie.getPosterUrl())
                 .apply(requestOptions)

@@ -15,7 +15,7 @@
     <dimen name="font_size_extra_large">22sp</dimen>
 
     <!-- Images -->
-    <dimen name="image_header_height">150dp</dimen>
+    <dimen name="image_header_height">200dp</dimen>
     <dimen name="image_default_size">100dp</dimen>
 
     <!-- Buttons -->
