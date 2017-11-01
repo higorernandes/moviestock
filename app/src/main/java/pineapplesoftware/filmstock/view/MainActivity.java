@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mMainInfiniteCycleViewPager.setAdapter(mMoviesPagerAdapter);
             mMainInfiniteCycleViewPager.addOnPageChangeListener(this);
             mMoviesPagerAdapter.notifyDataSetChanged();
+            mNoMoviesView.setVisibility(View.GONE);
         } else {
             mMainInfiniteCycleViewPager.setVisibility(View.GONE);
             mMainMovieInfoContainer.setVisibility(View.GONE);
