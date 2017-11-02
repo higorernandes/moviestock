@@ -9,6 +9,7 @@
 
     <!-- No internet icon -->
     <ImageView
+        android:id="@+id/no_internet_image"
         android:layout_width="@dimen/image_default_size"
         android:layout_height="@dimen/image_default_size"
         android:src="@drawable/ic_signal_wifi_off_white"
@@ -27,6 +28,7 @@
 
     <!-- No internet text -->
     <TextView
+        android:id="@+id/no_internet_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -38,6 +40,7 @@
         android:text="@string/no_internet"/>
 
     <TextView
+        android:id="@+id/no_internet_suggestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"

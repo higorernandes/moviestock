@@ -23,6 +23,7 @@ public class FilmstockApi
     private static FilmstockApi.IFilmstockApi filmstockApi;
     private static String BASE_URL = "http://www.omdbapi.com";
     public static String API_KEY = "201fefa";
+    public static String PLOT_FULL = "full";
 
     public static Retrofit getClient(final Context context) {
         try {
@@ -54,6 +55,17 @@ public class FilmstockApi
         Call<JsonObject> searchMovie(@Query("apikey") String apiKey,
                                      @Query("t") String text,
                                      @Query("plot") String plot);
+
+        @GET(".")
+        Call<JsonObject> searchMoviePaginated(@Query("apikey") String apiKey,
+                                              @Query("s") String text,
+                                              @Query("page") int page,
+                                              @Query("plot") String plot);
+
+        @GET(".")
+        Call<JsonObject> loadMovieInformation(@Query("apikey") String apiKey,
+                                              @Query("i") String imdbId,
+                                              @Query("plot") String plot);
     }
 
     //endregion

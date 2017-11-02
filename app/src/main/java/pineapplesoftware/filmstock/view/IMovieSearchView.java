@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import pineapplesoftware.filmstock.generic.IView;
+import pineapplesoftware.filmstock.model.domain.Search;
 import pineapplesoftware.filmstock.model.dto.Movie;
 
 /**
@@ -16,8 +17,10 @@ public interface IMovieSearchView extends IView
 
     void callbackSuccessSearchMovie(ArrayList<Movie> movieList);
     void callbackErrorSearchMovie();
+    void callbackSuccessSearchMoviePaginated(ArrayList<Search> searchResults);
+    void callbackErrorSearchMoviePaginated();
 
-    class HomebrokerEmptyView implements IMovieSearchView {
+    class MovieSearchEmptyView implements IMovieSearchView {
 
         @Override
         public Context getContext() {
@@ -41,5 +44,11 @@ public interface IMovieSearchView extends IView
 
         @Override
         public void callbackErrorSearchMovie() { }
+
+        @Override
+        public void callbackSuccessSearchMoviePaginated(ArrayList<Search> movieList) { }
+
+        @Override
+        public void callbackErrorSearchMoviePaginated() { }
     }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@android:color/black"
+    android:alpha="0.8">
+
+    <!-- No internet icon -->
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/no_internet_image"
+        android:layout_width="@dimen/image_default_size"
+        android:layout_height="@dimen/image_default_size"
+        android:src="@drawable/ic_signal_wifi_off_white"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="LineScaleIndicator"/>
+
+</LinearLayout>

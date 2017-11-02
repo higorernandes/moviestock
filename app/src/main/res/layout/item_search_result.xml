@@ -56,30 +56,34 @@
                     android:layout_marginTop="@dimen/cardview_default_margin"
                     android:background="@drawable/bg_gradient"/>
 
+                <!-- Movie year -->
                 <TextView
-                    android:id="@+id/search_item_movie_genre"
+                    android:id="@+id/search_item_movie_year"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/cardview_default_margin"
-                    android:text="@string/generic_placeholder_text"
-                    android:textSize="@dimen/font_size_medium"
-                    android:textAllCaps="true"
-                    android:fontFamily="@font/roboto_light"
-                    android:alpha="0.5"
-                    android:textColor="@android:color/white"/>
-
-                <TextView
-                    android:id="@+id/search_item_movie_cast"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:text="@string/generic_placeholder_text"
                     android:textSize="@dimen/font_size_medium_large"
-                    android:layout_marginTop="@dimen/cardview_small_margin"
+                    android:layout_marginTop="@dimen/cardview_default_margin"
                     android:fontFamily="@font/roboto_thin"
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:gravity="top"
                     android:textColor="@android:color/white"/>
+
+                <!-- Movie type -->
+                <TextView
+                    android:id="@+id/search_item_movie_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:layout_marginTop="@dimen/cardview_default_margin"
+                    android:alpha="0.5"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/generic_placeholder_text"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_size_medium" />
 
             </LinearLayout>
 

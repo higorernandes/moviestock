@@ -7,6 +7,7 @@
     <string name="no_internet_verify_connection">Check your connection and try again. :)</string>
     <string name="generic_server_error">There was a error on the server. :/</string>
     <string name="generic_server_connection_error">We could not connect to the server D: \n\nPlease try again.</string>
+    <string name="generic_server_connection_error_suggestion">Would you mind trying it again?</string>
     <string name="generic_reconnect">Try again</string>
     <string name="generic_placeholder_text">-</string>
 

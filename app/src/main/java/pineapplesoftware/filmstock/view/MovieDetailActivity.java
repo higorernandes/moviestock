@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,75 +26,78 @@ import java.util.Calendar;
 import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.helper.DatabaseHelper;
 import pineapplesoftware.filmstock.model.dto.Movie;
+import pineapplesoftware.filmstock.presenter.MovieDetailPresenter;
 
-public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener
+public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener, IMovieDetailView
 {
     //region Attributes
 
-    private static final String ID = "ID";
-    private static final String TITLE = "TITLE";
-    private static final String YEAR = "YEAR";
-    private static final String RATED = "RATED";
-    private static final String RELEASED = "RELEASED";
-    private static final String RUNTIME = "RUNTIME";
-    private static final String GENRE = "GENRE";
-    private static final String DIRECTOR = "DIRECTOR";
-    private static final String WRITER = "WRITER";
-    private static final String ACTORS = "ACTORS";
-    private static final String PLOT = "PLOT";
-    private static final String LANGUAGE = "LANGUAGE";
-    private static final String COUNTRY = "COUNTRY";
-    private static final String AWARDS = "AWARDS";
-    private static final String POSTER_URL = "POSTER_URL";
-    private static final String METASCORE = "METASCORE";
-    private static final String IMDB_RATING = "IMDB_RATING";
-    private static final String IMDB_VOTES = "IMDB_VOTES";
-    private static final String IMDB_ID = "IMDB_ID";
-    private static final String TYPE = "TYPE";
-    private static final String DVD = "DVD";
-    private static final String BOX_OFFICE = "BOX_OFFICE";
-    private static final String PRODUCTION = "PRODUCTION";
-    private static final String WEBSITE = "WEBSITE";
+    private static final String IMDB_ID = "ID";
+//    private static final String TITLE = "TITLE";
+//    private static final String YEAR = "YEAR";
+//    private static final String RATED = "RATED";
+//    private static final String RELEASED = "RELEASED";
+//    private static final String RUNTIME = "RUNTIME";
+//    private static final String GENRE = "GENRE";
+//    private static final String DIRECTOR = "DIRECTOR";
+//    private static final String WRITER = "WRITER";
+//    private static final String ACTORS = "ACTORS";
+//    private static final String PLOT = "PLOT";
+//    private static final String LANGUAGE = "LANGUAGE";
+//    private static final String COUNTRY = "COUNTRY";
+//    private static final String AWARDS = "AWARDS";
+//    private static final String POSTER_URL = "POSTER_URL";
+//    private static final String METASCORE = "METASCORE";
+//    private static final String IMDB_RATING = "IMDB_RATING";
+//    private static final String IMDB_VOTES = "IMDB_VOTES";
+//    private static final String IMDB_ID = "IMDB_ID";
+//    private static final String TYPE = "TYPE";
+//    private static final String DVD = "DVD";
+//    private static final String BOX_OFFICE = "BOX_OFFICE";
+//    private static final String PRODUCTION = "PRODUCTION";
+//    private static final String WEBSITE = "WEBSITE";
 
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
     private RelativeLayout mToolbarLikeButton;
     private ImageView mToolbarLikeImage;
 
+    private ScrollView mMainScrollView;
+    private RelativeLayout mNoInternetView;
+    private Button mNoInternetReconnectButton;
+
+    private ImageView mMoviePosterImageView;
     private ImageButton mPlayImageButton;
+    private TextView mMovieTitleTextView;
+    private TextView mMovieTypeTextView;
+
+    private TextView mMovieGenreTextView;
+    private TextView mMovieDurationTextView;
+    private TextView mMoviePlotTextView;
+    private TextView mMovieActorsTextView;
+    private TextView mMovieDirectorTextView;
+
+    private TextView mMovieWriterTextView;
+    private TextView mMovieRatedTextView;
+    private TextView mMovieAwardsTextView;
+    private TextView mMovieLanguageTextView;
+    private TextView mMovieCountryTextView;
+    private TextView mMovieProductionTextView;
+    private TextView mMovieReleasedTextView;
+    private TextView mMovieBoxOfficeTextView;
+    private TextView mMovieRatingsTextView;
 
     private Movie mMovie = new Movie();
+    private String mMovieImdbId;
+    private MovieDetailPresenter mPresenter;
 
     //endregion
 
     //region Constructors
 
-    public static Intent getActivityIntent(Context context, Movie movie) {
+    public static Intent getActivityIntent(Context context, String imdbId) {
         Intent intent = new Intent(context, MovieDetailActivity.class);
-        intent.putExtra(ID, movie.getId());
-        intent.putExtra(TITLE, movie.getTitle());
-        intent.putExtra(YEAR, movie.getYear());
-        intent.putExtra(RATED, movie.getRated());
-        intent.putExtra(RELEASED, movie.getReleased());
-        intent.putExtra(RUNTIME, movie.getRuntime());
-        intent.putExtra(GENRE, movie.getGenre());
-        intent.putExtra(DIRECTOR, movie.getDirector());
-        intent.putExtra(WRITER, movie.getWriter());
-        intent.putExtra(ACTORS, movie.getActors());
-        intent.putExtra(PLOT, movie.getPlot());
-        intent.putExtra(LANGUAGE, movie.getLanguage());
-        intent.putExtra(COUNTRY, movie.getCountry());
-        intent.putExtra(AWARDS, movie.getAwards());
-        intent.putExtra(POSTER_URL, movie.getPosterUrl());
-        intent.putExtra(METASCORE, movie.getMetascore());
-        intent.putExtra(IMDB_RATING, movie.getImdbRating());
-        intent.putExtra(IMDB_VOTES, movie.getImdbVotes());
-        intent.putExtra(IMDB_ID, movie.getImdbId());
-        intent.putExtra(TYPE, movie.getType());
-        intent.putExtra(DVD, movie.getDvd());
-        intent.putExtra(BOX_OFFICE, movie.getBoxOffice());
-        intent.putExtra(PRODUCTION, movie.getProduction());
-        intent.putExtra(WEBSITE, movie.getWebsite());
+        intent.putExtra(IMDB_ID, imdbId);
 
         return intent;
     }
@@ -106,9 +111,12 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        mPresenter = new MovieDetailPresenter();
+        mPresenter.setView(this);
+
         initViews();
         setUpToolbar();
-        loadMovieInformation();
+        loadLocalMovieInformation();
     }
 
     @Override
@@ -131,6 +139,9 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
             case R.id.detail_title_play_imagebutton:
                 openYoutubeVideoSearch();
                 break;
+            case R.id.no_internet_reconnect_button:
+                mPresenter.loadMovieInformation(mMovieImdbId);
+                break;
         }
     }
 
@@ -139,6 +150,62 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out_right);
     }
+
+    //region MovieDetailPresenter Methods
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void requestCallbackSuccess() { }
+
+    @Override
+    public void requestCallbackError() {
+        mMainScrollView.setVisibility(View.GONE);
+        mNoInternetView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void callbackSuccessLoadMovie(final Movie movie) {
+        mMovie = movie;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mNoInternetView.setVisibility(View.GONE);
+                mMainScrollView.setVisibility(View.VISIBLE);
+                loadMovieInformationIntoViews(movie);
+            }
+        });
+    }
+
+    @Override
+    public void callbackErrorLoadMovie() {
+        mMainScrollView.setVisibility(View.GONE);
+        mNoInternetView.setVisibility(View.VISIBLE);
+
+        TextView noInternetTextView = mNoInternetView.findViewById(R.id.no_internet_text);
+        noInternetTextView.setText(getResources().getString(R.string.generic_server_error));
+
+        TextView noInternetSuggestionTextView = mNoInternetView.findViewById(R.id.no_internet_suggestion);
+        noInternetSuggestionTextView.setText(getResources().getString(R.string.generic_server_connection_error_suggestion));
+
+        ImageView noInternetImageView = mNoInternetView.findViewById(R.id.no_internet_image);
+        noInternetImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_shrug));
+    }
+
+    //endregion
 
     //endregion
 
@@ -150,207 +217,34 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         mToolbarLikeButton = mToolbar.findViewById(R.id.toolbar_detail_like_relativelayout);
         mToolbarLikeImage = mToolbar.findViewById(R.id.toolbar_detail_like_imageview);
 
+        mMainScrollView = findViewById(R.id.detail_main_scrollview);
+        mNoInternetView = findViewById(R.id.detail_no_internet_view);
+        mNoInternetReconnectButton = findViewById(R.id.no_internet_reconnect_button);
+
+        mMoviePosterImageView = findViewById(R.id.detail_movie_image);
         mPlayImageButton = findViewById(R.id.detail_title_play_imagebutton);
+        mMovieTitleTextView = findViewById(R.id.detail_movie_name);
+        mMovieTypeTextView = findViewById(R.id.detail_movie_type);
 
-        //region Main information
+        mMovieGenreTextView = findViewById(R.id.detail_movie_genre_text);
+        mMovieDurationTextView = findViewById(R.id.detail_movie_duration);
+        mMoviePlotTextView = findViewById(R.id.detail_movie_plot);
+        mMovieActorsTextView = findViewById(R.id.detail_movie_actors_text);
+        mMovieDirectorTextView = findViewById(R.id.detail_movie_director_text);
 
-        LinearLayout containerView;
-
-        // Poster.
-        String posterUrl = getIntent().getStringExtra(POSTER_URL);
-        ImageView moviePosterImageView = findViewById(R.id.detail_movie_image);
-        if (posterUrl != null && !posterUrl.isEmpty() && !posterUrl.toLowerCase().equals("n/a")) {
-            Glide.with(this).load(posterUrl).into(moviePosterImageView);
-            mMovie.setPosterUrl(posterUrl);
-        }
-
-        // Title.
-        String title = getIntent().getStringExtra(TITLE);
-        TextView movieTitleTextView = findViewById(R.id.detail_movie_name);
-        if (title != null && !title.isEmpty() && !title.toLowerCase().equals("n/a")) {
-            movieTitleTextView.setText(title);
-            mMovie.setTitle(title);
-        }
-
-        // Type.
-        String type = getIntent().getStringExtra(TYPE);
-        TextView movieTypeTextView = findViewById(R.id.detail_movie_type);
-        if (type != null && !type.isEmpty() && !type.toLowerCase().equals("n/a")) {
-            movieTypeTextView.setText(type);
-            mMovie.setType(type);
-        } else {
-            movieTypeTextView.setVisibility(View.GONE);
-        }
-
-        // Genre.
-        String genre = getIntent().getStringExtra(GENRE);
-        if (genre != null && !genre.isEmpty() && !genre.toLowerCase().equals("n/a")) {
-            TextView movieGenreTextView = findViewById(R.id.detail_movie_genre_text);
-            movieGenreTextView.setText(genre);
-            mMovie.setGenre(genre);
-        }
-
-        // Year and Runtime/duration.
-        String year = getIntent().getStringExtra(YEAR);
-        String runtime = getIntent().getStringExtra(RUNTIME);
-        TextView movieDurationTextView = findViewById(R.id.detail_movie_duration);
-        if ((year != null && !year.isEmpty() && !year.toLowerCase().equals("n/a")) && (runtime != null && !runtime.isEmpty() && !runtime.toLowerCase().equals("n/a"))) {
-            movieDurationTextView.setText(getResources().getString(R.string.movie_detail_movie_year_runtime)
-                    .replace("{movieYear}", year)
-                    .replace("{runtime}", runtime));
-            mMovie.setYear(year);
-            mMovie.setRuntime(runtime);
-        } else if ((year == null || year.isEmpty() || year.toLowerCase().equals("n/a")) && (runtime != null && !runtime.isEmpty() && !runtime.toLowerCase().equals("n/a"))) {
-            movieDurationTextView.setText(runtime);
-            mMovie.setRuntime(runtime);
-        } else if ((year != null && !year.isEmpty() && !year.toLowerCase().equals("n/a")) && (runtime == null || runtime.isEmpty() || runtime.toLowerCase().equals("n/a"))) {
-            movieDurationTextView.setText(year);
-            mMovie.setYear(year);
-        }
-
-        // Plot.
-        String plot = getIntent().getStringExtra(PLOT);
-        if (plot != null && !plot.isEmpty() && !plot.toLowerCase().equals("n/a")) {
-            TextView moviePlotTextView = findViewById(R.id.detail_movie_plot);
-            moviePlotTextView.setText(plot);
-            mMovie.setPlot(plot);
-        }
-
-        // Cast.
-        String cast = getIntent().getStringExtra(ACTORS);
-        if (cast != null && !cast.isEmpty() && !cast.toLowerCase().equals("n/a")) {
-            TextView movieDirectorTextView = findViewById(R.id.detail_movie_actors_text);
-            movieDirectorTextView.setText(cast);
-            mMovie.setActors(cast);
-        } else {
-            containerView = findViewById(R.id.detail_actors_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Director.
-        String director = getIntent().getStringExtra(DIRECTOR);
-        if (director != null && !director.isEmpty() && !director.toLowerCase().equals("n/a")) {
-            TextView movieDirectorTextView = findViewById(R.id.detail_movie_director_text);
-            movieDirectorTextView.setText(director);
-            mMovie.setDirector(director);
-        } else {
-            containerView = findViewById(R.id.detail_director_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        //endregion
-
-        //region Secondary information
-
-        // Writers.
-        String writer = getIntent().getStringExtra(WRITER);
-        if (writer != null && !writer.isEmpty() && !writer.toLowerCase().equals("n/a")) {
-            TextView movieWriterTextView = findViewById(R.id.detail_movie_writer_text);
-            movieWriterTextView.setText(writer);
-            mMovie.setWriter(writer);
-        } else {
-            containerView = findViewById(R.id.detail_writer_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Rated.
-        String rated = getIntent().getStringExtra(RATED);
-        if (rated != null && !rated.isEmpty() && !rated.toLowerCase().equals("n/a")) {
-            TextView movieRatedTextView = findViewById(R.id.detail_movie_rated_text);
-            movieRatedTextView.setText(rated);
-            mMovie.setRated(rated);
-        } else {
-            containerView = findViewById(R.id.detail_rated_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Awards.
-        String awards = getIntent().getStringExtra(AWARDS);
-        if (awards != null && !awards.isEmpty() && !awards.toLowerCase().equals("n/a")) {
-            TextView movieAwardsTextView = findViewById(R.id.detail_movie_awards_text);
-            movieAwardsTextView.setText(awards);
-            mMovie.setAwards(awards);
-        } else {
-            containerView = findViewById(R.id.detail_awards_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Language.
-        String language = getIntent().getStringExtra(LANGUAGE);
-        if (language != null && !language.isEmpty() && !language.toLowerCase().equals("n/a")) {
-            TextView movieLanguageTextView = findViewById(R.id.detail_movie_language_text);
-            movieLanguageTextView.setText(language);
-            mMovie.setLanguage(language);
-        } else {
-            containerView = findViewById(R.id.detail_language_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Country.
-        String country = getIntent().getStringExtra(COUNTRY);
-        if (country != null && !country.isEmpty() && !country.toLowerCase().equals("n/a")) {
-            TextView movieCountryTextView = findViewById(R.id.detail_movie_country_text);
-            movieCountryTextView.setText(country);
-            mMovie.setCountry(country);
-        } else {
-            containerView = findViewById(R.id.detail_country_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Production.
-        String production = getIntent().getStringExtra(PRODUCTION);
-        if (production != null && !production.isEmpty() && !production.toLowerCase().equals("n/a")) {
-            TextView movieProductionTextView = findViewById(R.id.detail_movie_production_text);
-            movieProductionTextView.setText(production);
-            mMovie.setProduction(production);
-        } else {
-            containerView = findViewById(R.id.detail_production_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Released.
-        String released = getIntent().getStringExtra(RELEASED);
-        if (released != null && !released.isEmpty() && !released.toLowerCase().equals("n/a")) {
-            TextView movieReleasedTextView = findViewById(R.id.detail_movie_released_text);
-            movieReleasedTextView.setText(released);
-            mMovie.setReleased(released);
-        } else {
-            containerView = findViewById(R.id.detail_released_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // Box Office.
-        String boxOffice = getIntent().getStringExtra(BOX_OFFICE);
-        if (boxOffice != null && !boxOffice.isEmpty() && !boxOffice.toLowerCase().equals("n/a")) {
-            TextView movieBoxOfficeTextView = findViewById(R.id.detail_movie_box_text);
-            movieBoxOfficeTextView.setText(boxOffice);
-            mMovie.setBoxOffice(boxOffice);
-        } else {
-            containerView = findViewById(R.id.detail_boxoffice_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        // IMDB Rating.
-        String imdbRating = getIntent().getStringExtra(IMDB_RATING);
-        if (imdbRating != null && !imdbRating.isEmpty() && !imdbRating.toLowerCase().equals("n/a")) {
-            TextView movieRatingsTextView = findViewById(R.id.detail_movie_ratings_text);
-            movieRatingsTextView.setText(imdbRating);
-            mMovie.setImdbRating(imdbRating);
-        } else {
-            containerView = findViewById(R.id.detail_ratings_container);
-            containerView.setVisibility(View.GONE);
-        }
-
-        loadRemainingInfo();
-
-        //endregion
-
-        if (mMovie.getId() != 0) {
-            mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
-        }
+        mMovieWriterTextView = findViewById(R.id.detail_movie_writer_text);
+        mMovieRatedTextView = findViewById(R.id.detail_movie_rated_text);
+        mMovieAwardsTextView = findViewById(R.id.detail_movie_awards_text);
+        mMovieLanguageTextView = findViewById(R.id.detail_movie_language_text);
+        mMovieCountryTextView = findViewById(R.id.detail_movie_country_text);
+        mMovieProductionTextView = findViewById(R.id.detail_movie_production_text);
+        mMovieReleasedTextView = findViewById(R.id.detail_movie_released_text);
+        mMovieBoxOfficeTextView = findViewById(R.id.detail_movie_box_text);
+        mMovieRatingsTextView = findViewById(R.id.detail_movie_ratings_text);
 
         mToolbarLikeButton.setOnClickListener(this);
         mPlayImageButton.setOnClickListener(this);
+        mNoInternetReconnectButton.setOnClickListener(this);
     }
 
     private void setUpToolbar() {
@@ -362,49 +256,162 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     /**
-     * Verifies whether the movie already exists on the database or not.
+     * Loads the movie information from the local database. If movie doesn't exist locally, it loads
+     * it from the API.
      */
-    private void loadMovieInformation() {
-        // If movie has already been saved, changes the icon to show it as so.
+    private void loadLocalMovieInformation() {
+        mMovieImdbId = getIntent().getStringExtra(IMDB_ID);
+
         DatabaseHelper database = new DatabaseHelper(this);
-        Movie movie = database.getMovieWithImdbId(mMovie.getImdbId());
+        Movie movie = database.getMovieWithImdbId(mMovieImdbId);
+
         if (movie != null) {
+            // Setting the "Liked" button.
             mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
+            loadMovieInformationIntoViews(movie);
+        } else {
+            mPresenter.loadMovieInformation(mMovieImdbId);
         }
     }
 
     /**
-     * Loads the remaining info (information not shown).
+     * Loads a given movie's information into the views.
+     * @param movie The movie object containing the information.
      */
-    private void loadRemainingInfo() {
-        long id = getIntent().getLongExtra(ID, 0);
-        if (id != 0) {
-            mMovie.setId(id);
+    private void loadMovieInformationIntoViews(Movie movie) {
+
+        //region Main information
+
+        LinearLayout containerView;
+
+        // Poster.
+        if (movie.getPosterUrl() != null && !movie.getPosterUrl().isEmpty() && !movie.getPosterUrl().toLowerCase().equals("n/a")) {
+            Glide.with(this).load(movie.getPosterUrl()).into(mMoviePosterImageView);
         }
 
-        String metascore = getIntent().getStringExtra(IMDB_RATING);
-        if (metascore != null && !metascore.isEmpty() && !metascore.toLowerCase().equals("n/a")) {
-            mMovie.setMetascore(metascore);
+        // Title.
+        if (movie.getTitle() != null && !movie.getTitle().isEmpty() && !movie.getTitle().toLowerCase().equals("n/a")) {
+            mMovieTitleTextView.setText(movie.getTitle());
         }
 
-        String imdbVotes = getIntent().getStringExtra(IMDB_VOTES);
-        if (imdbVotes != null && !imdbVotes.isEmpty() && !imdbVotes.toLowerCase().equals("n/a")) {
-            mMovie.setImdbVotes(imdbVotes);
+        // Type.
+        if (movie.getType() != null && !movie.getType().isEmpty() && !movie.getType().toLowerCase().equals("n/a")) {
+            mMovieTypeTextView.setText(movie.getType());
+        } else {
+            mMovieTypeTextView.setVisibility(View.GONE);
         }
 
-        String imdbId = getIntent().getStringExtra(IMDB_ID);
-        if (imdbId != null && !imdbId.isEmpty() && !imdbId.toLowerCase().equals("n/a")) {
-            mMovie.setImdbId(imdbId);
+        // Genre.
+        if (movie.getGenre() != null && !movie.getGenre().isEmpty() && !movie.getGenre().toLowerCase().equals("n/a")) {
+            mMovieGenreTextView.setText(movie.getGenre());
         }
 
-        String dvd = getIntent().getStringExtra(DVD);
-        if (dvd != null && !dvd.isEmpty() && !dvd.toLowerCase().equals("n/a")) {
-            mMovie.setDvd(dvd);
+        // Year and Runtime/duration.
+        if ((movie.getYear() != null && !movie.getYear().isEmpty() && !movie.getYear().toLowerCase().equals("n/a")) && (movie.getRuntime() != null && !movie.getRuntime().isEmpty() && !movie.getRuntime().toLowerCase().equals("n/a"))) {
+            mMovieDurationTextView.setText(getResources().getString(R.string.movie_detail_movie_year_runtime)
+                    .replace("{movieYear}", movie.getYear())
+                    .replace("{runtime}", movie.getRuntime()));
+        } else if ((movie.getYear() == null || movie.getYear().isEmpty() || movie.getYear().toLowerCase().equals("n/a")) && (movie.getRuntime() != null && !movie.getRuntime().isEmpty() && !movie.getRuntime().toLowerCase().equals("n/a"))) {
+            mMovieDurationTextView.setText(movie.getRuntime());
+        } else if ((movie.getYear() != null && !movie.getYear().isEmpty() && !movie.getYear().toLowerCase().equals("n/a")) && (movie.getRuntime() == null || movie.getRuntime().isEmpty() || movie.getRuntime().toLowerCase().equals("n/a"))) {
+            mMovieDurationTextView.setText(movie.getYear());
         }
 
-        String website = getIntent().getStringExtra(WEBSITE);
-        if (website != null && !website.isEmpty() && !website.toLowerCase().equals("n/a")) {
-            mMovie.setWebsite(website);
+        // Plot.
+        if (movie.getPlot() != null && !movie.getPlot().isEmpty() && !movie.getPlot().toLowerCase().equals("n/a")) {
+            mMoviePlotTextView.setText(movie.getPlot());
+        }
+
+        // Cast.
+        if (movie.getActors() != null && !movie.getActors().isEmpty() && !movie.getActors().toLowerCase().equals("n/a")) {
+            mMovieActorsTextView.setText(movie.getActors());
+        } else {
+            containerView = findViewById(R.id.detail_actors_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Director.
+        if (movie.getDirector() != null && !movie.getDirector().isEmpty() && !movie.getDirector().toLowerCase().equals("n/a")) {
+            mMovieDirectorTextView.setText(movie.getDirector());
+        } else {
+            containerView = findViewById(R.id.detail_director_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        //endregion
+
+        //region Secondary information
+
+        // Writers.
+        if (movie.getWriter() != null && !movie.getWriter().isEmpty() && !movie.getWriter().toLowerCase().equals("n/a")) {
+            mMovieWriterTextView.setText(movie.getWriter());
+        } else {
+            containerView = findViewById(R.id.detail_writer_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Rated.
+        if (movie.getRated() != null && !movie.getRated().isEmpty() && !movie.getRated().toLowerCase().equals("n/a")) {
+            mMovieRatedTextView.setText(movie.getRated());
+        } else {
+            containerView = findViewById(R.id.detail_rated_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Awards.
+        if (movie.getAwards() != null && !movie.getAwards().isEmpty() && !movie.getAwards().toLowerCase().equals("n/a")) {
+            mMovieAwardsTextView.setText(movie.getAwards());
+        } else {
+            containerView = findViewById(R.id.detail_awards_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Language.
+        if (movie.getLanguage() != null && !movie.getLanguage().isEmpty() && !movie.getLanguage().toLowerCase().equals("n/a")) {
+            mMovieLanguageTextView.setText(movie.getLanguage());
+        } else {
+            containerView = findViewById(R.id.detail_language_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Country.
+        if (movie.getLanguage() != null && !movie.getLanguage().isEmpty() && !movie.getLanguage().toLowerCase().equals("n/a")) {
+            mMovieCountryTextView.setText(movie.getLanguage());
+        } else {
+            containerView = findViewById(R.id.detail_country_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Production.
+        if (movie.getProduction() != null && !movie.getProduction().isEmpty() && !movie.getProduction().toLowerCase().equals("n/a")) {
+            mMovieProductionTextView.setText(movie.getProduction());
+        } else {
+            containerView = findViewById(R.id.detail_production_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Released.
+        if (movie.getReleased() != null && !movie.getReleased().isEmpty() && !movie.getReleased().toLowerCase().equals("n/a")) {
+            mMovieReleasedTextView.setText(movie.getReleased());
+        } else {
+            containerView = findViewById(R.id.detail_released_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // Box Office.
+        if (movie.getBoxOffice() != null && !movie.getBoxOffice().isEmpty() && !movie.getBoxOffice().toLowerCase().equals("n/a")) {
+            mMovieBoxOfficeTextView.setText(movie.getBoxOffice());
+        } else {
+            containerView = findViewById(R.id.detail_boxoffice_container);
+            containerView.setVisibility(View.GONE);
+        }
+
+        // IMDB Rating.
+        if (movie.getImdbRating() != null && !movie.getImdbRating().isEmpty() && !movie.getImdbRating().toLowerCase().equals("n/a")) {
+            mMovieRatingsTextView.setText(movie.getImdbRating());
+        } else {
+            containerView = findViewById(R.id.detail_ratings_container);
+            containerView.setVisibility(View.GONE);
         }
     }
 

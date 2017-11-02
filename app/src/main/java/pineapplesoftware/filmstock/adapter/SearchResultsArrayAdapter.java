@@ -16,7 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 
 import pineapplesoftware.filmstock.R;
-import pineapplesoftware.filmstock.model.dto.Movie;
+import pineapplesoftware.filmstock.model.domain.Search;
 
 /**
  * Created by root on 2017-10-28.
@@ -27,7 +27,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
     //region Attributes
 
     private Context mContext;
-    private ArrayList<Movie> mObjects;
+    private ArrayList<Search> mObjects;
     private IMovieSelectionListener mListener;
 
     //endregion
@@ -42,7 +42,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     //region Constructor
 
-    public SearchResultsArrayAdapter(Context context, ArrayList<Movie> searchResults) {
+    public SearchResultsArrayAdapter(Context context, ArrayList<Search> searchResults) {
         mContext = context;
         mObjects = searchResults;
     }
@@ -59,7 +59,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     @Override
     public void onBindViewHolder(MoviesHolder holder, int position) {
-        Movie movie = mObjects.get(position);
+        Search movie = mObjects.get(position);
 
         // Setting the movie poster.
         RequestOptions requestOptions = new RequestOptions().placeholder(ContextCompat.getDrawable(mContext, R.drawable.ic_movie_placeholder)).centerCrop();
@@ -69,15 +69,13 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
                 .into(holder.getMoviePosterImageView());
 
         // Setting the movie title.
-        String title = mContext.getResources().getString(R.string.movie_search_title_text)
-                .replace("{name}", movie.getTitle())
-                .replace("{year}", movie.getYear());
-        holder.getMovieNameTextView().setText(title);
+        holder.getMovieNameTextView().setText(movie.getTitle());
 
-        //Setting the movie genre.
-        holder.getMovieGenreTextView().setText(movie.getGenre());
+        // Setting the movie type.
+        holder.getMovieTypeTextView().setText(movie.getType());
 
-        holder.getMovieCastTextView().setText(movie.getActors());
+        // Setting the movie year.
+        holder.getMovieYearTextView().setText(movie.getYear());
     }
 
     @Override
@@ -106,8 +104,8 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
         private CardView mRootView;
         private ImageView mMoviePosterImageView;
         private TextView mMovieNameTextView;
-        private TextView mMovieGenreTextView;
-        private TextView mMovieCastTextView;
+        private TextView mMovieTypeTextView;
+        private TextView mMovieYearTextView;
 
         MoviesHolder(View itemView) {
             super(itemView);
@@ -115,8 +113,8 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
             mRootView = itemView.findViewById(R.id.search_item_cardview);
             mMoviePosterImageView = itemView.findViewById(R.id.search_item_movie_poster);
             mMovieNameTextView = itemView.findViewById(R.id.search_item_movie_title);
-            mMovieGenreTextView = itemView.findViewById(R.id.search_item_movie_genre);
-            mMovieCastTextView = itemView.findViewById(R.id.search_item_movie_cast);
+            mMovieTypeTextView = itemView.findViewById(R.id.search_item_movie_type);
+            mMovieYearTextView = itemView.findViewById(R.id.search_item_movie_year);
 
             mRootView.setOnClickListener(this);
         }
@@ -137,20 +135,20 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
             this.mMovieNameTextView = movieNameTextView;
         }
 
-        public TextView getMovieGenreTextView() {
-            return mMovieGenreTextView;
+        public TextView getMovieTypeTextView() {
+            return mMovieTypeTextView;
         }
 
-        public void setMovieGenreTextView(TextView movieGenreTextView) {
-            this.mMovieGenreTextView = movieGenreTextView;
+        public void setMovieTypeTextView(TextView movieTypeTextView) {
+            this.mMovieTypeTextView = movieTypeTextView;
         }
 
-        public TextView getMovieCastTextView() {
-            return mMovieCastTextView;
+        public TextView getMovieYearTextView() {
+            return mMovieYearTextView;
         }
 
-        public void setMovieCastTextView(TextView movieCastTextView) {
-            this.mMovieCastTextView = movieCastTextView;
+        public void setMovieYearTextView(TextView movieYearTextView) {
+            this.mMovieYearTextView = movieYearTextView;
         }
 
         @Override

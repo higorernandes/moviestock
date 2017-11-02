@@ -56,7 +56,7 @@
             </RelativeLayout>
 
             <!-- ProgressBar -->
-            <ProgressBar
+            <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/toolbar_progressbar"
                 android:layout_width="@dimen/button_toolbar_size"
                 android:layout_height="@dimen/button_toolbar_size"
@@ -64,6 +64,8 @@
                 android:layout_centerInParent="true"
                 android:layout_marginEnd="@dimen/default_medium_margin"
                 android:layout_marginStart="@dimen/default_medium_margin"
+                app:indicatorColor="@color/colorAccent"
+                app:indicatorName="LineScaleIndicator"
                 android:visibility="gone"/>
 
         </RelativeLayout>

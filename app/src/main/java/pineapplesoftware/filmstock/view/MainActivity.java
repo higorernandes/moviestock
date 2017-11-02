@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.main_movie_info_container:
                 Movie selectedMovie = mMovies.get(mMainInfiniteCycleViewPager.getRealItem());
-                startActivity(MovieDetailActivity.getActivityIntent(this, selectedMovie));
+                startActivity(MovieDetailActivity.getActivityIntent(this, selectedMovie.getImdbId()));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
                 break;
         }
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void showMovieDetailedInfo(int position) {
         Movie movie = mMovies.get(position);
-        startActivity(MovieDetailActivity.getActivityIntent(this, movie));
+        startActivity(MovieDetailActivity.getActivityIntent(this, movie.getImdbId()));
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
     }
 

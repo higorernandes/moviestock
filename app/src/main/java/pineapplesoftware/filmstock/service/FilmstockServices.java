@@ -10,10 +10,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.model.domain.IFilmstockResponse;
 import pineapplesoftware.filmstock.model.domain.MovieResponse;
+import pineapplesoftware.filmstock.model.domain.MovieSearchResult;
+import pineapplesoftware.filmstock.model.domain.Search;
 import pineapplesoftware.filmstock.model.dto.Movie;
 import retrofit.Call;
 import retrofit.Callback;
@@ -46,7 +49,7 @@ public class FilmstockServices
                 mCall.cancel();
             }
 
-            mCall = service.searchMovie(FilmstockApi.API_KEY, textToSearch, "full");
+            mCall = service.searchMovie(FilmstockApi.API_KEY, textToSearch, FilmstockApi.PLOT_FULL);
             mCall.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
@@ -65,6 +68,101 @@ public class FilmstockServices
                             }
 
                             listener.onResponseSuccess(moviesList);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        listener.onResponseError(context.getResources().getString(R.string.generic_server_error));
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    mCall = null;
+                    listener.onResponseError(t.getMessage());
+                }
+            });
+        }
+    }
+
+    /**
+     * Makes a request to the OMDB Api to get a movie given a text to be searched.
+     * @param context The calling class.
+     * @param textToSearch The text to be searched.
+     * @param listener The class which will be listening to the response.
+     */
+    public static void searchMoviePaginated(final Context context, String textToSearch, int page, final IFilmstockResponse listener) {
+        FilmstockApi.IFilmstockApi service = getFilmstockApi(context);
+        if (service != null) {
+            if (mCall != null) {
+                mCall.cancel();
+            }
+
+            mCall = service.searchMoviePaginated(FilmstockApi.API_KEY, textToSearch, page,FilmstockApi.PLOT_FULL);
+            mCall.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
+                    mCall = null;
+                    if (response.isSuccess()) {
+                        try {
+                            // Getting the data from the Json response and transforming it into a movie list.
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = response.body().getAsJsonObject();
+
+                            String json = jsonObject.getAsJsonObject().toString();
+                            MovieSearchResult movieSearchResult = gson.fromJson(json, MovieSearchResult.class);
+
+                            ArrayList<Search> searchResultsList = new ArrayList<>();
+                            if (movieSearchResult != null && movieSearchResult.getSearch() != null) {
+                                searchResultsList.addAll(movieSearchResult.getSearch());
+                            }
+
+                            listener.onResponseSuccess(searchResultsList);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        listener.onResponseError(context.getResources().getString(R.string.generic_server_error));
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    mCall = null;
+                    listener.onResponseError(t.getMessage());
+                }
+            });
+        }
+    }
+
+    /**
+     * Loads the information for a single movie.
+     * @param context The calling class.
+     * @param imdbId The movie's IMDB ID.
+     * @param listener The class which will be listening to the response.
+     */
+    public static void loadMovieInformation(final Context context, String imdbId, final IFilmstockResponse listener) {
+        FilmstockApi.IFilmstockApi service = getFilmstockApi(context);
+        if (service != null) {
+            if (mCall != null) {
+                mCall.cancel();
+            }
+
+            mCall = service.loadMovieInformation(FilmstockApi.API_KEY, imdbId, FilmstockApi.PLOT_FULL);
+            mCall.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
+                    mCall = null;
+                    if (response.isSuccess()) {
+                        try {
+                            // Getting the data from the Json response and transforming it into a movie list.
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = response.body().getAsJsonObject();
+
+                            String json = jsonObject.getAsJsonObject().toString();
+                            Movie movie = gson.fromJson(json, Movie.class);
+
+                            listener.onResponseSuccess(movie);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
