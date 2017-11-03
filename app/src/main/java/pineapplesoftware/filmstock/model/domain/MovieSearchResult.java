@@ -19,6 +19,10 @@ public class MovieSearchResult implements Serializable
     @Expose
     private String mResponse;
 
+    @SerializedName("Error")
+    @Expose
+    private String mError;
+
     /**
      * No args constructor for use in serialization
      * 
@@ -61,5 +65,14 @@ public class MovieSearchResult implements Serializable
     public void setResponse(String response) {
         this.mResponse = response;
     }
+
+    public String getError() {
+        return mError;
+    }
+
+    public void setError(String error) {
+        this.mError = error;
+    }
+
 
 }

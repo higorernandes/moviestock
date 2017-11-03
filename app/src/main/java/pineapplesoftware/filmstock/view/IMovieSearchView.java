@@ -18,7 +18,7 @@ public interface IMovieSearchView extends IView
     void callbackSuccessSearchMovie(ArrayList<Movie> movieList);
     void callbackErrorSearchMovie();
     void callbackSuccessSearchMoviePaginated(ArrayList<Search> searchResults);
-    void callbackErrorSearchMoviePaginated();
+    void callbackErrorSearchMoviePaginated(String message);
 
     class MovieSearchEmptyView implements IMovieSearchView {
 
@@ -49,6 +49,6 @@ public interface IMovieSearchView extends IView
         public void callbackSuccessSearchMoviePaginated(ArrayList<Search> movieList) { }
 
         @Override
-        public void callbackErrorSearchMoviePaginated() { }
+        public void callbackErrorSearchMoviePaginated(String message) { }
     }
 }

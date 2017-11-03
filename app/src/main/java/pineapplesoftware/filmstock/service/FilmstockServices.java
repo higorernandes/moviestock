@@ -112,12 +112,16 @@ public class FilmstockServices
                             String json = jsonObject.getAsJsonObject().toString();
                             MovieSearchResult movieSearchResult = gson.fromJson(json, MovieSearchResult.class);
 
-                            ArrayList<Search> searchResultsList = new ArrayList<>();
-                            if (movieSearchResult != null && movieSearchResult.getSearch() != null) {
-                                searchResultsList.addAll(movieSearchResult.getSearch());
-                            }
+                            if (Boolean.valueOf(movieSearchResult.getResponse().toLowerCase())) {
+                                ArrayList<Search> searchResultsList = new ArrayList<>();
+                                if (movieSearchResult != null && movieSearchResult.getSearch() != null) {
+                                    searchResultsList.addAll(movieSearchResult.getSearch());
+                                }
 
-                            listener.onResponseSuccess(searchResultsList);
+                                listener.onResponseSuccess(searchResultsList);
+                            } else {
+                                listener.onResponseError(movieSearchResult.getError());
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

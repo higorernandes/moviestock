@@ -16,8 +16,8 @@ import pineapplesoftware.filmstock.view.IMovieSearchView;
  * Created by Higor Ernandes on 2017-10-29.
  */
 
-public class MovieSearchPresenter implements IPresenter {
-
+public class MovieSearchPresenter implements IPresenter
+{
     private IMovieSearchView mView;
 
     @Override
@@ -72,7 +72,7 @@ public class MovieSearchPresenter implements IPresenter {
 
                 @Override
                 public void onResponseError(String message) {
-                    mView.callbackErrorSearchMoviePaginated();
+                    mView.callbackErrorSearchMoviePaginated(message);
                     mView.hideLoading();
                 }
             });

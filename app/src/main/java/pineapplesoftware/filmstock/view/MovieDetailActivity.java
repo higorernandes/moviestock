@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import java.util.Calendar;
 
 import pineapplesoftware.filmstock.R;
+import pineapplesoftware.filmstock.adapter.SearchResultsArrayAdapter;
 import pineapplesoftware.filmstock.helper.DatabaseHelper;
 import pineapplesoftware.filmstock.model.dto.Movie;
 import pineapplesoftware.filmstock.presenter.MovieDetailPresenter;
@@ -65,6 +66,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     private ScrollView mMainScrollView;
     private RelativeLayout mNoInternetView;
     private Button mNoInternetReconnectButton;
+    private RelativeLayout mLoadingView;
 
     private ImageView mMoviePosterImageView;
     private ImageButton mPlayImageButton;
@@ -169,12 +171,14 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void showLoading() {
-
+        mMainScrollView.setVisibility(View.GONE);
+        mLoadingView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        mMainScrollView.setVisibility(View.VISIBLE);
+        mLoadingView.setVisibility(View.GONE);
     }
 
     @Override
@@ -220,6 +224,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         mMainScrollView = findViewById(R.id.detail_main_scrollview);
         mNoInternetView = findViewById(R.id.detail_no_internet_view);
         mNoInternetReconnectButton = findViewById(R.id.no_internet_reconnect_button);
+        mLoadingView = findViewById(R.id.detail_loading_view);
 
         mMoviePosterImageView = findViewById(R.id.detail_movie_image);
         mPlayImageButton = findViewById(R.id.detail_title_play_imagebutton);
@@ -263,12 +268,12 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         mMovieImdbId = getIntent().getStringExtra(IMDB_ID);
 
         DatabaseHelper database = new DatabaseHelper(this);
-        Movie movie = database.getMovieWithImdbId(mMovieImdbId);
+        mMovie = database.getMovieWithImdbId(mMovieImdbId);
 
-        if (movie != null) {
+        if (mMovie != null) {
             // Setting the "Liked" button.
             mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
-            loadMovieInformationIntoViews(movie);
+            loadMovieInformationIntoViews(mMovie);
         } else {
             mPresenter.loadMovieInformation(mMovieImdbId);
         }
@@ -375,8 +380,8 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         }
 
         // Country.
-        if (movie.getLanguage() != null && !movie.getLanguage().isEmpty() && !movie.getLanguage().toLowerCase().equals("n/a")) {
-            mMovieCountryTextView.setText(movie.getLanguage());
+        if (movie.getCountry() != null && !movie.getCountry().isEmpty() && !movie.getCountry().toLowerCase().equals("n/a")) {
+            mMovieCountryTextView.setText(movie.getCountry());
         } else {
             containerView = findViewById(R.id.detail_country_container);
             containerView.setVisibility(View.GONE);
@@ -435,7 +440,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(this, getResources().getString(R.string.movie_detail_success_save_message), Toast.LENGTH_SHORT).show();
         }
 
-        MainActivity.sShouldReloadMoviesList = !MainActivity.sShouldReloadMoviesList;
+        MainActivity.sShouldReloadMoviesList = true;
     }
 
     /**
@@ -444,7 +449,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     private void openYoutubeVideoSearch() {
         Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + mMovie.getTitle()));
         appIntent.setPackage("com.google.android.youtube");
-        appIntent.putExtra("query", mMovie.getTitle());
+        appIntent.putExtra("query", mMovie.getTitle() + " trailer");
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         String movieSearch = mMovie.getTitle().trim().replaceAll(" ", "+") + "+trailer";

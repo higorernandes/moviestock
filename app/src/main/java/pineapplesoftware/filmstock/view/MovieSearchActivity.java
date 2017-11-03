@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -42,12 +42,16 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
     private RelativeLayout mNoItemsView;
 
     private RecyclerView mSearchResultsRecyclerView;
+    private RelativeLayout mLoadingBottomContainer;
+    private AVLoadingIndicatorView mLoadingBottomProgressBar;
 
     private SearchResultsArrayAdapter mSearchResultsArrayAdapter;
     private ArrayList<Search> mSearchResults = new ArrayList<>();
 
     private MovieSearchPresenter mPresenter;
-    private int mPage = 1;
+    private LinearLayoutManager mLayoutManager;
+    private int mPage = 1, mPastVisibleItems, mVisibleItemCount, mTotalItemCount;;
+    private boolean mLoading = true;
 
     //endregion
 
@@ -79,9 +83,6 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
             case R.id.no_internet_reconnect_button:
                 mPresenter.searchMoviePaginated(mToolbarSearchEditText.getText().toString(), mPage);
                 break;
-            case R.id.toolbar_search_relativelayout:
-                mPresenter.searchMoviePaginated(mToolbarSearchEditText.getText().toString(), mPage);
-                break;
         }
     }
 
@@ -107,6 +108,7 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        mPage = 1;
         if (charSequence.length() >= 2) { // Minimum of 2 characters to start searching.
             mPresenter.searchMoviePaginated(charSequence.toString(), mPage);
         } else {
@@ -147,81 +149,91 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
         mLoadingProgressBar.animate();
         mLoadingProgressBar.setVisibility(View.VISIBLE);
         mToolbarSearchButton.setVisibility(View.GONE);
+
+        if (mPage > 1) {
+            mLoadingBottomProgressBar.animate();
+            mLoadingBottomContainer.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hideLoading() {
         mLoadingProgressBar.clearAnimation();
         mLoadingProgressBar.setVisibility(View.GONE);
+
+        mLoadingBottomProgressBar.clearAnimation();
+        mLoadingBottomContainer.setVisibility(View.GONE);
+
         mToolbarSearchButton.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void callbackSuccessSearchMovie(final ArrayList<Movie> movieList) {
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mNoInternetView.setVisibility(View.GONE);
-//                if (movieList != null && movieList.size() > 0) {
-//                    mNoItemsView.setVisibility(View.GONE);
-//                    mSearchResultsRecyclerView.setVisibility(View.VISIBLE);
-//                    mSearchResults = movieList;
-//                    mSearchResultsArrayAdapter = new SearchResultsArrayAdapter(getContext(), mSearchResults);
-//                    mSearchResultsArrayAdapter.setListener(MovieSearchActivity.this);
-//                    mSearchResultsRecyclerView.setAdapter(mSearchResultsArrayAdapter);
-//                } else {
-//                    mSearchResults.clear();
-//                    mSearchResultsRecyclerView.setVisibility(View.GONE);
-//                    mNoItemsView.setVisibility(View.VISIBLE);
-//                }
-//
-//                mSearchResultsArrayAdapter.notifyDataSetChanged();
-//            }
-//        });
-    }
+    public void callbackSuccessSearchMovie(final ArrayList<Movie> movieList) { }
 
     @Override
-    public void callbackErrorSearchMovie() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mToolbarSearchButton.setVisibility(View.VISIBLE);
-                mLoadingProgressBar.setVisibility(View.GONE);
-                mLoadingProgressBar.clearAnimation();
-
-                mSearchResultsRecyclerView.setVisibility(View.GONE);
-                mNoItemsView.setVisibility(View.VISIBLE);
-            }
-        });
-    }
+    public void callbackErrorSearchMovie() { }
 
     @Override
     public void callbackSuccessSearchMoviePaginated(final ArrayList<Search> searchResults) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                mLoading = false;
                 mNoInternetView.setVisibility(View.GONE);
                 if (searchResults != null && searchResults.size() > 0) {
+                    if (mPage == 1) {
+                        mSearchResults.clear();
+                    }
+
                     mNoItemsView.setVisibility(View.GONE);
                     mSearchResultsRecyclerView.setVisibility(View.VISIBLE);
-                    mSearchResults = searchResults;
-                    mSearchResultsArrayAdapter = new SearchResultsArrayAdapter(getContext(), mSearchResults);
-                    mSearchResultsArrayAdapter.setListener(MovieSearchActivity.this);
-                    mSearchResultsRecyclerView.setAdapter(mSearchResultsArrayAdapter);
+                    mSearchResults.addAll(searchResults);
+                    mSearchResultsArrayAdapter.notifyDataSetChanged();
                 } else {
-                    mSearchResults.clear();
-                    mSearchResultsRecyclerView.setVisibility(View.GONE);
-                    mNoItemsView.setVisibility(View.VISIBLE);
-                }
+                    if (mPage == 1) {
+                        mSearchResults.clear();
+                        mSearchResultsRecyclerView.setVisibility(View.GONE);
+                        mNoItemsView.setVisibility(View.VISIBLE);
 
-                mSearchResultsArrayAdapter.notifyDataSetChanged();
+                        TextView noItemsGreetingTextView = mNoItemsView.findViewById(R.id.no_items_greeting_text);
+                        noItemsGreetingTextView.setText(getResources().getString(R.string.movie_search_no_results_greeting_text));
+
+                        TextView noItemsErrorTextView = mNoItemsView.findViewById(R.id.no_items_error_text);
+                        noItemsErrorTextView.setText(getResources().getString(R.string.movie_search_no_results_text));
+
+                        TextView noItemsSuggestionTextView = mNoItemsView.findViewById(R.id.no_items_error_suggestion_text);
+                        noItemsSuggestionTextView.setText(getResources().getString(R.string.movie_search_no_results_suggestion_text));
+                    }
+                }
             }
         });
     }
 
     @Override
-    public void callbackErrorSearchMoviePaginated() {
+    public void callbackErrorSearchMoviePaginated(String message) {
+        mSearchResults.clear();
+        mSearchResultsRecyclerView.setVisibility(View.GONE);
+        mNoItemsView.setVisibility(View.VISIBLE);
 
+        if (message.toLowerCase().contains("too many results")) {
+            TextView noItemsGreetingTextView = mNoItemsView.findViewById(R.id.no_items_greeting_text);
+            noItemsGreetingTextView.setText(getResources().getString(R.string.movie_search_too_many_results_greeting_text));
+
+            TextView noItemsErrorTextView = mNoItemsView.findViewById(R.id.no_items_error_text);
+            noItemsErrorTextView.setText(getResources().getString(R.string.movie_search_too_many_results_error_text));
+
+            TextView noItemsSuggestionTextView = mNoItemsView.findViewById(R.id.no_items_error_suggestion_text);
+            noItemsSuggestionTextView.setText(getResources().getString(R.string.movie_search_too_many_results_suggestion_text));
+        } else if (message.toLowerCase().contains("movie not found")) {
+            TextView noItemsGreetingTextView = mNoItemsView.findViewById(R.id.no_items_greeting_text);
+            noItemsGreetingTextView.setText(getResources().getString(R.string.movie_search_no_results_greeting_text));
+
+            TextView noItemsErrorTextView = mNoItemsView.findViewById(R.id.no_items_error_text);
+            noItemsErrorTextView.setText(getResources().getString(R.string.movie_search_no_results_text));
+
+            TextView noItemsSuggestionTextView = mNoItemsView.findViewById(R.id.no_items_error_suggestion_text);
+            noItemsSuggestionTextView.setText(getResources().getString(R.string.movie_search_no_results_suggestion_text));
+        }
     }
 
     //endregion
@@ -244,11 +256,34 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
         mSearchResultsArrayAdapter = new SearchResultsArrayAdapter(this, mSearchResults);
         mSearchResultsArrayAdapter.setListener(this);
         mSearchResultsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mSearchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mSearchResultsRecyclerView.setLayoutManager(mLayoutManager);
         mSearchResultsRecyclerView.setAdapter(mSearchResultsArrayAdapter);
+
+        mLoadingBottomContainer = findViewById(R.id.search_progressbar_container);
+        mLoadingBottomProgressBar = findViewById(R.id.search_bottom_progressbar);
 
         reconnectButton.setOnClickListener(this);
         mToolbarSearchEditText.addTextChangedListener(this);
+        mSearchResultsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(dy > 0) {
+                    mVisibleItemCount = mLayoutManager.getChildCount();
+                    mTotalItemCount = mLayoutManager.getItemCount();
+                    mPastVisibleItems = mLayoutManager.findFirstVisibleItemPosition();
+
+                    if (!mLoading) {
+                        if ((mVisibleItemCount + mPastVisibleItems) >= mTotalItemCount) {
+                            mLoading = true;
+                            mPage++;
+                            mPresenter.searchMoviePaginated(mToolbarSearchEditText.getText().toString(), mPage);
+                        }
+                    }
+                }
+            }
+        });
+
     }
 
     private void setUpToolbar() {

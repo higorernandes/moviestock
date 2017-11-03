@@ -5,16 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@android:color/black"
-    android:alpha="0.8">
+    android:background="@color/colorBackgroundDark">
 
     <!-- No internet icon -->
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/no_internet_image"
-        android:layout_width="@dimen/image_default_size"
-        android:layout_height="@dimen/image_default_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_signal_wifi_off_white"
         app:indicatorColor="@color/colorAccent"
-        app:indicatorName="LineScaleIndicator"/>
+        app:indicatorName="LineScaleIndicator" />
 
 </LinearLayout>

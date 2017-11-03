@@ -16,6 +16,7 @@
 
     <!-- Greeting text -->
     <TextView
+        android:id="@+id/no_items_greeting_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -27,6 +28,7 @@
 
     <!-- No internet text -->
     <TextView
+        android:id="@+id/no_items_error_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -39,6 +41,7 @@
 
     <!-- Suggestion text -->
     <TextView
+        android:id="@+id/no_items_error_suggestion_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
