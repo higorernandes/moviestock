@@ -21,7 +21,7 @@ Wanna try it? Follow the steps below:
 - Email the developer and ask for help :D
 
 ### Additional Information
-This app was build using the [OMDB API](https://www.omdbapi.com/). No animals (except for the developer) were hurt in the process of creating it.
+This app was build using the [OMDB API](https://www.omdbapi.com/). No animals (except for the developer) were harmed in the making of this app.
 
 ### License
 ```
