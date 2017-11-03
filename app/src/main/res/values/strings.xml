@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">filmstock</string>
+    <string name="app_name">Filmstock</string>
 
     <!-- Generic -->
     <string name="no_internet">It looks like you\'re offline!</string>

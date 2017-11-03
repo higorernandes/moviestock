@@ -211,11 +211,11 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void callbackErrorSearchMoviePaginated(String message) {
-        mSearchResults.clear();
-        mSearchResultsRecyclerView.setVisibility(View.GONE);
-        mNoItemsView.setVisibility(View.VISIBLE);
-
         if (message.toLowerCase().contains("too many results")) {
+            mSearchResults.clear();
+            mSearchResultsRecyclerView.setVisibility(View.GONE);
+            mNoItemsView.setVisibility(View.VISIBLE);
+
             TextView noItemsGreetingTextView = mNoItemsView.findViewById(R.id.no_items_greeting_text);
             noItemsGreetingTextView.setText(getResources().getString(R.string.movie_search_too_many_results_greeting_text));
 
@@ -225,14 +225,20 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
             TextView noItemsSuggestionTextView = mNoItemsView.findViewById(R.id.no_items_error_suggestion_text);
             noItemsSuggestionTextView.setText(getResources().getString(R.string.movie_search_too_many_results_suggestion_text));
         } else if (message.toLowerCase().contains("movie not found")) {
-            TextView noItemsGreetingTextView = mNoItemsView.findViewById(R.id.no_items_greeting_text);
-            noItemsGreetingTextView.setText(getResources().getString(R.string.movie_search_no_results_greeting_text));
+            if (mPage == 1) {
+                mSearchResults.clear();
+                mSearchResultsRecyclerView.setVisibility(View.GONE);
+                mNoItemsView.setVisibility(View.VISIBLE);
 
-            TextView noItemsErrorTextView = mNoItemsView.findViewById(R.id.no_items_error_text);
-            noItemsErrorTextView.setText(getResources().getString(R.string.movie_search_no_results_text));
+                TextView noItemsGreetingTextView = mNoItemsView.findViewById(R.id.no_items_greeting_text);
+                noItemsGreetingTextView.setText(getResources().getString(R.string.movie_search_no_results_greeting_text));
 
-            TextView noItemsSuggestionTextView = mNoItemsView.findViewById(R.id.no_items_error_suggestion_text);
-            noItemsSuggestionTextView.setText(getResources().getString(R.string.movie_search_no_results_suggestion_text));
+                TextView noItemsErrorTextView = mNoItemsView.findViewById(R.id.no_items_error_text);
+                noItemsErrorTextView.setText(getResources().getString(R.string.movie_search_no_results_text));
+
+                TextView noItemsSuggestionTextView = mNoItemsView.findViewById(R.id.no_items_error_suggestion_text);
+                noItemsSuggestionTextView.setText(getResources().getString(R.string.movie_search_no_results_suggestion_text));
+            }
         }
     }
 
