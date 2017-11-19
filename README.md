@@ -22,7 +22,7 @@ Wanna try it? Follow the steps below:
 - Email the developer and ask for help :D
 
 ### Screenshots!
-<img src="/app/src/main/res/raw/Screenshot_20171103-121129.png" width="250"/> <img src="/app/src/main/res/raw/Screenshot_20171103-121201.png" width="250"/> <img src="/app/src/main/res/raw/Screenshot_20171103-121221.png" width="250"/>
+<img src="/app/src/main/res/raw/screenshot1.png" width="250"/> <img src="/app/src/main/res/raw/screenshot2.png" width="250"/> <img src="/app/src/main/res/raw/screenshot3.png" width="250"/>
 
 ### Additional Information
 This app was build using the [OMDB API](https://www.omdbapi.com/). No animals (except for the developer) were harmed in the making of this app.
