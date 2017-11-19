@@ -1,8 +1,9 @@
 # Filmstock
 ### What is this?
 **A simple android movie browsing app.** This app will blow your mind for its beautifulness and simplicity.
-Wanna try it? Follow the steps below:
 
+### How do I get it?
+Wanna try it? Follow the steps below:
 #### Method 1:
 - Clone the project to your computer;
 - Open it in Android Studio;
@@ -19,6 +20,9 @@ Wanna try it? Follow the steps below:
 
 #### Method 3:
 - Email the developer and ask for help :D
+
+### Screenshots!
+<img src="/app/src/main/res/raw/Screenshot_20171103-121129.png" width="250"/> <img src="/app/src/main/res/raw/Screenshot_20171103-121201.png" width="250"/> <img src="/app/src/main/res/raw/Screenshot_20171103-121221.png" width="250"/>
 
 ### Additional Information
 This app was build using the [OMDB API](https://www.omdbapi.com/). No animals (except for the developer) were harmed in the making of this app.
