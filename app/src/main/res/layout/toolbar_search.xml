@@ -19,13 +19,13 @@
             android:layout_weight="9"
             android:lines="1"
             android:hint="@string/movie_search_text"
-            android:textColor="@android:color/white"
-            android:textColorHint="@color/colorWhiteTranslucent"
+            android:textColor="@color/colorPrimaryText"
+            android:textColorHint="@color/colorSecondaryText"
             android:textSize="@dimen/font_size_large"
             android:inputType="textFilter"
             android:imeOptions="actionDone"
             android:layout_gravity="center"
-            android:fontFamily="@font/roboto_light"
+            android:fontFamily="@font/lato"
             android:ems="10"
             android:maxLines="1"/>
 
@@ -51,7 +51,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/default_medium_margin"
                     android:layout_marginStart="@dimen/default_medium_margin"
-                    android:src="@drawable/ic_search_white"/>
+                    android:src="@drawable/ic_search_white"
+                    android:tint="@color/colorAccent"/>
 
             </RelativeLayout>
 

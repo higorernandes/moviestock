@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,35 +30,13 @@ import pineapplesoftware.filmstock.adapter.SearchResultsArrayAdapter;
 import pineapplesoftware.filmstock.helper.DatabaseHelper;
 import pineapplesoftware.filmstock.model.dto.Movie;
 import pineapplesoftware.filmstock.presenter.MovieDetailPresenter;
+import pineapplesoftware.filmstock.util.CustomBounceInterpolator;
 
 public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener, IMovieDetailView
 {
     //region Attributes
 
     private static final String IMDB_ID = "ID";
-//    private static final String TITLE = "TITLE";
-//    private static final String YEAR = "YEAR";
-//    private static final String RATED = "RATED";
-//    private static final String RELEASED = "RELEASED";
-//    private static final String RUNTIME = "RUNTIME";
-//    private static final String GENRE = "GENRE";
-//    private static final String DIRECTOR = "DIRECTOR";
-//    private static final String WRITER = "WRITER";
-//    private static final String ACTORS = "ACTORS";
-//    private static final String PLOT = "PLOT";
-//    private static final String LANGUAGE = "LANGUAGE";
-//    private static final String COUNTRY = "COUNTRY";
-//    private static final String AWARDS = "AWARDS";
-//    private static final String POSTER_URL = "POSTER_URL";
-//    private static final String METASCORE = "METASCORE";
-//    private static final String IMDB_RATING = "IMDB_RATING";
-//    private static final String IMDB_VOTES = "IMDB_VOTES";
-//    private static final String IMDB_ID = "IMDB_ID";
-//    private static final String TYPE = "TYPE";
-//    private static final String DVD = "DVD";
-//    private static final String BOX_OFFICE = "BOX_OFFICE";
-//    private static final String PRODUCTION = "PRODUCTION";
-//    private static final String WEBSITE = "WEBSITE";
 
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
@@ -165,20 +145,33 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void requestCallbackError() {
-        mMainScrollView.setVisibility(View.GONE);
-        mNoInternetView.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMainScrollView.setVisibility(View.GONE);
+                mNoInternetView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
     public void showLoading() {
-        mMainScrollView.setVisibility(View.GONE);
-        mLoadingView.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mLoadingView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
     public void hideLoading() {
-        mMainScrollView.setVisibility(View.VISIBLE);
-        mLoadingView.setVisibility(View.GONE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mLoadingView.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -196,17 +189,22 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void callbackErrorLoadMovie() {
-        mMainScrollView.setVisibility(View.GONE);
-        mNoInternetView.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMainScrollView.setVisibility(View.GONE);
+                mNoInternetView.setVisibility(View.VISIBLE);
 
-        TextView noInternetTextView = mNoInternetView.findViewById(R.id.no_internet_text);
-        noInternetTextView.setText(getResources().getString(R.string.generic_server_error));
+                TextView noInternetTextView = mNoInternetView.findViewById(R.id.no_internet_text);
+                noInternetTextView.setText(getResources().getString(R.string.generic_server_error));
 
-        TextView noInternetSuggestionTextView = mNoInternetView.findViewById(R.id.no_internet_suggestion);
-        noInternetSuggestionTextView.setText(getResources().getString(R.string.generic_server_connection_error_suggestion));
+                TextView noInternetSuggestionTextView = mNoInternetView.findViewById(R.id.no_internet_suggestion);
+                noInternetSuggestionTextView.setText(getResources().getString(R.string.generic_server_connection_error_suggestion));
 
-        ImageView noInternetImageView = mNoInternetView.findViewById(R.id.no_internet_image);
-        noInternetImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_shrug));
+                ImageView noInternetImageView = mNoInternetView.findViewById(R.id.no_internet_image);
+                noInternetImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_shrug));
+            }
+        });
     }
 
     //endregion
@@ -424,23 +422,65 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
      * Saves or deletes a movie from the local database (you don't say?).
      */
     private void saveOrUnsaveMovieToLocalDatabase() {
-        DatabaseHelper database = new DatabaseHelper(this);
+        if (mLoadingView.getVisibility() == View.GONE) {
+            DatabaseHelper database = new DatabaseHelper(this);
 
-        Movie movie = database.getMovieWithImdbId(mMovie.getImdbId());
+            Movie movie = database.getMovieWithImdbId(mMovie.getImdbId());
 
-        if (movie != null) {
-            database.deleteMovie(movie);
-            mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white));
-            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_unsave_message), Toast.LENGTH_SHORT).show();
+            if (movie != null) {
+                database.deleteMovie(movie);
+
+                // Setting up the bouncing animation.
+                final Animation bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce);
+                CustomBounceInterpolator interpolator = new CustomBounceInterpolator(0.2, 20);
+                bounceAnimation.setInterpolator(interpolator);
+                bounceAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_favorite_border_white));
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) { }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) { }
+                });
+
+                mToolbarLikeImage.startAnimation(bounceAnimation);
+
+                Toast.makeText(this, getResources().getString(R.string.movie_detail_success_unsave_message), Toast.LENGTH_SHORT).show();
+            } else {
+                mMovie.setDateSaved(Calendar.getInstance().getTime());
+                database.addMovie(mMovie);
+                database.getMovieWithImdbId(mMovie.getImdbId());
+
+                // Setting up the bouncing animation.
+                final Animation bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce);
+                CustomBounceInterpolator interpolator = new CustomBounceInterpolator(0.2, 20);
+                bounceAnimation.setInterpolator(interpolator);
+                bounceAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_favorite_filled));
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) { }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) { }
+                });
+
+                mToolbarLikeImage.startAnimation(bounceAnimation);
+
+                Toast.makeText(this, getResources().getString(R.string.movie_detail_success_save_message), Toast.LENGTH_SHORT).show();
+            }
+
+            MainActivity.sShouldReloadMoviesList = true;
         } else {
-            mMovie.setDateSaved(Calendar.getInstance().getTime());
-            database.addMovie(mMovie);
-            database.getMovieWithImdbId(mMovie.getImdbId());
-            mToolbarLikeImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled));
-            Toast.makeText(this, getResources().getString(R.string.movie_detail_success_save_message), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.movie_detail_wait_message), Toast.LENGTH_SHORT).show();
         }
-
-        MainActivity.sShouldReloadMoviesList = true;
     }
 
     /**

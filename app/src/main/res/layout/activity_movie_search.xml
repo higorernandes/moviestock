@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorBackgroundDark"
+    android:background="@drawable/bg_gradient_dark"
     tools:context="pineapplesoftware.filmstock.view.MovieSearchActivity">
 
     <!-- Toolbar -->
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <include
             android:id="@+id/search_toolbar"
@@ -55,7 +56,9 @@
         android:fadingEdgeLength="50dp"
         android:requiresFadingEdge="vertical"
         android:layout_below="@+id/app_bar_layout"
-        android:layout_above="@+id/search_progressbar_container"/>
+        android:background="@drawable/bg_gradient_dark"
+        android:layout_above="@+id/search_progressbar_container"
+        android:layoutAnimation="@anim/layout_animation_fall_down"/>
 
     <RelativeLayout
         android:id="@+id/search_progressbar_container"

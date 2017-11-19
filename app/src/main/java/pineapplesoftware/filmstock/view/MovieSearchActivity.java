@@ -12,6 +12,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -188,7 +190,11 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
                     mNoItemsView.setVisibility(View.GONE);
                     mSearchResultsRecyclerView.setVisibility(View.VISIBLE);
                     mSearchResults.addAll(searchResults);
-                    mSearchResultsArrayAdapter.notifyDataSetChanged();
+                    if (mPage == 1) {
+                        runLayoutAnimation(mSearchResultsRecyclerView);
+                    } else {
+                        mSearchResultsArrayAdapter.notifyDataSetChanged();
+                    }
                 } else {
                     if (mPage == 1) {
                         mSearchResults.clear();
@@ -296,6 +302,15 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 
     //endregion

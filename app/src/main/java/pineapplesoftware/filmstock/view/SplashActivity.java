@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity
                 startActivity(MainActivity.getActivityIntent(SplashActivity.this));
                 finish();
             }
-        }, 2000);
+        }, 15000);
     }
 
     //endregion

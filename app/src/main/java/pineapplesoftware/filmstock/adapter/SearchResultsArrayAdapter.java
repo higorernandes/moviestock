@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +32,8 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
     private Context mContext;
     private ArrayList<Search> mObjects;
     private IMovieSelectionListener mListener;
+
+    private int mLastPosition = -1;
 
     //endregion
 
@@ -76,11 +81,29 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
         // Setting the movie year.
         holder.getMovieYearTextView().setText(movie.getYear());
+
+        // Animating the view loading.
+        setAnimation(holder.itemView, position);
     }
 
     @Override
     public int getItemCount() {
         return mObjects.size();
+    }
+
+    //endregion
+
+    //region Private Methods
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > mLastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.fall_down);
+            viewToAnimate.startAnimation(animation);
+            mLastPosition = position;
+        }
     }
 
     //endregion
@@ -101,7 +124,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     class MoviesHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private CardView mRootView;
+        private LinearLayout mRootView;
         private ImageView mMoviePosterImageView;
         private TextView mMovieNameTextView;
         private TextView mMovieTypeTextView;
@@ -110,7 +133,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
         MoviesHolder(View itemView) {
             super(itemView);
 
-            mRootView = itemView.findViewById(R.id.search_item_cardview);
+            mRootView = itemView.findViewById(R.id.search_item_linearlayout);
             mMoviePosterImageView = itemView.findViewById(R.id.search_item_movie_poster);
             mMovieNameTextView = itemView.findViewById(R.id.search_item_movie_title);
             mMovieTypeTextView = itemView.findViewById(R.id.search_item_movie_type);

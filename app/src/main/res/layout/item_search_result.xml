@@ -1,94 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_item_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorBackgroundDark">
+    android:background="@android:color/transparent"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical">
 
-    <!-- CardView -->
-    <android.support.v7.widget.CardView
-        android:id="@+id/search_item_cardview"
+    <!-- Container layout -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/cardview_list_item_height"
-        android:layout_marginTop="@dimen/cardview_small_margin"
-        android:layout_marginStart="@dimen/cardview_default_margin"
-        android:layout_marginEnd="@dimen/cardview_default_margin"
-        android:layout_marginBottom="@dimen/cardview_small_margin"
-        app:cardBackgroundColor="@color/colorCardBackgroundDark">
+        android:layout_marginStart="@dimen/cardview_large_margin"
+        android:layout_marginEnd="@dimen/cardview_large_margin"
+        android:layout_marginTop="@dimen/cardview_default_margin"
+        android:layout_marginBottom="@dimen/cardview_default_margin">
 
-        <!-- Container layout -->
+        <!-- Movie poster thumbnail -->
+        <ImageView
+            android:id="@+id/search_item_movie_poster"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/cardview_large_margin"
+            android:background="@color/colorBackgroundDark"
+            android:scaleType="centerCrop" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/cardview_default_margin"
+            android:layout_marginTop="@dimen/cardview_default_margin"
+            android:orientation="vertical">
 
-            <!-- Movie poster thumbnail -->
-            <ImageView
-                android:id="@+id/search_item_movie_poster"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/cardview_default_margin"
-                android:background="@color/colorBackgroundDark"
-                android:scaleType="centerCrop"/>
+            <!-- Movie title -->
+            <TextView
+                android:id="@+id/search_item_movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/lato_bold"
+                android:maxLines="2"
+                android:text="@string/generic_placeholder_text"
+                android:textColor="@android:color/white" />
 
-            <LinearLayout
+            <!-- Movie year -->
+            <TextView
+                android:id="@+id/search_item_movie_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/cardview_default_margin"
+                android:ellipsize="end"
+                android:fontFamily="@font/lato"
+                android:gravity="top"
+                android:maxLines="1"
+                android:text="@string/generic_placeholder_text"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_size_medium_large" />
+
+            <!-- Movie type -->
+            <TextView
+                android:id="@+id/search_item_movie_type"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_gravity="bottom"
                 android:layout_marginTop="@dimen/cardview_default_margin"
-                android:layout_marginBottom="@dimen/cardview_default_margin"
-                android:layout_marginEnd="@dimen/cardview_default_margin">
-
-                <!-- Movie title -->
-                <TextView
-                    android:id="@+id/search_item_movie_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/generic_placeholder_text"
-                    android:fontFamily="@font/roboto_light"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:textColor="@android:color/white"/>
-
-                <!-- Separator -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="@dimen/cardview_default_margin"
-                    android:background="@drawable/bg_gradient"/>
-
-                <!-- Movie year -->
-                <TextView
-                    android:id="@+id/search_item_movie_year"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/generic_placeholder_text"
-                    android:textSize="@dimen/font_size_medium_large"
-                    android:layout_marginTop="@dimen/cardview_default_margin"
-                    android:fontFamily="@font/roboto_thin"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:gravity="top"
-                    android:textColor="@android:color/white"/>
-
-                <!-- Movie type -->
-                <TextView
-                    android:id="@+id/search_item_movie_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:gravity="bottom"
-                    android:layout_marginTop="@dimen/cardview_default_margin"
-                    android:alpha="0.5"
-                    android:fontFamily="@font/roboto_light"
-                    android:text="@string/generic_placeholder_text"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/font_size_medium" />
-
-            </LinearLayout>
+                android:fontFamily="@font/lato"
+                android:gravity="bottom"
+                android:text="@string/generic_placeholder_text"
+                android:textAllCaps="true"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_size_medium" />
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <!-- Separator -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="100dp"
+        android:background="@color/colorWhiteTranslucent"
+        android:alpha="0.2"/>
 
 </LinearLayout>

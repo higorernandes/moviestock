@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/transparent"
     app:theme="@style/ToolbarStyleDark">
 
     <RelativeLayout
@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/lato"
             android:lines="1"
             android:text="@string/movie_detail_text"
             android:textColor="@android:color/white"
@@ -28,8 +29,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:foreground="?attr/selectableItemBackground">
+            android:layout_alignParentEnd="true">
 
             <ImageView
                 android:id="@+id/toolbar_detail_like_imageview"
@@ -38,7 +38,9 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/default_medium_margin"
-                android:src="@drawable/ic_favorite_border_white"/>
+                android:src="@drawable/ic_favorite_border_white"
+                android:tint="@color/colorAccent"
+                android:elevation="2dp"/>
 
         </RelativeLayout>
 

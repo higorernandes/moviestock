@@ -3,6 +3,7 @@ package pineapplesoftware.filmstock.view;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,9 +29,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import jp.wasabeef.blurry.Blurry;
 import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.helper.DatabaseHelper;
 import pineapplesoftware.filmstock.model.dto.Movie;
+import pineapplesoftware.filmstock.util.CustomBounceInterpolator;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener
 {
@@ -38,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private LinearLayout mNoMoviesView;
     private HorizontalInfiniteCycleViewPager mMainInfiniteCycleViewPager;
+
+    private View mMainSeparatorView;
 
     private LinearLayout mMainMovieInfoContainer;
     private TextView mMovieTitleTextView;
@@ -85,8 +93,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_main_relativelayout:
-                startActivity(MovieSearchActivity.getActivityIntent(this));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
+                // Animating the search button.
+                final Animation bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce_smooth);
+                CustomBounceInterpolator interpolator = new CustomBounceInterpolator(0.2, 3);
+                bounceAnimation.setInterpolator(interpolator);
+                bounceAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) { }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        startActivity(MovieSearchActivity.getActivityIntent(MainActivity.this));
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) { }
+                });
+                mToolbarSearchButton.startAnimation(bounceAnimation);
                 break;
             case R.id.main_movie_info_container:
                 Movie selectedMovie = mMovies.get(mMainInfiniteCycleViewPager.getRealItem());
@@ -122,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMainInfiniteCycleViewPager.setAdapter(mMoviesPagerAdapter);
         mMainInfiniteCycleViewPager.addOnPageChangeListener(this);
 
+        mMainSeparatorView = findViewById(R.id.main_separator_view);
+
         mMainMovieInfoContainer = findViewById(R.id.main_movie_info_container);
         mMovieTitleTextView = findViewById(R.id.main_movie_title);
         mMovieInfoTextView = findViewById(R.id.main_movie_info);
@@ -154,11 +180,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mMoviesPagerAdapter.notifyDataSetChanged();
             mMainInfiniteCycleViewPager.setVisibility(View.VISIBLE);
             mMainMovieInfoContainer.setVisibility(View.VISIBLE);
+            mMainSeparatorView.setVisibility(View.VISIBLE);
             mNoMoviesView.setVisibility(View.GONE);
             loadMovieInfo();
         } else {
             mMainInfiniteCycleViewPager.setVisibility(View.GONE);
             mMainMovieInfoContainer.setVisibility(View.GONE);
+            mMainSeparatorView.setVisibility(View.GONE);
             mNoMoviesView.setVisibility(View.VISIBLE);
         }
     }
@@ -259,8 +287,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public void onClick(View view) {
-            showMovieDetailedInfo(mMainInfiniteCycleViewPager.getRealItem());
+        public void onClick(final View view) {
+            final Animation bounceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.bounce_smooth_cover);
+            CustomBounceInterpolator interpolator = new CustomBounceInterpolator(0.1, 1);
+            bounceAnimation.setInterpolator(interpolator);
+            bounceAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) { }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    showMovieDetailedInfo(mMainInfiniteCycleViewPager.getRealItem());
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) { }
+            });
+            view.startAnimation(bounceAnimation);
+
         }
     }
 

@@ -6,13 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="pineapplesoftware.filmstock.view.MovieDetailActivity"
-    android:background="@color/colorBackgroundDark">
+    android:background="@drawable/bg_gradient_dark">
 
     <!-- Toolbar -->
     <android.support.design.widget.AppBarLayout
         android:id="@+id/detail_toolbar_appbarlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <include
             android:id="@+id/detail_toolbar"
@@ -29,18 +30,6 @@
         android:visibility="gone">
 
         <include layout="@layout/fragment_no_internet" />
-
-    </RelativeLayout>
-
-    <!-- Loading View -->
-    <RelativeLayout
-        android:id="@+id/detail_loading_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/detail_toolbar_appbarlayout"
-        android:visibility="gone">
-
-        <include layout="@layout/fragment_loading" />
 
     </RelativeLayout>
 
@@ -68,6 +57,7 @@
                 <ImageView
                     android:id="@+id/detail_movie_image"
                     android:layout_width="match_parent"
+                    android:paddingTop="-56dp"
                     android:layout_height="@dimen/image_header_height"
                     android:scaleType="centerCrop"/>
 
@@ -93,9 +83,9 @@
                     android:id="@+id/detail_title_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_medium_margin"
-                    android:layout_marginEnd="@dimen/default_medium_margin"
-                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:layout_marginStart="@dimen/cardview_large_margin"
+                    android:layout_marginEnd="@dimen/cardview_large_margin"
+                    android:layout_marginBottom="@dimen/cardview_large_margin"
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal">
 
@@ -104,57 +94,58 @@
                         android:id="@+id/detail_movie_name"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="7"
                         android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:text="@string/generic_placeholder_text"
-                        android:textSize="@dimen/font_size_extra_large"
-                        android:textColor="@android:color/white"
-                        android:fontFamily="@font/roboto_light"
+                        android:layout_weight="7"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/lato_bold"
                         android:gravity="bottom|start"
                         android:maxLines="3"
-                        android:textStyle="bold"
-                        android:ellipsize="end"/>
+                        android:text="@string/generic_placeholder_text"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_size_extra_large"
+                        android:textStyle="bold" />
 
                     <!-- Movie type -->
                     <TextView
                         android:id="@+id/detail_movie_type"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
                         android:layout_marginBottom="@dimen/default_medium_margin"
                         android:layout_weight="2"
-                        android:text="@string/generic_placeholder_text"
-                        android:textSize="@dimen/font_size_medium_large"
-                        android:textColor="@android:color/white"
-                        android:fontFamily="@font/roboto_light"
-                        android:maxLines="3"
-                        android:textAllCaps="true"
-                        android:textStyle="bold"
-                        android:layout_gravity="bottom"
-                        android:gravity="bottom|end"
                         android:alpha="0.7"
-                        android:ellipsize="end"/>
+                        android:ellipsize="end"
+                        android:fontFamily="@font/lato_bold"
+                        android:gravity="bottom|end"
+                        android:maxLines="3"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_size_medium_large"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
             </RelativeLayout>
 
             <!-- Main information area -->
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:id="@+id/detail_synopsis_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/detail_header_view"
-                android:layout_margin="@dimen/cardview_default_margin"
+                android:layout_marginTop="@dimen/cardview_default_margin"
+                android:layout_marginStart="@dimen/cardview_default_margin"
                 android:layout_marginEnd="@dimen/cardview_default_margin"
                 android:visibility="visible"
-                app:cardBackgroundColor="@color/colorCardBackgroundDark">
+                android:background="@android:color/transparent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/default_medium_margin"
-                    android:layout_marginStart="@dimen/default_medium_margin"
-                    android:layout_marginTop="@dimen/default_medium_margin"
+                    android:layout_marginEnd="@dimen/cardview_default_margin"
+                    android:layout_marginStart="@dimen/cardview_default_margin"
+                    android:layout_marginTop="@dimen/cardview_default_margin"
                     android:orientation="vertical">
 
                     <!-- Basic info -->
@@ -170,12 +161,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.7"
                             android:ellipsize="end"
-                            android:fontFamily="@font/roboto_light"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                         <!-- Year and duration -->
@@ -184,11 +174,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:alpha="0.7"
-                            android:fontFamily="@font/roboto_light"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewEnd"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -204,12 +193,12 @@
                     <TextView
                         android:id="@+id/detail_movie_plot"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/default_medium_margin"
                         android:layout_marginTop="@dimen/default_medium_margin"
-                        android:fontFamily="@font/roboto_light"
+                        android:fontFamily="@font/lato"
                         android:text="@string/generic_placeholder_text"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/font_size_medium_large" />
 
                     <!-- Actors section-->
@@ -225,11 +214,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_cast_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -237,10 +225,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -258,11 +246,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_director_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -270,35 +257,34 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewEnd"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </LinearLayout>
 
             <!-- Extra information area -->
-            <android.support.v7.widget.CardView
-                android:layout_below="@+id/detail_synopsis_cardview"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/cardview_default_margin"
+                android:layout_below="@+id/detail_synopsis_cardview"
                 android:layout_marginEnd="@dimen/cardview_default_margin"
-                android:layout_marginBottom="@dimen/cardview_default_margin"
-                android:paddingBottom="@dimen/cardview_default_margin"
-                app:cardBackgroundColor="@color/colorCardBackgroundDark">
+                android:layout_marginStart="@dimen/cardview_default_margin"
+                android:elevation="0dp"
+                android:paddingBottom="@dimen/cardview_small_margin"
+                android:background="@android:color/transparent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/default_medium_margin"
-                    android:layout_marginStart="@dimen/default_medium_margin"
-                    android:layout_marginTop="@dimen/default_medium_margin"
+                    android:layout_marginEnd="@dimen/cardview_default_margin"
+                    android:layout_marginStart="@dimen/cardview_default_margin"
                     android:orientation="vertical">
 
                     <!-- Writer -->
@@ -314,11 +300,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_writer_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -326,10 +311,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -347,11 +332,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_rated_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -359,10 +343,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -380,11 +364,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_awards_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -392,10 +375,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -413,11 +396,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_language_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -425,10 +407,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -446,11 +428,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_country_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -458,10 +439,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -479,11 +460,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_production_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -491,10 +471,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -512,11 +492,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_released_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -524,10 +503,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -545,11 +524,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_boxoffice_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -557,10 +535,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
@@ -578,11 +556,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:alpha="0.5"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/movie_detail_ratings_label"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/font_size_medium" />
 
                         <TextView
@@ -590,20 +567,32 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:fontFamily="@font/roboto_thin"
+                            android:fontFamily="@font/lato"
                             android:text="@string/generic_placeholder_text"
                             android:textAlignment="viewStart"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/font_size_medium_large" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </LinearLayout>
 
         </RelativeLayout>
 
     </ScrollView>
+
+    <!-- Loading View -->
+    <RelativeLayout
+        android:id="@+id/detail_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/detail_toolbar_appbarlayout"
+        android:visibility="gone">
+
+        <include layout="@layout/fragment_loading" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

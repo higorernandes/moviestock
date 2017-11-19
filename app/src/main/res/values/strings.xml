@@ -39,6 +39,7 @@
     <string name="movie_detail_boxoffice_label">Box Office</string>
     <string name="movie_detail_success_save_message">Movie saved!</string>
     <string name="movie_detail_success_unsave_message">Movie unsaved!</string>
+    <string name="movie_detail_wait_message">Wait a sec, we\'re loading the stuff…</string>
 
     <!-- Movie Search -->
     <string name="movie_search_text">Type a movie name…</string>

@@ -16,6 +16,7 @@
 
     <!-- Images -->
     <dimen name="image_header_height">200dp</dimen>
+    <dimen name="image_large_size">200dp</dimen>
     <dimen name="image_default_size">100dp</dimen>
 
     <!-- Buttons -->
@@ -23,7 +24,8 @@
     <dimen name="button_default_height">60dp</dimen>
 
     <!-- CardView -->
+    <dimen name="cardview_large_margin">20dp</dimen>
     <dimen name="cardview_default_margin">10dp</dimen>
     <dimen name="cardview_small_margin">5dp</dimen>
-    <dimen name="cardview_list_item_height">110dp</dimen>
+    <dimen name="cardview_list_item_height">88dp</dimen>
 </resources>
