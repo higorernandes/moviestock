@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Component sizes -->
-    <dimen name="default_extra_large_margin">64dp</dimen>
     <dimen name="default_large_margin">32dp</dimen>
     <dimen name="default_medium_margin">16dp</dimen>
     <dimen name="default_small_margin">8dp</dimen>
 
     <!-- Font sizes -->
-    <dimen name="font_size_small">8sp</dimen>
-    <dimen name="font_size_medium_small">10sp</dimen>
     <dimen name="font_size_medium">12sp</dimen>
     <dimen name="font_size_medium_large">14sp</dimen>
     <dimen name="font_size_large">18sp</dimen>
@@ -17,7 +14,6 @@
     <!-- Images -->
     <dimen name="image_header_height">200dp</dimen>
     <dimen name="image_large_size">200dp</dimen>
-    <dimen name="image_default_size">100dp</dimen>
 
     <!-- Buttons -->
     <dimen name="button_toolbar_size">20dp</dimen>

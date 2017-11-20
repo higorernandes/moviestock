@@ -63,7 +63,6 @@
 
                 <!-- Movie title translucent View -->
                 <RelativeLayout
-                    android:id="@+id/detail_translucent_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/image_header_height"
                     android:background="@drawable/transluscent_black_view"/>
@@ -80,7 +79,6 @@
 
                 <!-- Movie title and type -->
                 <LinearLayout
-                    android:id="@+id/detail_title_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/cardview_large_margin"
@@ -134,136 +132,124 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/detail_header_view"
-                android:layout_marginTop="@dimen/cardview_default_margin"
-                android:layout_marginStart="@dimen/cardview_default_margin"
-                android:layout_marginEnd="@dimen/cardview_default_margin"
+                android:layout_marginTop="@dimen/cardview_large_margin"
+                android:layout_marginStart="@dimen/cardview_large_margin"
+                android:layout_marginEnd="@dimen/cardview_large_margin"
                 android:visibility="visible"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:orientation="vertical">
 
+                <!-- Basic info -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/cardview_default_margin"
-                    android:layout_marginStart="@dimen/cardview_default_margin"
-                    android:layout_marginTop="@dimen/cardview_default_margin"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <!-- Basic info -->
-                    <LinearLayout
-                        android:id="@+id/detail_movie_synopsis_container_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <!-- Genre -->
-                        <TextView
-                            android:id="@+id/detail_movie_genre_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                        <!-- Year and duration -->
-                        <TextView
-                            android:id="@+id/detail_movie_duration"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewEnd"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                    </LinearLayout>
-
-                    <!-- Separator -->
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="@dimen/default_medium_margin"
-                        android:background="@drawable/bg_gradient" />
-
-                    <!-- Plot -->
+                    <!-- Genre -->
                     <TextView
-                        android:id="@+id/detail_movie_plot"
-                        android:layout_width="match_parent"
+                        android:id="@+id/detail_movie_genre_text"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:layout_marginTop="@dimen/default_medium_margin"
+                        android:layout_weight="6"
+                        android:ellipsize="end"
                         android:fontFamily="@font/lato"
                         android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
+
+                    <!-- Year and duration -->
+                    <TextView
+                        android:id="@+id/detail_movie_duration"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
+
+                </LinearLayout>
+
+                <!-- Separator -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/default_medium_margin"
+                    android:background="@drawable/bg_gradient" />
+
+                <!-- Plot -->
+                <TextView
+                    android:id="@+id/detail_movie_plot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:layout_marginTop="@dimen/default_medium_margin"
+                    android:fontFamily="@font/lato"
+                    android:text="@string/generic_placeholder_text"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/font_size_medium_large" />
+
+                <!-- Actors section-->
+                <LinearLayout
+                    android:id="@+id/detail_actors_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_cast_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
+
+                    <TextView
+                        android:id="@+id/detail_movie_actors_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/font_size_medium_large" />
 
-                    <!-- Actors section-->
-                    <LinearLayout
-                        android:id="@+id/detail_actors_container"
-                        android:layout_width="match_parent"
+                </LinearLayout>
+
+                <!-- Director -->
+                <LinearLayout
+                    android:id="@+id/detail_director_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_director_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_actors_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_cast_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
-
-                        <TextView
-                            android:id="@+id/detail_movie_actors_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                    </LinearLayout>
-
-                    <!-- Director -->
-                    <LinearLayout
-                        android:id="@+id/detail_director_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/detail_movie_director_text"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/detail_movie_director_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_director_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
-
-                        <TextView
-                            android:id="@+id/detail_movie_director_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewEnd"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                    </LinearLayout>
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
 
                 </LinearLayout>
 
@@ -274,306 +260,289 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/detail_synopsis_cardview"
-                android:layout_marginEnd="@dimen/cardview_default_margin"
-                android:layout_marginStart="@dimen/cardview_default_margin"
+                android:layout_marginEnd="@dimen/cardview_large_margin"
+                android:layout_marginStart="@dimen/cardview_large_margin"
                 android:elevation="0dp"
                 android:paddingBottom="@dimen/cardview_small_margin"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:orientation="vertical">
 
+                <!-- Writer -->
                 <LinearLayout
+                    android:id="@+id/detail_writer_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/cardview_default_margin"
-                    android:layout_marginStart="@dimen/cardview_default_margin"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
                     android:orientation="vertical">
 
-                    <!-- Writer -->
-                    <LinearLayout
-                        android:id="@+id/detail_writer_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_writer_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_writer_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_writer_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
-
-                        <TextView
-                            android:id="@+id/detail_movie_writer_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                    </LinearLayout>
-
-                    <!-- Rated -->
-                    <LinearLayout
-                        android:id="@+id/detail_rated_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/detail_movie_writer_text"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_rated_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_rated_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/detail_movie_rated_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
+                <!-- Rated -->
+                <LinearLayout
+                    android:id="@+id/detail_rated_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
 
-                    </LinearLayout>
-
-                    <!-- Awards -->
-                    <LinearLayout
-                        android:id="@+id/detail_awards_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_rated_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_awards_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_awards_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
-
-                        <TextView
-                            android:id="@+id/detail_movie_awards_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                    </LinearLayout>
-
-                    <!-- Language -->
-                    <LinearLayout
-                        android:id="@+id/detail_language_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/detail_movie_rated_text"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_language_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_language_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/detail_movie_language_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
+                <!-- Awards -->
+                <LinearLayout
+                    android:id="@+id/detail_awards_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
 
-                    </LinearLayout>
-
-                    <!-- Country -->
-                    <LinearLayout
-                        android:id="@+id/detail_country_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_awards_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_country_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_country_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
-
-                        <TextView
-                            android:id="@+id/detail_movie_country_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                    </LinearLayout>
-
-                    <!-- Production -->
-                    <LinearLayout
-                        android:id="@+id/detail_production_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/detail_movie_awards_text"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_production_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_production_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/detail_movie_production_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
+                <!-- Language -->
+                <LinearLayout
+                    android:id="@+id/detail_language_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
 
-                    </LinearLayout>
-
-                    <!-- Released -->
-                    <LinearLayout
-                        android:id="@+id/detail_released_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_language_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_released_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_released_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
-
-                        <TextView
-                            android:id="@+id/detail_movie_released_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
-
-                    </LinearLayout>
-
-                    <!-- BoxOffice -->
-                    <LinearLayout
-                        android:id="@+id/detail_boxoffice_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/detail_movie_language_text"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_box_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_boxoffice_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/detail_movie_box_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
+                <!-- Country -->
+                <LinearLayout
+                    android:id="@+id/detail_country_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
 
-                    </LinearLayout>
-
-                    <!-- Ratings -->
-                    <LinearLayout
-                        android:id="@+id/detail_ratings_container"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_medium_margin"
-                        android:orientation="vertical">
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_country_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_ratings_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/movie_detail_ratings_label"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/font_size_medium" />
+                    <TextView
+                        android:id="@+id/detail_movie_country_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
 
-                        <TextView
-                            android:id="@+id/detail_movie_ratings_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:fontFamily="@font/lato"
-                            android:text="@string/generic_placeholder_text"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/font_size_medium_large" />
+                </LinearLayout>
 
-                    </LinearLayout>
+                <!-- Production -->
+                <LinearLayout
+                    android:id="@+id/detail_production_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_production_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
+
+                    <TextView
+                        android:id="@+id/detail_movie_production_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
+
+                </LinearLayout>
+
+                <!-- Released -->
+                <LinearLayout
+                    android:id="@+id/detail_released_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_released_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
+
+                    <TextView
+                        android:id="@+id/detail_movie_released_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
+
+                </LinearLayout>
+
+                <!-- BoxOffice -->
+                <LinearLayout
+                    android:id="@+id/detail_boxoffice_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_boxoffice_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
+
+                    <TextView
+                        android:id="@+id/detail_movie_box_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
+
+                </LinearLayout>
+
+                <!-- Ratings -->
+                <LinearLayout
+                    android:id="@+id/detail_ratings_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_medium_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/movie_detail_ratings_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_medium" />
+
+                    <TextView
+                        android:id="@+id/detail_movie_ratings_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/generic_placeholder_text"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/font_size_medium_large" />
 
                 </LinearLayout>
 

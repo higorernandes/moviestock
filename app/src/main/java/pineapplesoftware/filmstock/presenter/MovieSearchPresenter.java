@@ -8,7 +8,6 @@ import pineapplesoftware.filmstock.helper.NetworkHelper;
 import pineapplesoftware.filmstock.model.domain.IFilmstockResponse;
 import pineapplesoftware.filmstock.model.domain.Search;
 import pineapplesoftware.filmstock.model.dto.Movie;
-import pineapplesoftware.filmstock.service.FilmstockApi;
 import pineapplesoftware.filmstock.service.FilmstockServices;
 import pineapplesoftware.filmstock.view.IMovieSearchView;
 

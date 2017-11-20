@@ -30,10 +30,10 @@ public class MovieSearchResult implements Serializable
     public MovieSearchResult() { }
 
     /**
-     * 
-     * @param response
-     * @param totalResults
-     * @param search
+     * A search result item coming from the API.
+     * @param response Whether the response was successful or not.
+     * @param totalResults The counter of results.
+     * @param search The text searched.
      */
     public MovieSearchResult(List<Search> search, String totalResults, String response) {
         super();

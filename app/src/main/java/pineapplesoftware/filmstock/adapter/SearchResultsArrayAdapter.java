@@ -2,7 +2,6 @@ package pineapplesoftware.filmstock.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +21,15 @@ import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.model.domain.Search;
 
 /**
- * Created by root on 2017-10-28.
+ * Created by Higor Ernandes on 2017-10-28.
  */
 
 public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResultsArrayAdapter.MoviesHolder>
 {
     //region Attributes
 
-    private Context mContext;
-    private ArrayList<Search> mObjects;
+    private final Context mContext;
+    private final ArrayList<Search> mObjects;
     private IMovieSelectionListener mListener;
 
     private int mLastPosition = -1;
@@ -124,7 +123,7 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
 
     class MoviesHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private LinearLayout mRootView;
+        private final LinearLayout mRootView;
         private ImageView mMoviePosterImageView;
         private TextView mMovieNameTextView;
         private TextView mMovieTypeTextView;
@@ -142,36 +141,20 @@ public class SearchResultsArrayAdapter extends RecyclerView.Adapter<SearchResult
             mRootView.setOnClickListener(this);
         }
 
-        public ImageView getMoviePosterImageView() {
+        private ImageView getMoviePosterImageView() {
             return mMoviePosterImageView;
         }
 
-        public void setMoviePosterImageView(ImageView moviePosterImageView) {
-            this.mMoviePosterImageView = moviePosterImageView;
-        }
-
-        public TextView getMovieNameTextView() {
+        private TextView getMovieNameTextView() {
             return mMovieNameTextView;
         }
 
-        public void setMovieNameTextView(TextView movieNameTextView) {
-            this.mMovieNameTextView = movieNameTextView;
-        }
-
-        public TextView getMovieTypeTextView() {
+        private TextView getMovieTypeTextView() {
             return mMovieTypeTextView;
         }
 
-        public void setMovieTypeTextView(TextView movieTypeTextView) {
-            this.mMovieTypeTextView = movieTypeTextView;
-        }
-
-        public TextView getMovieYearTextView() {
+        private TextView getMovieYearTextView() {
             return mMovieYearTextView;
-        }
-
-        public void setMovieYearTextView(TextView movieYearTextView) {
-            this.mMovieYearTextView = movieYearTextView;
         }
 
         @Override

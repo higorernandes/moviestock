@@ -9,18 +9,17 @@
 
     <!-- No internet icon -->
     <ImageView
-        android:id="@+id/no_internet_image"
-        android:layout_width="@dimen/image_default_size"
-        android:layout_height="@dimen/image_default_size"
-        android:src="@drawable/ic_signal_wifi_off_white"
-        android:alpha="0.5"/>
+        android:id="@+id/loading_indicator"
+        android:layout_width="@dimen/image_large_size"
+        android:layout_height="@dimen/image_large_size"
+        android:src="@drawable/ic_no_internet"/>
 
     <!-- Greeting text -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:layout_marginTop="@dimen/default_large_margin"
+        android:layout_marginTop="@dimen/default_medium_margin"
         android:fontFamily="@font/lato_bold"
         android:textSize="@dimen/font_size_large"
         android:textColor="@android:color/white"

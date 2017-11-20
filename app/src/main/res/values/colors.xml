@@ -6,8 +6,6 @@
     <color name="colorPrimaryText">#f6f8ff</color>
     <color name="colorAccent">#26ABE3</color>
     <color name="colorGradientEnd">#26ABE3</color>
-    <color name="colorBackground">#f6f6f6</color>
-    <color name="colorBackgroundLight">#F0F2F4</color>
     <color name="colorBackgroundDark">#10151a</color>
     <color name="colorCardBackgroundDark">#434651</color>
     <color name="colorBlackTranslucent">#bf000000</color>

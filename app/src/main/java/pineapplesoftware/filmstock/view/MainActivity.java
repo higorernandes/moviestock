@@ -3,17 +3,14 @@ package pineapplesoftware.filmstock.view;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -29,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import jp.wasabeef.blurry.Blurry;
 import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.helper.DatabaseHelper;
 import pineapplesoftware.filmstock.model.dto.Movie;
@@ -244,8 +240,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     class CoverViewPagerAdapter extends PagerAdapter implements View.OnClickListener {
 
         private LayoutInflater mLayoutInflater;
-        private Context mContext;
-        private ArrayList<Movie> mItems;
+        private final Context mContext;
+        private final ArrayList<Movie> mItems;
 
         CoverViewPagerAdapter(Context context, ArrayList<Movie> items) {
             mContext = context;

@@ -4,11 +4,6 @@ import android.content.Context;
 
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-
-import pineapplesoftware.filmstock.model.domain.IFilmstockResponse;
-import pineapplesoftware.filmstock.model.domain.MovieResponse;
-import pineapplesoftware.filmstock.model.dto.Movie;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -18,14 +13,13 @@ import retrofit.http.Query;
 /**
  * Created by Higor Ernandes on 2017-10-29.
  */
-public class FilmstockApi
+class FilmstockApi
 {
-    private static FilmstockApi.IFilmstockApi filmstockApi;
-    private static String BASE_URL = "http://www.omdbapi.com";
-    public static String API_KEY = "201fefa";
-    public static String PLOT_FULL = "full";
+    private static final String BASE_URL = "http://www.omdbapi.com";
+    static final String API_KEY = "201fefa";
+    static final String PLOT_FULL = "full";
 
-    public static Retrofit getClient(final Context context) {
+    private static Retrofit getClient(final Context context) {
         try {
             return new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -38,7 +32,7 @@ public class FilmstockApi
         return null;
     }
 
-    public static FilmstockApi.IFilmstockApi getApi(final Context context) {
+    static FilmstockApi.IFilmstockApi getApi(final Context context) {
         try {
             return getClient(context).create(FilmstockApi.IFilmstockApi.class);
         } catch (Exception e) {

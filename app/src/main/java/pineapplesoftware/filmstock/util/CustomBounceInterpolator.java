@@ -1,7 +1,7 @@
 package pineapplesoftware.filmstock.util;
 
 /**
- * Created by root on 2017-11-18.
+ * Created by Higor Ernandes on 2017-11-18.
  */
 
 public class CustomBounceInterpolator implements android.view.animation.Interpolator

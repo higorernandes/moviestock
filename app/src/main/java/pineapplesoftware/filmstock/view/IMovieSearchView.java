@@ -14,7 +14,6 @@ import pineapplesoftware.filmstock.model.dto.Movie;
 
 public interface IMovieSearchView extends IView
 {
-
     void callbackSuccessSearchMovie(ArrayList<Movie> movieList);
     void callbackErrorSearchMovie();
     void callbackSuccessSearchMoviePaginated(ArrayList<Search> searchResults);

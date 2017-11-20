@@ -3,7 +3,7 @@ package pineapplesoftware.filmstock.generic;
 import android.content.Context;
 
 /**
- * Created by root on 2017-10-29.
+ * Created by Higor Ernandes on 2017-10-29.
  */
 
 public interface IView

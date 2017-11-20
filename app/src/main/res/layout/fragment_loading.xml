@@ -9,7 +9,7 @@
 
     <!-- No internet icon -->
     <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/no_internet_image"
+        android:id="@+id/loading_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_signal_wifi_off_white"

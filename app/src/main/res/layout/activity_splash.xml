@@ -9,7 +9,7 @@
     tools:context="pineapplesoftware.filmstock.view.SplashActivity">
 
     <ImageView
-        android:id="@+id/splash_filmstock_logo"
+        android:id="@+id/splash_filmstock_imageview"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/ic_filmstock"

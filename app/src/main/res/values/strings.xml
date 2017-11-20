@@ -6,14 +6,12 @@
     <string name="no_internet_greeting">Oops!</string>
     <string name="no_internet_verify_connection">Check your connection and try again. :)</string>
     <string name="generic_server_error">There was a error on the server. :/</string>
-    <string name="generic_server_connection_error">We could not connect to the server D: \n\nPlease try again.</string>
     <string name="generic_server_connection_error_suggestion">Would you mind trying it again?</string>
     <string name="generic_reconnect">Try again</string>
     <string name="generic_placeholder_text">-</string>
 
     <!-- Content Descriptions -->
     <string name="splash_filmstock_logo">Filmstock Logo</string>
-    <string name="splash_filmstock_background">Filmstock Background</string>
 
     <!-- Main -->
     <string name="main_movie_info">{genre} • {year} • {runtime}</string>
@@ -25,7 +23,6 @@
     <!-- Movie Detail -->
     <string name="movie_detail_text">Details</string>
     <string name="movie_detail_movie_year_runtime">{movieYear} • {runtime}</string>
-    <string name="movie_detail_genre_label">Genre</string>
     <string name="movie_detail_cast_label">Cast</string>
     <string name="movie_detail_director_label">Directed by</string>
     <string name="movie_detail_ratings_label">IMDB Rating</string>
@@ -46,7 +43,6 @@
     <string name="movie_search_no_results_greeting_text">Nothing…</string>
     <string name="movie_search_no_results_text">No results were found :(</string>
     <string name="movie_search_no_results_suggestion_text">How about trying something different?</string>
-    <string name="movie_search_title_text">{name} • ({year})</string>
     <string name="movie_search_too_many_results_greeting_text">Err…</string>
     <string name="movie_search_too_many_results_error_text">Sorry, but that was a bit too generic…</string>
     <string name="movie_search_too_many_results_suggestion_text">How about trying something a little more specific?</string>

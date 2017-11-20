@@ -3,18 +3,12 @@ package pineapplesoftware.filmstock.service;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import pineapplesoftware.filmstock.R;
 import pineapplesoftware.filmstock.model.domain.IFilmstockResponse;
-import pineapplesoftware.filmstock.model.domain.MovieResponse;
 import pineapplesoftware.filmstock.model.domain.MovieSearchResult;
 import pineapplesoftware.filmstock.model.domain.Search;
 import pineapplesoftware.filmstock.model.dto.Movie;
@@ -114,7 +108,7 @@ public class FilmstockServices
 
                             if (Boolean.valueOf(movieSearchResult.getResponse().toLowerCase())) {
                                 ArrayList<Search> searchResultsList = new ArrayList<>();
-                                if (movieSearchResult != null && movieSearchResult.getSearch() != null) {
+                                if (movieSearchResult.getSearch() != null) {
                                     searchResultsList.addAll(movieSearchResult.getSearch());
                                 }
 

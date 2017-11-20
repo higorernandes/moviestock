@@ -48,11 +48,11 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
     private AVLoadingIndicatorView mLoadingBottomProgressBar;
 
     private SearchResultsArrayAdapter mSearchResultsArrayAdapter;
-    private ArrayList<Search> mSearchResults = new ArrayList<>();
+    private final ArrayList<Search> mSearchResults = new ArrayList<>();
 
     private MovieSearchPresenter mPresenter;
     private LinearLayoutManager mLayoutManager;
-    private int mPage = 1, mPastVisibleItems, mVisibleItemCount, mTotalItemCount;;
+    private int mPage = 1, mPastVisibleItems, mVisibleItemCount, mTotalItemCount;
     private boolean mLoading = true;
 
     //endregion
@@ -304,6 +304,10 @@ public class MovieSearchActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
+    /**
+     * Animates the RecyclerView's update.
+     * @param recyclerView The RecyclerView in which changes are happening.
+     */
     private void runLayoutAnimation(final RecyclerView recyclerView) {
         final Context context = recyclerView.getContext();
         final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);

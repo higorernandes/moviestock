@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 import java.util.Calendar;
 
 import pineapplesoftware.filmstock.R;
-import pineapplesoftware.filmstock.adapter.SearchResultsArrayAdapter;
 import pineapplesoftware.filmstock.helper.DatabaseHelper;
 import pineapplesoftware.filmstock.model.dto.Movie;
 import pineapplesoftware.filmstock.presenter.MovieDetailPresenter;
@@ -201,7 +200,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
                 TextView noInternetSuggestionTextView = mNoInternetView.findViewById(R.id.no_internet_suggestion);
                 noInternetSuggestionTextView.setText(getResources().getString(R.string.generic_server_connection_error_suggestion));
 
-                ImageView noInternetImageView = mNoInternetView.findViewById(R.id.no_internet_image);
+                ImageView noInternetImageView = mNoInternetView.findViewById(R.id.loading_indicator);
                 noInternetImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_shrug));
             }
         });

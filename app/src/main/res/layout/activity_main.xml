@@ -8,16 +8,6 @@
     android:background="@drawable/bg_gradient_dark"
     tools:context="pineapplesoftware.filmstock.view.MainActivity">
 
-    <!-- Background white pattern -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bg_white_pattern"
-        android:scaleType="fitXY"
-        android:background="@drawable/bg_white_repeat"
-        android:alpha="0.2"
-        android:visibility="gone"/>
-
     <!-- Toolbar -->
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -36,17 +26,14 @@
 
     <!-- Main content layout -->
     <LinearLayout
-        android:id="@+id/main_root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <!-- Movie title translucent View -->
         <RelativeLayout
-            android:id="@+id/main_translucent_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/transluscent_extra_black_view"
             android:visibility="gone"/>
 
@@ -153,7 +140,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/lato"
                 android:maxLines="2"
-                android:text="Scott Pilgrim vs. The World"
+                android:text="@string/generic_placeholder_text"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/font_size_extra_large"
@@ -168,7 +155,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/lato"
                 android:maxLines="3"
-                android:text="Comedy, Action, Romance • 2010 • 112min"
+                android:text="@string/generic_placeholder_text"
                 android:textAlignment="center"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/font_size_medium_large" />
@@ -191,7 +178,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/lato"
                 android:maxLines="3"
-                android:text="Saved on 03/11/2017"
+                android:text="@string/generic_placeholder_text"
                 android:textAlignment="center"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/font_size_medium_large" />

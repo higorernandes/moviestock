@@ -33,12 +33,12 @@ public class Search implements Serializable
     public Search() { }
 
     /**
-     * 
-     * @param title
-     * @param poster
-     * @param year
-     * @param imdbID
-     * @param type
+     * An object containing a search result item.
+     * @param title The movie title.
+     * @param poster The movie poster URL.
+     * @param year The movie's year of release.
+     * @param imdbID The movie's IMDB ID.
+     * @param type The movie type (movie, series, game, etc.).
      */
     public Search(String title, String year, String imdbID, String type, String poster) {
         super();

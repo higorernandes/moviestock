@@ -1,12 +1,9 @@
 package pineapplesoftware.filmstock.presenter;
 
-import java.util.ArrayList;
-
 import pineapplesoftware.filmstock.generic.IPresenter;
 import pineapplesoftware.filmstock.generic.IView;
 import pineapplesoftware.filmstock.helper.NetworkHelper;
 import pineapplesoftware.filmstock.model.domain.IFilmstockResponse;
-import pineapplesoftware.filmstock.model.domain.Search;
 import pineapplesoftware.filmstock.model.dto.Movie;
 import pineapplesoftware.filmstock.service.FilmstockServices;
 import pineapplesoftware.filmstock.view.IMovieDetailView;
