@@ -54,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_default_height"
         android:text="@string/generic_reconnect"
+        android:fontFamily="@font/lato_bold"
         style="@style/ButtonStyleDefault"/>
 
 </LinearLayout>
