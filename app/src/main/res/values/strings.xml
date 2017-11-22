@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Filmstock</string>
+    <string name="app_name">Moviestock</string>
 
     <!-- Generic -->
     <string name="no_internet">It looks like you\'re offline!</string>
@@ -11,7 +11,7 @@
     <string name="generic_placeholder_text">-</string>
 
     <!-- Content Descriptions -->
-    <string name="splash_filmstock_logo">Filmstock Logo</string>
+    <string name="splash_moviestock_logo">Moviestock Logo</string>
 
     <!-- Main -->
     <string name="main_movie_info">{genre} • {year} • {runtime}</string>

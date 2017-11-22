@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:textColor="@android:color/white"
             android:scaleType="fitStart"
-            android:src="@drawable/ic_filmstock" />
+            android:src="@drawable/ic_moviestock" />
 
         <!-- Search Button -->
         <RelativeLayout

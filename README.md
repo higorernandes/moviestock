@@ -1,4 +1,4 @@
-# Filmstock
+# Moviestock
 ### What is this?
 **A simple android movie browsing app.** This app will blow your mind for its beautifulness and simplicity.
 
@@ -12,7 +12,7 @@ Wanna try it? Follow the steps below:
 - See it run on your phone or emulator.
 
 #### Method 2:
-- Download the **.apk** file located in **apk/filmstock.apk**;
+- Download the **.apk** file located in **apk/moviestock.apk**;
 - Transfer it to your phone via USB;
 - Click on it (on your phone, you're not on your computer anymore);
 - Wait and see the magic.

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="pineapplesoftware.filmstock">
+    package="pineapplesoftware.moviestock">
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".application.FilmstockApplication"
+        android:name="pineapplesoftware.moviestock.application.MoviestockApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -19,7 +19,7 @@
 
         <!-- Splash Activity -->
         <activity
-            android:name=".view.SplashActivity"
+            android:name="pineapplesoftware.moviestock.view.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -30,7 +30,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".view.MainActivity"
+            android:name="pineapplesoftware.moviestock.view.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -41,13 +41,13 @@
         <!-- Movie Detail Activity -->
         <activity
             android:theme="@style/AppTheme"
-            android:name=".view.MovieDetailActivity"
+            android:name="pineapplesoftware.moviestock.view.MovieDetailActivity"
             android:screenOrientation="portrait"/>
 
         <!-- Movie Search Activity -->
         <activity
             android:theme="@style/AppTheme"
-            android:name=".view.MovieSearchActivity"
+            android:name="pineapplesoftware.moviestock.view.MovieSearchActivity"
             android:screenOrientation="portrait"/>
         <meta-data
             android:name="preloaded_fonts"

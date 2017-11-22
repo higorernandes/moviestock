@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_gradient_dark"
-    tools:context="pineapplesoftware.filmstock.view.MainActivity">
+    tools:context="pineapplesoftware.moviestock.view.MainActivity">
 
     <!-- Toolbar -->
     <android.support.design.widget.AppBarLayout

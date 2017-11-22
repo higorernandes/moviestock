@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/bg_gradient_dark"
-    tools:context="pineapplesoftware.filmstock.view.MovieSearchActivity">
+    tools:context="pineapplesoftware.moviestock.view.MovieSearchActivity">
 
     <!-- Toolbar -->
     <android.support.design.widget.AppBarLayout
