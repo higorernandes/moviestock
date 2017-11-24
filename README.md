@@ -4,6 +4,10 @@
 
 ### How do I get it?
 Wanna try it? Follow the steps below:
+
+#### Method 0:
+Download it from Google Play, dummie: https://play.google.com/store/apps/details?id=pineapplesoftware.moviestock
+
 #### Method 1:
 - Clone the project to your computer;
 - Open it in Android Studio;
